@@ -186,6 +186,13 @@ int main(int argc, char * argv[]) {
         cout << "running time to pattern analysis" << endl;
         sprintf(outfilename, "time_to_pattern_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
     }
+    //cherry
+    else if (ANALYSIS_MAX_LENGTH) {
+        cout << "getting maximum lengths reached per filopodium" << endl;
+        sprintf(outfilename,
+        "max_length_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
+        );
+    }
     else {
         cout << "analysis must either be ANALYSIS_HYSTERESIS or ANALYSIS_TIME_TO_PATTERN.. aborting run";
         sprintf(outfilename, "testforpybind");
@@ -223,6 +230,8 @@ void World::runSimulation()
             hysteresisAnalysis();
         else if (ANALYSIS_TIME_TO_PATTERN)
             evaluateSandP();
+        /*else if (ANALYSIS_MAX_LENGTH) //cherry
+            writeMaxLengths();*/
 
         if(MEM_LEAK_OCCURRING)
         {
@@ -475,6 +484,14 @@ void World::updateMemAgents(void) {
                 //retract fils if inactive------------
                 if ( ((RAND_FILRETRACT_CHANCE==-1)&&(memp->filTipTimer > FILTIPMAX)) || ((RAND_FILRETRACT_CHANCE>-1) &&(randomChance < RAND_FILRETRACT_CHANCE)) ) {
 
+                    //cherry
+                    if (ANALYSIS_MAX_LENGTH) {
+                        if (memp->filTipTimer != FILTIPMAX+1) { // filTipTimer is set to FILTIPMAX+2 after the filopodia has started retracting
+                            RUNSfile << memp->FilLength(TIP) 
+                            // << "\t" << WORLDpointer->timeStep << "\t" << memp->FilBase(TIP)[0] << "\t" << memp->FilBase(TIP)[1] << "\t" << memp->FilBase(TIP)[2] 
+                            << endl;
+                        }
+                    }
 
                     if (memp->filRetract() == true) {
 

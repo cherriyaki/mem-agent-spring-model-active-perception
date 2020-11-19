@@ -10,6 +10,8 @@ MAXtime = 5000
 BAHTI_ANALYSIS = false
 ANALYSIS_HYSTERESIS = false
 ANALYSIS_TIME_TO_PATTERN = false
+# cherry
+ANALYSIS_MAX_LENGTH = false
 CAMP = false
 
 CDBG +=
