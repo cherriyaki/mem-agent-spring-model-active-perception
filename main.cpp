@@ -176,6 +176,8 @@ int main(int argc, char * argv[]) {
     //---------------------------------------------------------------
 
     char outfilename[150];
+    //cherry
+    sprintf(outfilename, "output/");
     //TODO update these file names with variable vals
     //do print statement as well
     if (ANALYSIS_HYSTERESIS) {

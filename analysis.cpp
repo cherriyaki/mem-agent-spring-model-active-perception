@@ -652,10 +652,10 @@ void World::evaluateSandP()
 
 //cherry
 //---------------------------------------------------------------------------------------------
-void World::writeMaxLengths()
+/*void World::writeMaxLengths()
 {
     if (memp)
-}
+}*/
 
 //---------------------------------------------------------------------------------------------
 /*void World::filopodia_contacts_Test(void){
