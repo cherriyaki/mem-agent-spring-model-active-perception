@@ -175,9 +175,7 @@ int main(int argc, char * argv[]) {
     cout << "test seed: " << test_seed << endl;
     //---------------------------------------------------------------
 
-    char outfilename[150];
-    //cherry
-    sprintf(outfilename, "output/");
+    char outfilename[150]; 
     //TODO update these file names with variable vals
     //do print statement as well
     if (ANALYSIS_HYSTERESIS) {
@@ -189,6 +187,12 @@ int main(int argc, char * argv[]) {
         sprintf(outfilename, "time_to_pattern_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
     }
     //cherry
+    else if (ANALYSIS_FILO_LENGTHS) {
+        cout << "getting the lengths over time per filopodium" << endl;
+        sprintf(outfilename,
+        "filoLengthFiles/filo_lengths_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
+        );
+    }
     else if (ANALYSIS_MAX_LENGTH) {
         cout << "getting maximum lengths reached per filopodium" << endl;
         sprintf(outfilename,
@@ -232,8 +236,8 @@ void World::runSimulation()
             hysteresisAnalysis();
         else if (ANALYSIS_TIME_TO_PATTERN)
             evaluateSandP();
-        /*else if (ANALYSIS_MAX_LENGTH) //cherry
-            writeMaxLengths();*/
+        /*else if (ANALYSIS_FILO_LENGTHS) //cherry
+            writeFiloLengths();*/
 
         if(MEM_LEAK_OCCURRING)
         {
@@ -471,6 +475,11 @@ void World::updateMemAgents(void) {
             //if the memAgent resides at the tip of a filopodium (note TIP state of a memAgent is to do with filopodia not tip cells.)
             if (memp->FIL == TIP) {
 
+                //cherry
+                if (ANALYSIS_FILO_LENGTHS) {
+                    RUNSfile << memp << "," << memp->FilLength(TIP) << endl;
+                }
+
                 randomChance = rand() / (float) RAND_MAX;
 
                 //veil advance for cell migration------------------------
@@ -482,6 +491,7 @@ void World::updateMemAgents(void) {
                         else if(ANALYSIS_HYSTERESIS==false) memp->veilAdvance();
                     }
                 }
+                
                 //------------------------------------
                 //retract fils if inactive------------
                 if ( ((RAND_FILRETRACT_CHANCE==-1)&&(memp->filTipTimer > FILTIPMAX)) || ((RAND_FILRETRACT_CHANCE>-1) &&(randomChance < RAND_FILRETRACT_CHANCE)) ) {

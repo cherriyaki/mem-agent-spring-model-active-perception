@@ -69,6 +69,11 @@ then
 	echo "building time_to_pattern analysis..."
 	make clean; make CDBG=-w ECpack=10 MAXtime=5000 ANALYSIS_TIME_TO_PATTERN=true GRAPHICS=$graphics
 # cherry
+elif [ "$analysis" == "filo_lengths" ]
+then
+    echo "writing the lengths over time per filopodium..."
+    mkdir filoLengthFiles
+    make clean; make CDBG=-w ECpack=10 MAXtime=500 ANALYSIS_FILO_LENGTHS=true GRAPHICS=$graphics 
 elif [ "$analysis" == "max_length" ]
 then
     echo "writing maximum lengths reached..."

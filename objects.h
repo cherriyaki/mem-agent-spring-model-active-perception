@@ -866,6 +866,7 @@ public:
     void evaluate_shuffling(ofstream& fileTo);
     void printScores(ofstream& fileTo);
     void evaluateSandP();
+    void writeFiloLengths();
     void filopodia_contacts_Test(void);
     void printContactsInfo(ofstream& fileTo);
     void calcEnvVEGFlevel(void);
