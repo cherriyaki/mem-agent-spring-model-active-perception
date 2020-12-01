@@ -236,8 +236,6 @@ void World::runSimulation()
             hysteresisAnalysis();
         else if (ANALYSIS_TIME_TO_PATTERN)
             evaluateSandP();
-        /*else if (ANALYSIS_FILO_LENGTHS) //cherry
-            writeFiloLengths();*/
 
         if(MEM_LEAK_OCCURRING)
         {
@@ -506,6 +504,11 @@ void World::updateMemAgents(void) {
                     }
 
                     if (memp->filRetract() == true) {
+
+                        //cherry
+                        if (ANALYSIS_FILO_LENGTHS) {
+                            RUNSfile << memp << "," << 0 << endl;
+                        }
 
                         tipDeleteFlag = true;
                         deleteOldGridRef(memp, true);

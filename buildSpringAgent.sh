@@ -73,7 +73,8 @@ elif [ "$analysis" == "filo_lengths" ]
 then
     echo "writing the lengths over time per filopodium..."
     mkdir filoLengthFiles
-    make clean; make CDBG=-w ECpack=10 MAXtime=500 ANALYSIS_FILO_LENGTHS=true GRAPHICS=$graphics 
+    mkdir filoLengthImages
+    make clean; make CDBG=-w ECpack=10 MAXtime=1000 ANALYSIS_FILO_LENGTHS=true GRAPHICS=$graphics 
 elif [ "$analysis" == "max_length" ]
 then
     echo "writing maximum lengths reached..."

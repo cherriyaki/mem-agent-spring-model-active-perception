@@ -2,88 +2,145 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import math
 import numpy as np
+import os
 
-content = None
+# Get content of each file
+fileToContent = {}
 for path in Path("filoLengthFiles").iterdir():
-    if path.is_file():
+    if path.is_file() and path.name.__contains__("filo"):
         f = open(path, "r")
+        fileName = path.name.replace(".txt", "")
         content = f.read()
+        fileToContent[fileName] = content
         f.close()
 
-lengthsPerFilo = {}
+# Constants
+TIME_STEP = 15
+IMAGE_FOLDER = "filoLengthImages"
+# FIGURE COUNTER
+figureCt = 1
 
-lines = content.split("\n")
-for line in lines:
-    if line != '': 
-        elements = line.split(",")
-        filo = elements[0]
-        length = float(elements[1])
-        if filo not in lengthsPerFilo: 
-            lengthsPerFilo[filo] = []
-        lengthsPerFilo[filo].append(length) 
 
 """
-=========================================================
-GET EXTENSION AND RETRACTION RATES
+FOR EVERY FILE CONTAINING FILO LENGTHS
+Each representing a run with specific parameters
 """
+for file, content in fileToContent.items():
+    lengthsPerFilo = {}
 
+    # Get list of lengths for each filo
+    lines = content.split("\n")
+    for line in lines:
+        if line != '': 
+            elements = line.split(",")
+            filo = elements[0]
+            length = float(elements[1])
+            if filo not in lengthsPerFilo: 
+                lengthsPerFilo[filo] = []
+            lengthsPerFilo[filo].append(length) 
 
-timePerExtPerFilo = []
-timePerRetPerFilo = []
-extDuration = extendedLength = retDuration = retractedLength = 0
-TIME_STEP = 30
+    # Skip this file if it is empty
+    if len(lengthsPerFilo) == 0:
+        continue
 
-for lengths in lengthsPerFilo.values():
-    # ""'float' object is not callable" error on doing len(filo) for some reason ??
-    prev = 0
-    for length in lengths:
-        diff = length - prev
-        if diff > 0: # extension
-            extDuration += TIME_STEP
-            extendedLength += diff
-        elif diff < 0: # retraction
-            retDuration += TIME_STEP
-            retractedLength += abs(diff)
-        prev = length
-    # For this filo, add seconds taken to extend each micron. Do the same for retraction.
-    timePerExtPerFilo.append(extDuration / extendedLength)
-    timePerRetPerFilo.append(retDuration / retractedLength)
-    # Reset values for next filo
+    """
+    =========================================================
+    CREATE FOLDER TO STORE IMAGES FOR THIS FILE
+    """
+    newFolder = IMAGE_FOLDER + "/" + file 
+    if not os.path.exists(newFolder):
+        try:
+            os.mkdir(newFolder)
+        except OSError:
+            print ("Creation of the directory %s failed" % newFolder)
+        else:
+            print ("Successfully created the directory %s " % newFolder)
+    else:
+        print ("The directory %s exists already" % newFolder)
+    
+    """
+    =========================================================
+    GET EXTENSION AND RETRACTION RATES
+    """
+
+    timePerExtPerFilo = []
+    timePerRetPerFilo = []
     extDuration = extendedLength = retDuration = retractedLength = 0
 
-"""
-=========================================================
-HISTOGRAM
-"""
-extBins = math.ceil(max(timePerExtPerFilo)-min(timePerExtPerFilo)) *2
-retBins = math.ceil(max(timePerRetPerFilo)-min(timePerRetPerFilo)) *2
+    for lengths in lengthsPerFilo.values():
+        # ""'float' object is not callable" error on doing len(filo) for some reason ??
+        prev = 0
+        for length in lengths:
+            diff = length - prev
+            if diff > 0: # extension
+                extDuration += TIME_STEP
+                extendedLength += diff
+            elif diff < 0: # retraction
+                retDuration += TIME_STEP
+                retractedLength += abs(diff)
+            prev = length
+        # For this filo, add seconds taken to extend each micron. Do the same for retraction.
+        timePerExtPerFilo.append(extDuration / extendedLength)
+        # For time being we keep filos that don't retract in a run
+        if retractedLength > 0:
+            timePerRetPerFilo.append(retDuration / retractedLength)
+        # Reset values for next filo
+        extDuration = extendedLength = retDuration = retractedLength = 0
 
-freqExtTime, extTimes, _ = plt.hist(timePerExtPerFilo, extBins, density=True) 
-# Labels
-plt.title("Histogram of extension rate")
-plt.xlabel("Seconds per extended micron")
-plt.ylabel("Probability")
+    # FOR DEBUGGING
+    print(max(timePerExtPerFilo))
 
-freqRetTime, retTimes, _ = plt.hist(timePerRetPerFilo, retBins, density=True) 
-# Labels
-plt.title("Histogram of retraction rate")
-plt.xlabel("Seconds per retracted micron")
-plt.ylabel("Probability")
+    """
+    =========================================================
+    HISTOGRAM
+    """
 
-"""
-=========================================================
-CUMULATIVE DISTRIBUTION
-"""
+    extBins = math.ceil(max(timePerExtPerFilo)-min(timePerExtPerFilo)) *2
+    retBins = math.ceil(max(timePerRetPerFilo)-min(timePerRetPerFilo)) *2
 
-cumSumExt = np.cumsum(freqExtTime) * (extTimes[1]-extTimes[0]) 
-cumSumRet = np.cumsum(freqRetTime) * (retTimes[1]-retTimes[0])
+    fig = plt.figure(figureCt)
+    freqExtTime, extTimes, _ = plt.hist(timePerExtPerFilo, extBins, density=True) 
+    # Labels
+    plt.title("Histogram of extension rate")
+    plt.xlabel("Seconds per extended micron")
+    plt.ylabel("Probability")
+    fig.savefig(newFolder + "/histogramExtRate.png")
+    figureCt += 1
 
-plt.plot(extTimes[1:], cumSumExt)
-plt.title("CDF of extension rate")
-plt.xlabel("Seconds per micron extended")
-plt.ylabel("Cumulative probability")
+    fig = plt.figure(figureCt)
+    freqRetTime, retTimes, _ = plt.hist(timePerRetPerFilo, retBins, density=True) 
+    # Labels
+    plt.title("Histogram of retraction rate")
+    plt.xlabel("Seconds per retracted micron")
+    plt.ylabel("Probability")
+    fig.savefig(newFolder + "/histogramRetRate.png")
+    figureCt += 1
 
-plt.plot(retTimes[1:], cumSumRet)
-plt.title("CDF of retraction rate")
-plt.xlabel("Seconds per micron retracted")
-plt.ylabel("Cumulative probability")
+    """
+    =========================================================
+    CUMULATIVE DISTRIBUTION
+    """
+
+    cumSumExt = np.cumsum(freqExtTime) * (extTimes[1]-extTimes[0]) 
+    cumSumRet = np.cumsum(freqRetTime) * (retTimes[1]-retTimes[0])
+
+    fig = plt.figure(figureCt)
+    plt.plot(extTimes[1:], cumSumExt)
+    plt.title("CDF of extension rate")
+    plt.xlabel("Seconds per micron extended")
+    plt.ylabel("Cumulative probability")
+    fig.savefig(newFolder + "/cdfExtRate.png")
+    figureCt += 1
+
+    fig = plt.figure(figureCt)
+    plt.plot(retTimes[1:], cumSumRet)
+    plt.title("CDF of retraction rate")
+    plt.xlabel("Seconds per micron retracted")
+    plt.ylabel("Cumulative probability")
+    fig.savefig(newFolder + "/cdfRetRate.png")
+    figureCt += 1
+
+
+    
+
+    
