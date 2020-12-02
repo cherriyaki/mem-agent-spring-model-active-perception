@@ -38,7 +38,6 @@ World* WORLDpointer;
 ofstream RUNSfile;
 int memINIT;
 char fname[200];
-float actinMax = 512;
 
 //GRN Signalling pathways
 float delta = 2.0; //2.0f normal
@@ -78,6 +77,7 @@ float EPSILON = 0.9;
 float tokenStrength = 1;
 float FILTIPMAX = 15;
 int FIL_SPACING = 2;
+float actinMax = 512; // cherry. default 512
 int run_number = 1;
 int GRADIENT = STEADY;
 float randFilExtend = -1;
@@ -116,15 +116,16 @@ void readArgs(int argc, char * argv[]) {
         FILTIPMAX = atof(argv[6]);
         tokenStrength = atof(argv[7]);
 		FIL_SPACING = atof(argv[8]);
-        if (argc > 9)
+        actinMax = atof(argv[9]); //cherry actinmax and other number changes below
+        if (argc > 10)
         {
-            randFilExtend = atof(argv[9]);
+            randFilExtend = atof(argv[10]);
             if (randFilExtend >= 0 && randFilExtend <= 1)
                 EPSILON = 0;
-            RAND_FILRETRACT_CHANCE = atof(argv[10]);
+            RAND_FILRETRACT_CHANCE = atof(argv[11]);
 
-            if ( argc > 11 )
-                test_seed = stoll(argv[11], nullptr, 10);
+            if ( argc > 12 )
+                test_seed = stoll(argv[12], nullptr, 11);
 
         }
 
@@ -170,6 +171,7 @@ int main(int argc, char * argv[]) {
     cout << "FILTIPMAX: " << FILTIPMAX << endl;
     cout << "tokenStrength: " << tokenStrength << endl;
 	cout << "FIL_SPACING: " << FIL_SPACING << endl;
+    cout << "actinMax: " << actinMax << endl; //cherry
 	cout << "randFilExtension: " << randFilExtend << endl;
 	cout << "RAND_FILRETRACT_CHANCE: " << RAND_FILRETRACT_CHANCE<< endl;
     cout << "test seed: " << test_seed << endl;
@@ -180,23 +182,23 @@ int main(int argc, char * argv[]) {
     //do print statement as well
     if (ANALYSIS_HYSTERESIS) {
         cout << "running bistability analysis" << endl;
-        sprintf(outfilename, "analysis_hysteresis_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
+        sprintf(outfilename, /*cherry actinmax*/"analysis_hysteresis_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
     }
     else if (ANALYSIS_TIME_TO_PATTERN) {
         cout << "running time to pattern analysis" << endl;
-        sprintf(outfilename, "time_to_pattern_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
+        sprintf(outfilename, "time_to_pattern_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
     }
     //cherry
     else if (ANALYSIS_FILO_LENGTHS) {
         cout << "getting the lengths over time per filopodium" << endl;
         sprintf(outfilename,
-        "filoLengthFiles/filo_lengths_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
+        "filoLengthFiles/filo_lengths_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
         );
     }
     else if (ANALYSIS_MAX_LENGTH) {
         cout << "getting maximum lengths reached per filopodium" << endl;
         sprintf(outfilename,
-        "max_length_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
+        "max_length_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
         );
     }
     else {

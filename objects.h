@@ -746,7 +746,7 @@ public:
     //TODO: add yMax in..
     //TODO: put ybaseline back in
     //World(float epsilon = 0.9, float vconcst = 0.04, int gradientType = 2, /*float yBaseline,*/ float filConstNorm = 2.0f, float filTipMax = 10, float tokenstrength = 1);
-    World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float randomFilExtend, float randFilRetract);
+    World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float actinmax /*cherry*/, float randomFilExtend, float randFilRetract);
     void runSimulation();
     void creationTimestep(int movie);
     void simulateTimestep();

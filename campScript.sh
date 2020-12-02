@@ -13,6 +13,7 @@ filconstnorm=2.0
 filtipmax=15
 tokenstrength=1
 filspacing=2
+actinmax=512 #cherry
 randFilExtend=-1
 randFilRetract=-1
 maxtime=5000 #just for pybind version
@@ -56,6 +57,11 @@ case $key in
     ;;
     --filtipmax)
     filtipmax="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    --actinmax) # cherry
+    actinmax="$2"
     shift # past argument
     shift # past value
     ;;
@@ -157,6 +163,9 @@ do
     elif [ "$vary1_param" == "filspacing" ]
     then
         filspacing=$vary1_val
+    elif [ "$vary1_param" == "actinmax" ] #cherry
+    then
+        actinmax=$vary1_val
     elif [ "$vary1_param" == "randFilExtend" ]
     then
         randFilExtend=$vary1_val
@@ -188,6 +197,9 @@ do
         elif [ "$vary2_param" == "filspacing" ]
         then
             filspacing=$vary2_val
+        elif [ "$vary2_param" == "actinmax" ] #cherry
+        then
+            actinmax=$vary2_val 
         elif [ "$vary2_param" == "randFilExtend" ]
         then
             randFilExtend=$vary2_val
@@ -218,6 +230,9 @@ do
             elif [ "$vary3_param" == "filspacing" ]
             then
                 filspacing=$vary3_val
+            elif [ "$vary3_param" == "actinmax" ] #cherry
+            then
+                actinmax=$vary3_val
             elif [ "$vary3_param" == "randFilExtend" ]
             then
                 randFilExtend=$vary3_val
@@ -226,12 +241,12 @@ do
                 randFilRetract=$vary3_val
             fi
             if [ "$analysis" == "pybind" ]
-            then
-                echo "calling slurm script for pybind, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime"
-                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime; exit;"
+            then #cherry actinmax
+                echo "calling slurm script for pybind, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --actinmax $actinmax --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime"
+                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --actinmax $actinmax --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime; exit;"
             else
-                echo "calling slurm script for $analysis, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract"
-                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime; exit;"
+                echo "calling slurm script for $analysis, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --actinmax $actinmax --randFilExtend $randFilExtend --randFilRetract $randFilRetract"
+                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --actinmax $actinmax --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime; exit;"
             fi
         done
     done

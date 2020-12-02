@@ -17,8 +17,6 @@ for path in Path("filoLengthFiles").iterdir():
 # Constants
 TIME_STEP = 15
 IMAGE_FOLDER = "filoLengthImages"
-# FIGURE COUNTER
-figureCt = 1
 
 
 """
@@ -52,11 +50,11 @@ for file, content in fileToContent.items():
         try:
             os.mkdir(newFolder)
         except OSError:
-            print ("Creation of the directory %s failed" % newFolder)
+            print ("Failed to create the directory %s failed" % newFolder)
         else:
             print ("Successfully created the directory %s " % newFolder)
     else:
-        print ("The directory %s exists already" % newFolder)
+        print ("Directory already exists: %s" % newFolder)
     
     """
     =========================================================
@@ -67,7 +65,7 @@ for file, content in fileToContent.items():
     timePerRetPerFilo = []
     extDuration = extendedLength = retDuration = retractedLength = 0
 
-    for lengths in lengthsPerFilo.values():
+    for filo, lengths in lengthsPerFilo.items(): #lengths in lengthsPerFilo.values():
         # ""'float' object is not callable" error on doing len(filo) for some reason ??
         prev = 0
         for length in lengths:
@@ -81,40 +79,52 @@ for file, content in fileToContent.items():
             prev = length
         # For this filo, add seconds taken to extend each micron. Do the same for retraction.
         timePerExtPerFilo.append(extDuration / extendedLength)
+        # DEBUGGING
+        if extDuration / extendedLength > 65:
+            print ("ext", filo, extDuration, extendedLength)
         # For time being we keep filos that don't retract in a run
         if retractedLength > 0:
             timePerRetPerFilo.append(retDuration / retractedLength)
+            # DEBUGGING
+            if retDuration / retractedLength > 90:
+                print ("ret", filo, retDuration, retractedLength)
+
         # Reset values for next filo
         extDuration = extendedLength = retDuration = retractedLength = 0
 
     # FOR DEBUGGING
     print(max(timePerExtPerFilo))
+    print(max(timePerRetPerFilo))
 
     """
     =========================================================
     HISTOGRAM
     """
 
+    # make bin size 2. Aim: 0<x<=2s, 2<x<=4 ...
     extBins = math.ceil(max(timePerExtPerFilo)-min(timePerExtPerFilo)) *2
     retBins = math.ceil(max(timePerRetPerFilo)-min(timePerRetPerFilo)) *2
 
-    fig = plt.figure(figureCt)
+    # The one figure window which we will reuse to plot graphs, saving to an image each time
+    fig = plt.figure()
+
     freqExtTime, extTimes, _ = plt.hist(timePerExtPerFilo, extBins, density=True) 
     # Labels
     plt.title("Histogram of extension rate")
     plt.xlabel("Seconds per extended micron")
     plt.ylabel("Probability")
     fig.savefig(newFolder + "/histogramExtRate.png")
-    figureCt += 1
+    # Clears current fig
+    plt.clf()
 
-    fig = plt.figure(figureCt)
     freqRetTime, retTimes, _ = plt.hist(timePerRetPerFilo, retBins, density=True) 
     # Labels
     plt.title("Histogram of retraction rate")
     plt.xlabel("Seconds per retracted micron")
     plt.ylabel("Probability")
     fig.savefig(newFolder + "/histogramRetRate.png")
-    figureCt += 1
+    # Clears current fig
+    plt.clf()
 
     """
     =========================================================
@@ -124,21 +134,24 @@ for file, content in fileToContent.items():
     cumSumExt = np.cumsum(freqExtTime) * (extTimes[1]-extTimes[0]) 
     cumSumRet = np.cumsum(freqRetTime) * (retTimes[1]-retTimes[0])
 
-    fig = plt.figure(figureCt)
     plt.plot(extTimes[1:], cumSumExt)
     plt.title("CDF of extension rate")
     plt.xlabel("Seconds per micron extended")
     plt.ylabel("Cumulative probability")
     fig.savefig(newFolder + "/cdfExtRate.png")
-    figureCt += 1
+    # Clears current fig
+    plt.clf()
 
-    fig = plt.figure(figureCt)
     plt.plot(retTimes[1:], cumSumRet)
     plt.title("CDF of retraction rate")
     plt.xlabel("Seconds per micron retracted")
     plt.ylabel("Cumulative probability")
     fig.savefig(newFolder + "/cdfRetRate.png")
-    figureCt += 1
+    # Clears current fig
+    plt.clf()
+
+# CLOSE ENTIRE PLOT WINDOW
+plt.close()
 
 
     
