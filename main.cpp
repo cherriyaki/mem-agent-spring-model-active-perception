@@ -231,7 +231,8 @@ void World::runSimulation()
 {
     while (timeStep <= MAXtime)
     {
-        if (timeStep % 1 == 0) cout << "timestep " << timeStep << ".. " << MAXtime - timeStep << " left" << endl;
+        // cherry commented out for faster run
+        //if (timeStep % 1 == 0) cout << "timestep " << timeStep << ".. " << MAXtime - timeStep << " left" << endl;
         simulateTimestep();
 
         if (ANALYSIS_HYSTERESIS)

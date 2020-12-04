@@ -1,0 +1,433 @@
+ECPACK: 10
+GRAPHICS: 0
+bahti analysis: 0 @@ time to pattern analysis: 0 @@  hysteresis analysis: 0
+ECELLS: 10
+Epsilon: 0.9
+VconcST: 0.04
+gradient: 2
+FIL_VARY (filconstnorm): 2
+FILTIPMAX: 15
+tokenStrength: 1
+FIL_SPACING: 10
+actinMax: 512
+randFilExtension: -1
+RAND_FILRETRACT_CHANCE: -1
+test seed: -1
+getting the lengths over time per filopodium
+output file name: filoLengthFiles/filo_lengths_filvary_2.000000_epsilon_0.900000_VconcST0.040000_GRADIENT2_FILTIPMAX15.000000_tokenStrength1.000000_FILSPACING10_actinMax512.000000_randFilExtend-1.000000_randFilRetract-1.000000_run_8_.txt
+Creating world...
+xMax: 200 yMax: 1016 zMax: 20
+Grid size 200x1016x20
+World created!
+Creation timestep... initialising everything
+memInit760
+created environment
+VEGF total 8.24794e+07	4033002gridded membrane7600
+CEll: 0 VEGFRnorm: 31714 Vsink: 9
+CEll: 1 VEGFRnorm: 31714 Vsink: 9
+CEll: 2 VEGFRnorm: 31714 Vsink: 9
+CEll: 3 VEGFRnorm: 31714 Vsink: 9
+CEll: 4 VEGFRnorm: 31714 Vsink: 9
+CEll: 5 VEGFRnorm: 31714 Vsink: 9
+CEll: 6 VEGFRnorm: 31714 Vsink: 9
+CEll: 7 VEGFRnorm: 31714 Vsink: 9
+CEll: 8 VEGFRnorm: 31714 Vsink: 9
+CEll: 9 VEGFRnorm: 31714 Vsink: 9
+
+Creation complete
+Creation timestep complete.
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.954507
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.774912
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.021521
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.313392
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.198089
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.659968
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.310904
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.351038
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.784007
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.74617
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.662381
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.918944
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.56615
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.105182
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.668864
+0x7f9f24827560 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.0591159
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.0357535
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.661119
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.0260933
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.423358
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.531251
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.504731
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.134168
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108112 | chance = 0.816881
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.373379
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.929106
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.0754651
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.590945
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.990144
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.594788
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.480755
+0x7f9f242cf1e0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.63747
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.91862
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.689327
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.860744
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.422919
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.870152
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.717769
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108254 | chance = 0.964539
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.474883
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.527003
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.0759019
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.111069
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.0199665
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.179036
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.711244
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.492205
+0x7f9f24aa5be0 | Length = 0.0433813 |  VEGFResponse() before probability check | Prob = 0.00108538 | chance = 0.172968
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.0541016
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.929694
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.281165
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.548279
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.601076
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.5984
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.863085
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.608364
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.436083
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.618763
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.731201
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.179967
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.393022
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.409171
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.652508
+0x7f9f2588f240 | Length = 0.0433839 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.536032
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.988978
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.265344
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.192266
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.0795162
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.879992
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.481519
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.609571
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.712409
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.422321
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.701044
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.12431
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.0584286
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.225368
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.418036
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.681336
+0x7f9f24ad7ac0 | Length = 0.0433851 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.0712554
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107578 | chance = 0.892696
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107578 | chance = 0.0492685
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before extension
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after node==true
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after envNeighs.size>0
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after highest!=NULL
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() after extension
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107578 | chance = 0.8955
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107578 | chance = 0.054109
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before extension
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after node==true
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after envNeighs.size>0
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after highest!=NULL
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() after extension
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107578 | chance = 0.182922
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107578 | chance = 0.680544
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107578 | chance = 0.208261
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107384 | chance = 0.316685
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107384 | chance = 0.707505
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107254 | chance = 0.0682582
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before extension
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after node==true
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after envNeighs.size>0
+0x7f9f24fb7f40 | Length = 0.0433762 |  extendFil() after highest!=NULL
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() after extension
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107254 | chance = 0.718125
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107449 | chance = 0.760184
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107255 | chance = 0.762362
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107122 | chance = 0.502108
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107057 | chance = 0.65329
+0x7f9f24fb7f40 | Length = 0.0433762 |  VEGFResponse() before probability check | Prob = 0.107057 | chance = 0.450551
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.00534757
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.77145
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.00564639
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00107971 | chance = 0.19449
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.562742
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.985205
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.184967
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.722046
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.301321
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.477156
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.52833
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.81846
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.294648
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.462508
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.2077
+0x7f9f24be3240 | Length = 0.0433824 |  VEGFResponse() before probability check | Prob = 0.00108396 | chance = 0.463059
+end of run simulation
+
+======================================================================================================================================================
+
+
+ECPACK: 10
+GRAPHICS: 0
+bahti analysis: 0 @@ time to pattern analysis: 0 @@  hysteresis analysis: 0
+ECELLS: 10
+Epsilon: 0.9
+VconcST: 0.04
+gradient: 2
+FIL_VARY (filconstnorm): 2
+FILTIPMAX: 15
+tokenStrength: 1
+FIL_SPACING: 10
+actinMax: 512
+randFilExtension: -1
+RAND_FILRETRACT_CHANCE: -1
+test seed: -1
+getting the lengths over time per filopodium
+output file name: filoLengthFiles/filo_lengths_filvary_2.000000_epsilon_0.900000_VconcST0.040000_GRADIENT2_FILTIPMAX15.000000_tokenStrength1.000000_FILSPACING10_actinMax512.000000_randFilExtend-1.000000_randFilRetract-1.000000_run_9_.txt
+Creating world...
+xMax: 200 yMax: 1016 zMax: 20
+Grid size 200x1016x20
+World created!
+Creation timestep... initialising everything
+memInit760
+created environment
+VEGF total 8.24794e+07	4033002gridded membrane7600
+CEll: 0 VEGFRnorm: 31714 Vsink: 9
+CEll: 1 VEGFRnorm: 31714 Vsink: 9
+CEll: 2 VEGFRnorm: 31714 Vsink: 9
+CEll: 3 VEGFRnorm: 31714 Vsink: 9
+CEll: 4 VEGFRnorm: 31714 Vsink: 9
+CEll: 5 VEGFRnorm: 31714 Vsink: 9
+CEll: 6 VEGFRnorm: 31714 Vsink: 9
+CEll: 7 VEGFRnorm: 31714 Vsink: 9
+CEll: 8 VEGFRnorm: 31714 Vsink: 9
+CEll: 9 VEGFRnorm: 31714 Vsink: 9
+
+Creation complete
+Creation timestep complete.
+0x7fc2943c5200 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.0385343 | chance = 0.27357
+0x7fc2943c5200 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.0387073 | chance = 0.607285
+0x7fc2943c5200 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.0387053 | chance = 0.0111486
+0x7fc2943c5200 | Length = 0.0433839 |  VEGFResponse() before extension
+0x7fc2943c5200 | Length = 0.0433839 |  extendFil() after node==true
+0x7fc2943c5200 | Length = 0.0433839 |  extendFil() after envNeighs.size>0
+0x7fc2943c5200 | Length = 0.0433839 |  extendFil() after highest!=NULL
+0x7fc2943c5200 | Length = 0.0433839 |  extendFil() before check of actin remaining >= dist. | Remaining = 505.182 | distneeded = 1.72419
+0x7fc2943c5200 | Length = 0.0433839 |  extendFil() after actin remaining >= dist. | Remaining = 505.182 | distneeded = 1.72419
+0x7fc2943c5200 | Length = 0.0433839 |  moveAgent() entered
+0x7fc2943c5200 | Length = 1.76758 |  moveAgent() ended
+0x7fc2943c5200 | Length = 1.76758 |  extendFil() after FIL!=NONE and extension success
+0x7fc2943c5200 | Length = 1.76758 |  VEGFResponse() after extension
+0x7fc2943c5200 | Length = 1.76758 |  VEGFResponse() before extension
+0x7fc2943c5200 | Length = 1.76758 |  extendFil() after node==true
+0x7fc2943c5200 | Length = 1.76758 |  extendFil() after envNeighs.size>0
+0x7fc2943c5200 | Length = 1.76758 |  extendFil() after highest!=NULL
+0x7fc2943c5200 | Length = 1.76758 |  extendFil() before check of actin remaining >= dist. | Remaining = 503.458 | distneeded = 1.27327
+0x7fc2943c5200 | Length = 1.76758 |  extendFil() after actin remaining >= dist. | Remaining = 503.458 | distneeded = 1.27327
+0x7fc2943c5200 | Length = 1.76758 |  moveAgent() entered
+0x7fc2943c5200 | Length = 3.04085 |  moveAgent() ended
+0x7fc2943c5200 | Length = 3.04085 |  extendFil() after FIL!=NONE and extension success
+0x7fc2943c5200 | Length = 3.04085 |  VEGFResponse() after extension
+0x7fc2943c5200 | Length = 3.04085 |  moveAgent() entered
+0x7fc2943c5200 | Length = 2.07145 |  moveAgent() ended
+0x7fc2943c5200 | Length = 2.07145 |  moveAgent() entered
+0x7fc2943c5200 | Length = 1.56251 |  moveAgent() ended
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.978596
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.778915
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.763502
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.725446
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.893395
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.363687
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.581418
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.365618
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.950395
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.471911
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.742743
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.824513
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.540686
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.514569
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.961869
+0x7fc294bfac40 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.408782
+0x7fc294d77440 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.0423491 | chance = 0.888252
+0x7fc294d77440 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.0423918 | chance = 0.758079
+0x7fc294d77440 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.0423911 | chance = 0.910189
+0x7fc294d77440 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.042405 | chance = 0.235285
+0x7fc294d77440 | Length = 0.0433839 |  VEGFResponse() before probability check |  | Prob = 0.0424065 | chance = 0.0169258
+0x7fc294d77440 | Length = 0.0433839 |  VEGFResponse() before extension
+0x7fc294d77440 | Length = 0.0433839 |  extendFil() after node==true
+0x7fc294d77440 | Length = 0.0433839 |  extendFil() after envNeighs.size>0
+0x7fc294d77440 | Length = 0.0433839 |  extendFil() after highest!=NULL
+0x7fc294d77440 | Length = 0.0433839 |  extendFil() before check of actin remaining >= dist. | Remaining = 508.04 | distneeded = 1.41412
+0x7fc294d77440 | Length = 0.0433839 |  extendFil() after actin remaining >= dist. | Remaining = 508.04 | distneeded = 1.41412
+0x7fc294d77440 | Length = 0.0433839 |  moveAgent() entered
+0x7fc294d77440 | Length = 1.45751 |  moveAgent() ended
+0x7fc294d77440 | Length = 1.45751 |  extendFil() after FIL!=NONE and extension success
+0x7fc294d77440 | Length = 1.45751 |  VEGFResponse() after extension
+0x7fc294d77440 | Length = 1.45751 |  VEGFResponse() before extension
+0x7fc294d77440 | Length = 1.45751 |  extendFil() after node==true
+0x7fc294d77440 | Length = 1.45751 |  extendFil() after envNeighs.size>0
+0x7fc294d77440 | Length = 1.45751 |  extendFil() after highest!=NULL
+0x7fc294d77440 | Length = 1.45751 |  extendFil() before check of actin remaining >= dist. | Remaining = 505.413 | distneeded = 1.58334
+0x7fc294d77440 | Length = 1.45751 |  extendFil() after actin remaining >= dist. | Remaining = 505.413 | distneeded = 1.58334
+0x7fc294d77440 | Length = 1.45751 |  moveAgent() entered
+0x7fc294d77440 | Length = 3.04085 |  moveAgent() ended
+0x7fc294d77440 | Length = 3.04085 |  extendFil() after FIL!=NONE and extension success
+0x7fc294d77440 | Length = 3.04085 |  VEGFResponse() after extension
+0x7fc294d77440 | Length = 3.04085 |  VEGFResponse() before extension
+0x7fc294d77440 | Length = 3.04085 |  extendFil() after node==true
+0x7fc294d77440 | Length = 3.04085 |  extendFil() after envNeighs.size>0
+0x7fc294d77440 | Length = 3.04085 |  extendFil() after highest!=NULL
+0x7fc294d77440 | Length = 3.04085 |  extendFil() before check of actin remaining >= dist. | Remaining = 500.506 | distneeded = 1.68876
+0x7fc294d77440 | Length = 3.04085 |  extendFil() after actin remaining >= dist. | Remaining = 500.506 | distneeded = 1.68876
+0x7fc294d77440 | Length = 3.04085 |  moveAgent() entered
+0x7fc294d77440 | Length = 4.72961 |  moveAgent() ended
+0x7fc294d77440 | Length = 4.72961 |  extendFil() after FIL!=NONE and extension success
+0x7fc294d77440 | Length = 4.72961 |  VEGFResponse() after extension
+0x7fc294d77440 | Length = 4.72961 |  moveAgent() entered
+0x7fc294d77440 | Length = 4.08133 |  moveAgent() ended
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.295562
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.348319
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.775781
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.682934
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.148544
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.689854
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.836847
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.444084
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.840291
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.608005
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.92823
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.749306
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.234446
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.906912
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.979385
+0x7fc294954430 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.994423
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.775959
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.157269
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.380528
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.0879992
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.321208
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.872976
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.420424
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.0394599
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.586322
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.297606
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.723386
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.938081
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.757004
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.0902905
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.0010868 | chance = 0.288484
+0x7fc294ade940 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108396 | chance = 0.475588
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.208941
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.764163
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.768514
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.567852
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.662844
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.968911
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.0612811
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.507977
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.341879
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.717731
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.641231
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.566029
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.471069
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.936459
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.727461
+0x7fc29500fec0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.67975
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.628674
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.575251
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.730967
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.552058
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.992102
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.98879
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.406335
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.126911
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.43347
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.184342
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.370007
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.0102259
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.83881
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.390153
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.270053
+0x7fc295221b80 | Length = 0.0433813 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.790324
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108822 | chance = 0.750436
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108822 | chance = 0.226027
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108822 | chance = 0.190079
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.183243
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.751868
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.0249989
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.0373719
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.0972732
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00109106 | chance = 0.0495459
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108538 | chance = 0.740308
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.936209
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.827524
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.27348
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.472392
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.0307336
+0x7fc294af1480 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.313825
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.883206
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.287801
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.306493
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.262038
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.919818
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.490265
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.779974
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.347134
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.370306
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.805733
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.116987
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108538 | chance = 0.0358505
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108538 | chance = 0.291104
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108538 | chance = 0.65345
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108538 | chance = 0.147625
+0x7fc294f0f2a0 | Length = 0.0433824 |  VEGFResponse() before probability check |  | Prob = 0.00108538 | chance = 0.617329
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.436889
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.373772
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.758307
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.206027
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.281924
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.260909
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.352331
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.585591
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.846923
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.683466
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.652323
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.355531
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.769323
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.088432
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.0791063
+0x7fc29499eb10 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.816727
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.350047
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.755182
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.938712
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.479236
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.573124
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.595967
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.547137
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.854306
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.412038
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.819135
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.597847
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.93216
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.84409
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.175969
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.486768
+0x7fc294bd8610 | Length = 0.0433851 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.612556
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.299204
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.805687
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.132828
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.90544
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.991402
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.32433
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.399945
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00108254 | chance = 0.0947276
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.982283
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.372555
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.848127
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.808551
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.940414
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.687991
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.0660366
+0x7fc2951fd040 | Length = 0.0433762 |  VEGFResponse() before probability check |  | Prob = 0.00107971 | chance = 0.729507
+end of run simulation

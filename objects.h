@@ -573,6 +573,9 @@ public:
 class MemAgent {
 public:
 
+    //cherry debugging
+    bool tracking;
+
     ///general
     float Mx, My, Mz; ///continuous space coordinates
     EC* Cell; ///pointer to the cell agent it belongs to

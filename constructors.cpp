@@ -100,6 +100,9 @@ Env::Env(World* WorldP){
 //-------------------------------------------------------------------------------
 MemAgent::MemAgent(EC* belongsTo, World* world){
 
+    //cherry debugging
+    tracking = false;
+
 	int i;
 	diffAd_replaced_cell = NULL;
 	diffAd_replaced_med = NULL;

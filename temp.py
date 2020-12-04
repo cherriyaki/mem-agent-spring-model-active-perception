@@ -17,7 +17,7 @@ for path in Path("filoLengthFiles").iterdir():
 # Constants
 TIME_STEP = 15
 IMAGE_FOLDER = "filoLengthImages"
-
+# make constants from invivo data?
 
 """
 FOR EVERY FILE CONTAINING FILO LENGTHS
@@ -66,7 +66,10 @@ for file, content in fileToContent.items():
     extDuration = extendedLength = retDuration = retractedLength = 0
 
     for filo, lengths in lengthsPerFilo.items(): #lengths in lengthsPerFilo.values():
-        # ""'float' object is not callable" error on doing len(filo) for some reason ??
+        # Only parse this filo's lengths if it has retracted fully, i.e. last length is 0
+        if lengths[-1] != 0:
+            continue
+        # Can't use len(filo) for some reason: "'float' object is not callable" error 
         prev = 0
         for length in lengths:
             diff = length - prev
