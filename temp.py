@@ -3,6 +3,67 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 import os
+import csv
+
+"""
+=====================================================================================
+************** Store invivo data
+'IV' stands for in vivo
+=====================================================================================
+"""
+lengthsPerFiloIV = []
+with open('lensPerTimeStep.csv', encoding='utf-8-sig', newline='') as f:
+    reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
+    filoCtr = 0
+    firstLine = True
+    lengthsPerFiloIV = []
+    for line in reader:
+        for length in line:
+            if firstLine: lengthsPerFiloIV.append([])
+            lengthsPerFiloIV[filoCtr].append(length)
+            filoCtr += 1
+        firstLine = False
+        filoCtr = 0
+
+timePerExtPerFiloIV = []
+timePerRetPerFiloIV = []
+extDurationIV = extendedLengthIV = retDurationIV = retractedLengthIV = 0
+TIME_STEP_IV = 30
+for filo in lengthsPerFiloIV:
+    # ""'float' object is not callable" error on doing len(filo) for some reason ??
+    prev = 0
+    for length in filo:
+        diff = length - prev
+        if diff > 0: # extension
+            extDurationIV += TIME_STEP_IV
+            extendedLengthIV += diff
+        elif diff < 0: # retraction
+            retDurationIV += TIME_STEP_IV
+            retractedLengthIV += abs(diff)
+        prev = length
+    # For this filo, add seconds taken to extend each micron. Do the same for retraction.
+    timePerExtPerFiloIV.append(extDurationIV / extendedLengthIV)
+    timePerRetPerFiloIV.append(retDurationIV / retractedLengthIV)
+    # Reset values for next filo
+    extDurationIV = extendedLengthIV = retDurationIV = retractedLengthIV = 0
+
+"""
+=========================================================
+HISTOGRAM
+"""
+extBinsIV = math.ceil(max(timePerExtPerFiloIV)-min(timePerExtPerFiloIV)) *2
+retBinsIV = math.ceil(max(timePerRetPerFiloIV)-min(timePerRetPerFiloIV)) *2
+freqExtTimeIV, extTimesIV, _ = plt.hist(timePerExtPerFiloIV, extBinsIV, density=True) 
+freqRetTimeIV, retTimesIV, _ = plt.hist(timePerRetPerFiloIV, retBinsIV, density=True) 
+
+cumSumExtIV = np.cumsum(freqExtTimeIV) * (extTimesIV[1]-extTimesIV[0]) 
+cumSumRetIV = np.cumsum(freqRetTimeIV) * (retTimesIV[1]-retTimesIV[0])
+
+"""
+=====================================================================================
+************** Store model data
+=====================================================================================
+"""
 
 # Get content of each file
 fileToContent = {}
@@ -153,10 +214,47 @@ for file, content in fileToContent.items():
     # Clears current fig
     plt.clf()
 
+    """
+    =====================================================================================
+    ************** Compare with invivo
+    =====================================================================================
+    """
+
+    # Sum of squared distances between cumSums of model and invivo - extension time
+    sumSDExt = 0
+    xSizeE = max(len(cumSumExt), len(cumSumExtIV))
+    for i in range(0, xSizeE):
+        # If i is out of bounds of any of the cumSum arrays, then use 1 instead because the graph plateaus at 1
+        csExt = 1 if (len(cumSumExt)-1 < i) else cumSumExt[i]
+        csIVExt = 1 if (len(cumSumExtIV)-1 < i) else cumSumExtIV[i]
+        # Square the distance between model and invivo cumsum, add it to the sum
+        sumSDExt += (csIVExt - csExt) **2 
+
+    # Sum of squared distances between cumSums of model and invivo - retraction time
+    sumSDRet = 0
+    xSizeR = max(len(cumSumRet), len(cumSumRetIV))
+    for i in range(0, xSizeR):
+        # If i is out of bounds of any of the cumSum arrays, then use 1 instead because the graph plateaus at 1
+        csRet = 1 if (len(cumSumRet)-1 < i) else cumSumRet[i]
+        csIVRet = 1 if (len(cumSumRetIV)-1 < i) else cumSumRetIV[i]
+        # Square the distance between model and invivo cumsum, add it to the sum
+        sumSDRet += (csIVRet - csRet) **2 
+
+    # Create file storing these sum of sq diffs
+    fileName = newFolder + "/ssd.txt"
+    if not os.path.exists(fileName):
+        with open(fileName, 'w') as f: 
+            f.write("Sum of squared distances between model and invivo results: \n CumSum of ext time probs: SSD = %f \n CumSum of ret time probs: SSD = %f" % (sumSDExt, sumSDRet))
+
+
+
 # CLOSE ENTIRE PLOT WINDOW
 plt.close()
 
 
-    
+
+
+
+
 
     

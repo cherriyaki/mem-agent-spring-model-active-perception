@@ -173,6 +173,11 @@ void MemAgent::veilAdvance(void) {
  */
 bool MemAgent::filRetract(void) {
 
+    //cherry debugging
+    if (FIL == TIP )
+        if (tracking)
+        cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() entered" << endl;
+
     int flag = 0;
     int i, k;
     float B, D;
@@ -216,6 +221,11 @@ bool MemAgent::filRetract(void) {
 
     ///if its spring length>1 (so nodeAgents either end of spring are not nearest neighbours in grid, return flase and stop function. It will reassess next timestep after the spring has retracted further
     if ((int) length > 1) {
+
+        //cherry debugging
+        if (FIL == TIP )
+            if (tracking)
+            cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() after springLength>1 so dont retract" << endl;
 
         return (false);
     }
@@ -356,6 +366,10 @@ bool MemAgent::filRetract(void) {
             }
         }
         
+        //cherry debugging
+        /*if (FIL == TIP )
+            if (tracking)
+            cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() ended" << endl;*/
 
         delete neighStp;
         return (true);
@@ -663,7 +677,7 @@ void MemAgent::VEGFRresponse(void) {
 
     //cherry debugging
     if (FIL == TIP)
-    if (FilLength(TIP) < 0.05) {
+    if (FilLength(TIP) < 2/*0.05*/) {
         tracking = true;
         cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() before probability check | " << " | Prob = " << Prob << " | chance = " << chance << endl;
     }
