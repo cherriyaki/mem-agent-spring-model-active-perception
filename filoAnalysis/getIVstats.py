@@ -2,7 +2,7 @@ import csv
 import numpy as np
 
 lengthsPerFiloIV = []
-with open('lensPerTimeStep.csv', encoding='utf-8-sig', newline='') as f:
+with open('lengthsOverTimeIV.csv', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
     filoCtr = 0
     firstLine = True
@@ -39,5 +39,5 @@ for filo in lengthsPerFiloIV:
 
 extArr = np.asarray(timePerExtPerFiloIV)
 retArr = np.asarray(timePerRetPerFiloIV)
-np.savetxt("extTimesIV.csv", extArr, delimiter=",")
-np.savetxt("retTimesIV.csv", retArr, delimiter=",")
+np.savetxt("extTimesIV.csv", extArr, fmt='%.3f', delimiter=',')
+np.savetxt("retTimesIV.csv", retArr, fmt='%.3f', delimiter=',')
