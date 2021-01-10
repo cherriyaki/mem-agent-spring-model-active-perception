@@ -12,7 +12,7 @@ latest_file = max(list_of_files, key=os.path.getctime)
 """
 Store file name and content
 """
-fileName = latest_file.replace(".txt", "")
+fileName = latest_file.split('/')[2].replace(".txt", "")
 f = open(latest_file, "r")
 content = f.read()
 f.close()
