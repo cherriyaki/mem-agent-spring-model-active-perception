@@ -3,7 +3,7 @@ import numpy as np
 from analysisFunctions import getFiloMetrics
 
 lengthsPerFiloIV = []
-with open('filoAnalysis/lengthsOverTimeIV.csv', encoding='utf-8-sig', newline='') as f:
+with open('filoAnalysis/invivo/lengthsOverTimeIV.csv', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
     filoCtr = 0
     firstLine = True
@@ -16,9 +16,8 @@ with open('filoAnalysis/lengthsOverTimeIV.csv', encoding='utf-8-sig', newline=''
         filoCtr = 0
 
 """GET METRICS"""
-minExtLength = 1 # for not recording filopodia from model that are too short
 TIME_STEP_IV = 30
-metrics = getFiloMetrics(lengthsPerFiloIV, TIME_STEP_IV, minExtLength)
+metrics = getFiloMetrics(lengthsPerFiloIV, TIME_STEP_IV)
 
 """SAVE METRIC DISTRIBUTIONS TO FILES"""
 maxLenArr = np.asarray(metrics["maxLen"])

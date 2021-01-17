@@ -1,5 +1,7 @@
 
-def getFiloMetrics(listOfLengths, TIME_STEP, MIN_MAX_LEN):
+def getFiloMetrics(listOfLengths, TIME_STEP):
+    # Constants
+    MIN_MAX_LEN = 1
     # Instantiate variables to store the output
     maxLengthList = []
     averageExtendingTimeList = []
@@ -32,7 +34,7 @@ def getFiloMetrics(listOfLengths, TIME_STEP, MIN_MAX_LEN):
             # Instantiate values for this filopodium
             timeTilMax = timeAtMax = timeTilZero = extDuration = extendedLength = retDuration = retractedLength = 0
             maxLenReached = retracting = False
-            
+
             """FOR EACH RECORDED LENGTH"""
             prev = 0
             for length in lengths:
@@ -47,16 +49,15 @@ def getFiloMetrics(listOfLengths, TIME_STEP, MIN_MAX_LEN):
                 # Filo has previously reached max length and is still on it
                 elif length == maxLen and maxLenReached:
                     timeAtMax += TIME_STEP
-                # Filo is now starting to retract
-                elif length < maxLen and maxLenReached and not retracting:
+                # Filo has just started to retract
+                elif length < maxLen and prev == maxLen:
                     timeAtMaxList.append(timeAtMax)
-                    retracting = True
-                    timeTilZero += TIME_STEP
-                # Filo is in retracting phrase
-                elif retracting and length > 0:
+                    
+                # Filo has not fully retracted
+                if length < maxLen and length > 0 and maxLenReached:
                     timeTilZero += TIME_STEP
                 # Filo has just completely retracted
-                elif length == 0 and prev != 0:
+                elif length == 0 and prev > 0:
                     timeTilZero += TIME_STEP
                     averageRetractingTimeList.append(timeTilZero/maxLen)
 
