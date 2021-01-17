@@ -2,6 +2,7 @@ import glob
 import os
 import csv
 from scipy import stats
+from analysisFunctions import getFiloMetrics
 
 """
 Get latest file with filopodia lengths over time
@@ -42,62 +43,66 @@ if len(lengthsPerFilo) == 0:
     exit()
 
 """
-Get lists of extension and retraction times
+Get lists for each metric
 """
-timePerExtPerFilo = []
-timePerRetPerFilo = []
-extDuration = extendedLength = retDuration = retractedLength = 0
+metrics = getFiloMetrics(list(lengthsPerFilo.values()), TIME_STEP)
 
-for filo, lengths in lengthsPerFilo.items(): 
-    # Only parse this filo's lengths if it has retracted fully, i.e. last length is 0
-    if lengths[-1] != 0:
-        continue
-    # Can't use len(filo) for some reason: "'float' object is not callable" error 
-    prev = 0
-    for length in lengths:
-        diff = length - prev
-        if diff > 0.05: # EXTENSION. Note: I look for >0.05 difference because the model tends to produce some 0.04xx difference numbers which wouldnt actually be recorded in real life as it's very small to the human eye
-            extDuration += TIME_STEP
-            extendedLength += diff
-        elif diff < 0: # RETRACTION
-            retDuration += TIME_STEP
-            retractedLength += abs(diff)
-        prev = length
-
-    # For this filo, add seconds taken to extend each micron. Do the same for retraction.
-    timePerExtPerFilo.append(extDuration / extendedLength)
-    # DEBUGGING
-    if extDuration / extendedLength > 65:
-        print ("ext", filo, extDuration, extendedLength)
-    if retractedLength > 0:
-        timePerRetPerFilo.append(retDuration / retractedLength)
-        # DEBUGGING
-        if retDuration / retractedLength > 90:
-            print ("ret", filo, retDuration, retractedLength)
-
-    # Reset values for next filo
-    extDuration = extendedLength = retDuration = retractedLength = 0
+maxLenArr = metrics["maxLen"]
+avgExtTimeArr = metrics["averageExtendingTime"]
+avgRetTimeArr = metrics["averageRetractingTime"]
+timeAtMaxArr = metrics["timeAtMax"]
+extArr = metrics["timePerExtension"]
+retArr = metrics["timePerRetraction"]
 
 """
-Get KS statistic for extension and retraction times
+Retrive invivo distributions for each metric
 """
-# Retrieve invivo data
+maxLensIV = []
+avgExtIV = []
+avgRetIV = []
+timeAtMaxIV = []
 extTimesIV = []
 retTimesIV = []
 
-with open('extTimesIV.csv', encoding='utf-8-sig', newline='') as f:
+with open('invivo/maxLensIV.csv', encoding='utf-8-sig', newline='') as f:
+    reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
+    for line in reader:
+        for value in line:
+            maxLensIV.append(value)
+with open('invivo/avgExtIV.csv', encoding='utf-8-sig', newline='') as f:
+    reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
+    for line in reader:
+        for value in line:
+            avgExtIV.append(value)
+with open('invivo/avgRetIV.csv', encoding='utf-8-sig', newline='') as f:
+    reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
+    for line in reader:
+        for value in line:
+            avgRetIV.append(value)
+with open('invivo/timeAtMaxIV.csv', encoding='utf-8-sig', newline='') as f:
+    reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
+    for line in reader:
+        for value in line:
+            timeAtMaxIV.append(value)
+with open('invivo/extTimesIV.csv', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
     for line in reader:
         for value in line:
             extTimesIV.append(value)
-
-with open('retTimesIV.csv', encoding='utf-8-sig', newline='') as f:
+with open('invivo/retTimesIV.csv', encoding='utf-8-sig', newline='') as f:
     reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
     for line in reader:
         for value in line: 
             retTimesIV.append(value)
 
-ksExt = stats.ks_2samp(timePerExtPerFilo, extTimesIV)
-ksRet = stats.ks_2samp(timePerRetPerFilo, retTimesIV)
+"""
+Get KS statistic for extension and retraction times
+"""
+ksMaxLen = stats.ks_2samp(maxLenArr, maxLensIV)
+ksAvgExt = stats.ks_2samp(avgExtTimeArr, avgExtIV)
+ksAvgRet = stats.ks_2samp(avgRetTimeArr, avgRetIV)
+ksTimeAtMax = stats.ks_2samp(timeAtMaxArr, timeAtMaxIV)
+ksExt = stats.ks_2samp(extArr, extTimesIV)
+ksRet = stats.ks_2samp(retArr, retTimesIV)
 print(ksExt)
 print(ksRet)
