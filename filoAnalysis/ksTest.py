@@ -18,8 +18,8 @@ def runAgent(params):
     os.system(f"./springAgent 1 0.9 0.04 2 {params[0]} {params[1]} 1 {params[2]} {params[3]} -1 -1")
 
 def getOutputContent(params):
-    fileName = f"filo_lengths_filvary_{params[0]}_epsilon_0.900000_VconcST0.040000_GRADIENT2_FILTIPMAX{params[1]}_tokenStrength1.000000_FILSPACING{params[2]}_actinMax{params[3]}_randFilExtend-1.000000_randFilRetract-1.000000_run_1_.txt"
-    fullPath = os.getcwd() + os.sep + "filoLengthFiles" + fileName
+    fileName = "filo_lengths_filvary_%.6f_epsilon_0.900000_VconcST0.040000_GRADIENT2_FILTIPMAX%.6f_tokenStrength1.000000_FILSPACING%.6f_actinMax%.6f_randFilExtend-1.000000_randFilRetract-1.000000_run_1_.txt" % (params[0],params[1],params[2],params[3])
+    fullPath = "filoLengthFiles" + os.sep + fileName
     f = open(fullPath, "r")
     content = f.read()
     f.close()
