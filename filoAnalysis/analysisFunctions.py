@@ -11,6 +11,7 @@ def getFiloMetrics(listOfLengths, TIME_STEP):
     timePerRetractionList = []
 
     """FOR EACH LIST OF LENGTHS"""
+    listCtr = 0 # TODO remove
     for lengthsList in listOfLengths: 
         # Each list might contain the recorded lengths of multiple filopodia, so we need to further split this list of lengths into separate lists for each filopodium
         individualFilopodia = []
@@ -20,6 +21,13 @@ def getFiloMetrics(listOfLengths, TIME_STEP):
                 individualFilopodia.append([])
             individualFilopodia[-1].append(lengthsList[i])
 
+        # TODO debugging remove
+        # if len(individualFilopodia) > 1 and individualFilopodia[-1][-1]!=0:
+            # print(individualFilopodia)
+            # print(listCtr)
+
+        # TODO remove
+        filoctr = 0
         """FOR EACH FILOPODIUM"""
         for lengths in individualFilopodia:
             # Only parse this filo's lengths if it has retracted fully, i.e. last length is 0
@@ -45,6 +53,9 @@ def getFiloMetrics(listOfLengths, TIME_STEP):
                 elif length == maxLen and not maxLenReached:
                     timeTilMax += TIME_STEP
                     averageExtendingTimeList.append(timeTilMax/maxLen)
+                    # # DEBUGGING TODO REMOVE
+                    # if timeTilMax/maxLen > 400:
+                    #     print("avgExt =" + str(timeTilMax/maxLen) + ",  list "+ str(listCtr) + " filoCtr " + str(filoctr))
                     maxLenReached = True
                 # Filo has previously reached max length and is still on it
                 elif length == maxLen and maxLenReached:
@@ -76,6 +87,10 @@ def getFiloMetrics(listOfLengths, TIME_STEP):
             timePerExtensionList.append(extDuration / extendedLength)
             if retractedLength > 0:
                 timePerRetractionList.append(retDuration / retractedLength)
+            
+            filoctr += 1
+
+        listCtr += 1
 
     output = {
         "maxLen": maxLengthList,
