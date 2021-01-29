@@ -21,11 +21,8 @@ class MyProblem(Problem):
     # Evaluates a stack of candidate solutions
     def _evaluate(self, X, out, *args, **kwargs):
         """
-        For solutions s0, s1, s2
-        And say f1 = [2,3,4]
+        For solutions s0, s1, s2, And say f1 = [2,3,4]
         This means for objective 1, s0's loss is 2, s1's loss is 3 and s2's loss is 4.
-        f2 = [1,4,2]
-        For objective 2, s0's loss is 1, s1's loss is 4 and s2's loss is 2.
 
         For each solution
             Run ksTest.py 
@@ -41,8 +38,6 @@ class MyProblem(Problem):
             f4.append(ksValues[3])
             
         out["F"] = np.column_stack([f1, f2, f3, f4])
-
-        
 
 # Thanks to pymoo's website for this code https://pymoo.org/customization/mixed_variable_problem.html
 mask = ["real", "int", "int", "int"]
@@ -65,15 +60,15 @@ mutation = MixedVariableMutation(mask, {
 })
 
 algorithm = NSGA2(
-    pop_size=40, # 40
-    n_offsprings=10, # 10
+    pop_size=5, # 40
+    n_offsprings=5, # 10
     sampling=sampling,
     crossover=crossover,
     mutation=mutation,
     eliminate_duplicates=True
 )
 
-termination = get_termination("n_gen", 40) # 40
+termination = get_termination("n_gen", 2) # 40
 
 res = minimize(problem,
                algorithm,
@@ -82,7 +77,13 @@ res = minimize(problem,
                save_history=True,
                verbose=True)
 
+output = ""
 for i in range(len(res.X)):
-    print("SOLUTION ("+str(i)+")")
-    print("Solution: %s" % res.X)
-    print("Loss values: %s" % res.F)
+    output += "--- SOLUTION ("+str(i)+") \n"
+    output += "Solution: %s" % res.X + "\n"
+    output += "Loss values: %s" % res.F + "\n"
+
+text_file = open("filoAnalysis/mooOutput.txt", "w")
+text_file.write(output)
+text_file.close()
+print(output)

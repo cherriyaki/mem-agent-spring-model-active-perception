@@ -3,6 +3,9 @@ import invivoMetrics as iv
 from scipy import stats
 from analysisFunctions import getFiloMetrics
 
+#TODO might need to make file param or sth
+user = "limc"
+
 """"""
 def getKsValues(params):
     TIME_STEP = 15
