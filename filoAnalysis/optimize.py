@@ -7,42 +7,75 @@ from pymoo.operators.mixed_variable_operator import MixedVariableSampling, Mixed
 from pymoo.factory import get_termination
 from pymoo.optimize import minimize
 
+#--
+# Parse command line arguments for the parameters to be optimized 
+# and the lower and upper bound of each
+#--
+lowerBounds = {}
+upperBounds = {}
+objectiveNames = []
+try:
+    opts, args = getopt.getopt(sys.argv,,["filvary=","filtipmax=","filspacing=","actinmax=","objectives="])
+except getopt.GetoptError:
+    print 'optimize.py --filvary "<lowerBound> <upperBound>" --filtipmax "<lowerBound> <upperBound>" --filspacing "<lowerBound> <upperBound>" --actinmax "<lowerBound> <upperBound>" --objectives "maxLen averageExtendingTime averageRetractingTime timeAtMax" '
+    sys.exit(2)
+for opt, arg in opts:
+    if opt ==  "--filvary":
+        bounds = map(float, arg.split())
+        lowerBounds["filvary"] = bounds[0]
+        upperBounds["filvary"] = bounds[1]
+    elif opt ==  "--filtipmax":
+        bounds = map(int, arg.split())
+        lowerBounds["filtipmax"] = bounds[0]
+        upperBounds["filtipmax"] = bounds[1]
+    elif opt ==  "--filspacing":
+        bounds = map(int, arg.split())
+        lowerBounds["filspacing"] = bounds[0]
+        upperBounds["filspacing"] = bounds[1]
+    elif opt ==  "--actinmax":
+        bounds = map(int, arg.split())
+        lowerBounds["actinmax"] = bounds[0]
+        upperBounds["actinmax"] = bounds[1]
+    elif opt == "--objectives":
+        objectiveNames = arg.split()
+
+mask = []
+for param in lowerBounds.keys():
+    if param == "filvary":
+        mask.append("real")
+    else:
+        mask.append("int")
+
 class MyProblem(Problem):
 
     # The parameters are filVary, filTipMax, filSpacing, actinMax
     def __init__(self):
-        super().__init__(n_var=4,
+        super().__init__(n_var=len(lowerBounds),
                          n_obj=4,
                         #  n_constr=2,
-                         xl=np.array([0.1,1,1,500]),
-                         xu=np.array([2.0,15,4,600])
-                         )
+                         xl=np.array(lowerBounds.values()),
+                         xu=np.array(upperBounds.values())
+        )
 
     # Evaluates a stack of candidate solutions
     def _evaluate(self, X, out, *args, **kwargs):
         """
         For solutions s0, s1, s2, And say f1 = [2,3,4]
         This means for objective 1, s0's loss is 2, s1's loss is 3 and s2's loss is 4.
-
-        For each solution
-            Run ksTest.py 
-            For each objective i
-                f[i].append(ksValues[i])
         """
-        f1, f2, f3, f4 = [], [], [], []
+        f = {}
+        for obj in objectiveNames:
+            f[obj] = {}
         for solution in X:
             ksValues = ks.getKsValues(solution)
-            f1.append(ksValues[0])
-            f2.append(ksValues[1])
-            f3.append(ksValues[2])
-            f4.append(ksValues[3])
+            for obj, val in ksValues.items():
+                f[obj].append(val)
             
-        out["F"] = np.column_stack([f1, f2, f3, f4])
-
-# Thanks to pymoo's website for this code https://pymoo.org/customization/mixed_variable_problem.html
-mask = ["real", "int", "int", "int"]
+        out["F"] = np.column_stack(np.array(f.values()))
 
 problem = MyProblem()
+
+# Thanks to pymoo's website for this code https://pymoo.org/customization/mixed_variable_problem.html
 
 sampling = MixedVariableSampling(mask, {
     "real": get_sampling("real_random"),
@@ -60,15 +93,15 @@ mutation = MixedVariableMutation(mask, {
 })
 
 algorithm = NSGA2(
-    pop_size=5, # 40
-    n_offsprings=5, # 10
+    pop_size=40, # 40
+    n_offsprings=10, # 10
     sampling=sampling,
     crossover=crossover,
     mutation=mutation,
     eliminate_duplicates=True
 )
 
-termination = get_termination("n_gen", 2) # 40
+termination = get_termination("n_gen", 40) # 40
 
 res = minimize(problem,
                algorithm,
@@ -80,8 +113,8 @@ res = minimize(problem,
 output = ""
 for i in range(len(res.X)):
     output += "--- SOLUTION ("+str(i)+") \n"
-    output += "Solution: %s" % res.X + "\n"
-    output += "Loss values: %s" % res.F + "\n"
+    output += "Solution: %s" % res.X[i] + "\n"
+    output += "Loss values: %s" % res.F[i] + "\n"
 
 text_file = open("filoAnalysis/mooOutput.txt", "w")
 text_file.write(output)

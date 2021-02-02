@@ -68,6 +68,6 @@ def getArrayOfKsValues(metrics):
     ksAvgExt = stats.ks_2samp(metrics["averageExtendingTime"], iv.avgExtIV)
     ksAvgRet = stats.ks_2samp(metrics["averageRetractingTime"], iv.avgRetIV)
     ksTimeAtMax = stats.ks_2samp(metrics["timeAtMax"], iv.timeAtMaxIV)
-    return [ksMaxLen.statistic, ksAvgExt.statistic, ksAvgRet.statistic, ksTimeAtMax.statistic]
+    return {"maxLen": ksMaxLen.statistic, "averageExtendingTime": ksAvgExt.statistic, "averageRetractingTime": ksAvgRet.statistic, "timeAtMax": ksTimeAtMax.statistic}
 
 
