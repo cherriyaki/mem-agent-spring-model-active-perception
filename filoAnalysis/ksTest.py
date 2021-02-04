@@ -50,7 +50,7 @@ def getListsOfLengths(content):
     # Get list of lengths for each filo
     lines = content.split("\n")
     for line in lines:
-        if line != '': 
+        if line.strip() not in ['\n', '\r\n', '']: 
             elements = line.split(",")
             filo = elements[0]
             length = float(elements[1])
