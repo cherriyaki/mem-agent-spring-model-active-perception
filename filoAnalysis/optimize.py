@@ -6,6 +6,8 @@ from pymoo.factory import get_sampling, get_crossover, get_mutation
 from pymoo.operators.mixed_variable_operator import MixedVariableSampling, MixedVariableMutation, MixedVariableCrossover
 from pymoo.factory import get_termination
 from pymoo.optimize import minimize
+import getopt
+import sys
 
 #--
 # Parse command line arguments for the parameters to be optimized 
@@ -15,25 +17,25 @@ lowerBounds = {}
 upperBounds = {}
 objectiveNames = []
 try:
-    opts, args = getopt.getopt(sys.argv,,["filvary=","filtipmax=","filspacing=","actinmax=","objectives="])
+    opts, args = getopt.getopt(sys.argv[1:],"",["filvary=","filtipmax=","filspacing=","actinmax=","objectives="])
 except getopt.GetoptError:
-    print 'optimize.py --filvary "<lowerBound> <upperBound>" --filtipmax "<lowerBound> <upperBound>" --filspacing "<lowerBound> <upperBound>" --actinmax "<lowerBound> <upperBound>" --objectives "maxLen averageExtendingTime averageRetractingTime timeAtMax" '
+    print('optimize.py --filvary "<lowerBound> <upperBound>" --filtipmax "<lowerBound> <upperBound>" --filspacing "<lowerBound> <upperBound>" --actinmax "<lowerBound> <upperBound>" --objectives "maxLen averageExtendingTime averageRetractingTime timeAtMax"')
     sys.exit(2)
 for opt, arg in opts:
     if opt ==  "--filvary":
-        bounds = map(float, arg.split())
+        bounds = list(map(float, arg.split()))
         lowerBounds["filvary"] = bounds[0]
         upperBounds["filvary"] = bounds[1]
     elif opt ==  "--filtipmax":
-        bounds = map(int, arg.split())
+        bounds = list(map(int, arg.split()))
         lowerBounds["filtipmax"] = bounds[0]
         upperBounds["filtipmax"] = bounds[1]
     elif opt ==  "--filspacing":
-        bounds = map(int, arg.split())
+        bounds = list(map(int, arg.split()))
         lowerBounds["filspacing"] = bounds[0]
         upperBounds["filspacing"] = bounds[1]
     elif opt ==  "--actinmax":
-        bounds = map(int, arg.split())
+        bounds = list(map(int, arg.split()))
         lowerBounds["actinmax"] = bounds[0]
         upperBounds["actinmax"] = bounds[1]
     elif opt == "--objectives":
@@ -45,16 +47,15 @@ for param in lowerBounds.keys():
         mask.append("real")
     else:
         mask.append("int")
-
 class MyProblem(Problem):
 
     # The parameters are filVary, filTipMax, filSpacing, actinMax
     def __init__(self):
         super().__init__(n_var=len(lowerBounds),
-                         n_obj=4,
+                         n_obj=len(objectiveNames),
                         #  n_constr=2,
-                         xl=np.array(lowerBounds.values()),
-                         xu=np.array(upperBounds.values())
+                         xl=np.array(list(lowerBounds.values())),
+                         xu=np.array(list(upperBounds.values()))
         )
 
     # Evaluates a stack of candidate solutions
@@ -65,13 +66,15 @@ class MyProblem(Problem):
         """
         f = {}
         for obj in objectiveNames:
-            f[obj] = {}
+            f[obj] = []
+        print(f)
         for solution in X:
             ksValues = ks.getKsValues(solution)
             for obj, val in ksValues.items():
-                f[obj].append(val)
+                if obj in objectiveNames: # only add the loss values for objectives specified by user
+                    f[obj].append(val)
             
-        out["F"] = np.column_stack(np.array(f.values()))
+        out["F"] = np.column_stack(np.array(list(f.values())))
 
 problem = MyProblem()
 
@@ -93,15 +96,15 @@ mutation = MixedVariableMutation(mask, {
 })
 
 algorithm = NSGA2(
-    pop_size=40, # 40
-    n_offsprings=10, # 10
+    pop_size=80, # 40
+    n_offsprings=20, # 10
     sampling=sampling,
     crossover=crossover,
     mutation=mutation,
     eliminate_duplicates=True
 )
 
-termination = get_termination("n_gen", 40) # 40
+termination = get_termination("n_gen", 80) # 40
 
 res = minimize(problem,
                algorithm,
