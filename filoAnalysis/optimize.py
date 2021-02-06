@@ -8,6 +8,7 @@ from pymoo.factory import get_termination
 from pymoo.optimize import minimize
 import getopt
 import sys
+import os
 
 #--
 # Parse command line arguments for the parameters to be optimized 
@@ -47,6 +48,7 @@ for param in lowerBounds.keys():
         mask.append("real")
     else:
         mask.append("int")
+
 class MyProblem(Problem):
 
     # The parameters are filVary, filTipMax, filSpacing, actinMax
@@ -67,7 +69,6 @@ class MyProblem(Problem):
         f = {}
         for obj in objectiveNames:
             f[obj] = []
-        print(f)
         for solution in X:
             ksValues = ks.getKsValues(solution)
             for obj, val in ksValues.items():
@@ -96,8 +97,8 @@ mutation = MixedVariableMutation(mask, {
 })
 
 algorithm = NSGA2(
-    pop_size=80, # 40
-    n_offsprings=20, # 10
+    pop_size=40, # 40
+    n_offsprings=10, # 10
     sampling=sampling,
     crossover=crossover,
     mutation=mutation,
@@ -119,7 +120,12 @@ for i in range(len(res.X)):
     output += "Solution: %s" % res.X[i] + "\n"
     output += "Loss values: %s" % res.F[i] + "\n"
 
-text_file = open("filoAnalysis/mooOutput.txt", "w")
+text_file = open(os.path.join(getRoot(),"filoAnalysis/mooOutput.txt"), "w")
 text_file.write(output)
 text_file.close()
 print(output)
+
+def getRoot():
+    thisPath = os.path.dirname(__file__)
+    root = os.path.join(thisPath, '../')
+    return root

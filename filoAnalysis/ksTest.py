@@ -14,15 +14,18 @@ def getKsValues(params):
     TIME_STEP = 15
     runAgent(params)
     content = getOutputContent(params)
-    # TODO ensure content isn't empty
+    # if content is empty, return maximum losses
+    if content.strip() in ['\n', '\r\n', '']:
+        return {"maxLen": 1, "averageExtendingTime": 1, "averageRetractingTime": 1, "timeAtMax": 1}
     lengthsPerFilo = getListsOfLengths(content)
     metrics = getFiloMetrics(list(lengthsPerFilo.values()), TIME_STEP)
     return getArrayOfKsValues(metrics)
     
 def runAgent(params):
-    os.system("./buildSpringAgent.sh --analysis \"filo_lengths\"")
+    root = getRoot()
+    subprocess.run(f"{root}./buildSpringAgent.sh --analysis \"filo_lengths\"", shell=True)
     # os.system(f"./springAgent 1 0.9 0.04 2 {params[0]} {params[1]} 1 {params[2]} {params[3]} -1 -1")
-    os.system("./springAgent 1 0.9 0.04 2 %f %f 1 %i %f -1 -1" % (params[0], params[1], params[2], params[3]))
+    subprocess.run(f"{root}./springAgent 1 0.9 0.04 2 %f %f 1 %i %f -1 -1" % (params[0], params[1], params[2], params[3]), shell=True)
 #     campScriptOutput = subprocess.check_output(f"./campScript.sh --analysis \"filo_lengths\" --runs 1 --vary1 filconstnorm \"{params[0]}\" --vary2 filtipmax \"{params[1]}\" --filspacing \"{params[2]}\" --actinmax \"{params[3]}\"")
 #     jobId = subprocess.check_output(f"echo {campScriptOutput} | awk -F, '$1 == \"job_id\"{print $2}'")
 #     s = sched.scheduler(time.time, time.sleep)
@@ -36,7 +39,7 @@ def runAgent(params):
 
 def getOutputContent(params):
     fileName = "filo_lengths_filvary_%f_epsilon_0.900000_VconcST0.040000_GRADIENT2_FILTIPMAX%f_tokenStrength1.000000_FILSPACING%i_actinMax%f_randFilExtend-1.000000_randFilRetract-1.000000_run_1_.txt" % (params[0],params[1],params[2],params[3])
-    fullPath = "filoLengthFiles" + os.sep + fileName
+    fullPath = os.path.join(getRoot(),"filoLengthFiles" + os.sep + fileName)
     f = open(fullPath, "r")
     content = f.read()
     f.close()
@@ -70,4 +73,8 @@ def getArrayOfKsValues(metrics):
     ksTimeAtMax = stats.ks_2samp(metrics["timeAtMax"], iv.timeAtMaxIV)
     return {"maxLen": ksMaxLen.statistic, "averageExtendingTime": ksAvgExt.statistic, "averageRetractingTime": ksAvgRet.statistic, "timeAtMax": ksTimeAtMax.statistic}
 
+def getRoot():
+    thisPath = os.path.dirname(__file__)
+    root = os.path.join(thisPath, '../')
+    return root
 
