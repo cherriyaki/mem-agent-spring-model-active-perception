@@ -22,6 +22,11 @@ try:
 except getopt.GetoptError:
     print('optimize.py --filvary "<lowerBound> <upperBound>" --filtipmax "<lowerBound> <upperBound>" --filspacing "<lowerBound> <upperBound>" --actinmax "<lowerBound> <upperBound>" --objectives "maxLen averageExtendingTime averageRetractingTime timeAtMax"')
     sys.exit(2)
+
+if len(opts) == 0:
+    print('Usage: optimize.py --filvary "<lowerBound> <upperBound>" --filtipmax "<lowerBound> <upperBound>" --filspacing "<lowerBound> <upperBound>" --actinmax "<lowerBound> <upperBound>" --objectives "maxLen averageExtendingTime averageRetractingTime timeAtMax"')
+    sys.exit(2)
+
 for opt, arg in opts:
     if opt ==  "--filvary":
         bounds = list(map(float, arg.split()))
