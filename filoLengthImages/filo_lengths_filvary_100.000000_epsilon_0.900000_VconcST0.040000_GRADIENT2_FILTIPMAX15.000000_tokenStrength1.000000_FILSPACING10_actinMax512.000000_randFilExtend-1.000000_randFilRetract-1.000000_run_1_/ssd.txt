@@ -1,3 +1,0 @@
-Sum of squared distances between model and invivo results: 
- CumSum of ext time probs: SSD = 12.232416 
- CumSum of ret time probs: SSD = 18.341117
