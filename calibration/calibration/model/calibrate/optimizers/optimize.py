@@ -1,6 +1,9 @@
-from optimize import Optimizer
+class Optimizer:
+    def _buildAgent(self, analysis):
+        # try buidl agent
+        pass
 
-class PymooOptimizer(Optimizer):
+    @abstractmethods
     def setParams(self, params):
         pass
 

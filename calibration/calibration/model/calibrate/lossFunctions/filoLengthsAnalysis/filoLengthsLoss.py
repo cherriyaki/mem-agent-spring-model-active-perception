@@ -10,7 +10,7 @@ class FiloLengthLossFunction(LossFunction):
         output = self._getOutputContent(candidate)
         lengthsPerFilo = self._splitByFilo(output)
         featureDistributions = self._getFeatureDistri(lengthsPerFilo)
-        return self._getKsValues(featureDistributions)
+        return self._getKsValues(featureDistributions)        
 
     def _splitByFilo(self, content):
         pass
