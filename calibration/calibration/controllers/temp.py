@@ -1,4 +1,8 @@
 # error handling: check inputs
 
-# save UI inputs to a json with an id
-# tell camp script in model to run with id as arg
+#-- upon 'calibrate' button clicked
+# popup asking if they're sure they wanna submit. remind to double check typed input like user, email
+# create unique session id
+# create log file w id
+# save UI inputs to a json with session id
+# run camp script in model with args
