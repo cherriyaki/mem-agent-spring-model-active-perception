@@ -1,0 +1,4 @@
+2021-02-21 00:08:54 INFO	campScript.sh:79 - Session 1 started. Input file: calibration/data/inputHistory/input_1.json
+2021-02-21 00:08:54 INFO	campScript.sh:81 - Result file created: calibration/output/calibrationResults/result_1.txt
+2021-02-21 00:08:54 DEBUG	campScript.sh:86 - Attempting to rsync agent files to CAMP...
+2021-02-21 00:08:54 ERROR	campScript.sh:88 - rsync failed: Failed to move files to CAMP

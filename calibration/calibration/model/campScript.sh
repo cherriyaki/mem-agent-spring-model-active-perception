@@ -8,18 +8,13 @@ while [[ $# -gt 0 ]]
 do
 key="$1"
 case $key in
-    --user) 
-    user="$2"
-    shift # past argument
-    shift # past value
-    ;;
     --id)
     id="$2"
     shift # past argument
     shift # past value
     ;;
-    --analysis)
-    analysis="$2"
+    --user)
+    user="$2"
     shift # past argument
     shift # past value
     ;;
@@ -28,43 +23,73 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    *)    # unknown option
-    POSITIONAL+=("$1") # save it in an array for later
+    --analysis)
+    analysis="$2"
     shift # past argument
+    shift # past value
     ;;
 esac
 done
 
-#-- Paths
+#-- Local Paths
+THIS_FILE=$(basename "${BASH_SOURCE[0]}")
+ROOT=$(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd)     # Thanks to https://codefather.tech/blog/bash-get-script-directory/ for this line of code
+input_file="$ROOT/calibration/data/inputHistory/input_$id.json"
+log_file="$ROOT/calibration/logs/log_$id.log"
+result_file="$ROOT/calibration/output/calibrationResults/result_$id.txt"
+config="$ROOT/calibration/calibration/config.py"
+
 camp_home="/camp/lab/bentleyk/home/shared/$user"
 session_dir="APSingleCodebase/session_$id"
-calibration_dir="calibration"
-slurm_out_camp="$camp_home/$session_dir/$calibration_dir/output/slurm"
-log_file="$camp_home/$session_dir/$calibration_dir/logs/log_$id.log"
+slurm_out_camp="$camp_home/$session_dir/calibration/output/slurm"
 
 #-- For debugging
-echo "
-user $user, id $id, analysis $analysis, email $email
-camp home $camp_home, session dir $session_dir, calibration dir $calibration_dir, slurm out $slurm_out_camp
-"
+# echo "
+# user $user, id $id, analysis $analysis, email $email
+# agent $ROOT, this $THIS_FILE, camp home $camp_home, session dir $session_dir, slurm out $slurm_out_camp, log $log_file,  result $result_file
+# "
 
-#-- Error handling function
-# Thanks to https://stackoverflow.com/a/50265513 for this code
-exit_if_error() {
-  local exit_code=$1
-  shift
-  [[ $exit_code ]] &&               # do nothing if no error code passed
-    ((exit_code != 0)) && {         # do nothing if error code is 0
-      printf 'ERROR: %s\n' "$@" > $log_file  # save to log
-      exit "$exit_code"             
-    }
+#-- Functions
+#- Log function:
+# Arguments: $1 - type, $2 - line number, $3 - message
+write_log() {
+  local log_type=$1
+  local line=$2
+  shift; shift;
+  local message=$(printf '%s' "$@")
+  PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter $id $log_type $THIS_FILE $line "$message"
 }
 
-# TODO add file extensions
-rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ \
-|| exit_if_error $? "rsync failed: Failed to move files to CAMP"
+#- Error handling function
+# Adapted from https://stackoverflow.com/a/50265513
+exit_if_error() {
+  local exit_code=$1
+  local line=$2
+  shift; shift;
+  if [ $exit_code != 0 ]
+  then
+    write_log "ERROR" $line "$(printf '%s' "$@")"  # save to log
+    exit "$exit_code"     
+            # TODO NEW how to handle this exit status in the python code?
+  fi
+}
 
-# TODO add pip installs
+#-- Create files
+touch log_file
+write_log "INFO" $LINENO "Session $id started. Input file: calibration/data/inputHistory/input_$id.json"
+touch result_file
+write_log "INFO" $LINENO "Result file created: calibration/output/calibrationResults/result_$id.txt"
+
+#-- Main activity
+cd $ROOT
+# TODO NEW add file extensions
+write_log "DEBUG" $LINENO "Attempting to rsync agent files to CAMP..."
+rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ \
+|| exit_if_error $? $LINENO "rsync failed: Failed to move files to CAMP"
+
+# TODO NEW add pip installs
+# TODO NEW add logging in below commands? 
+write_log "DEBUG" $LINENO "Attempting to ssh to CAMP..."
 ssh $user@login.camp.thecrick.org \
 "
 cd $camp_home/APSingleCodebase;
@@ -83,6 +108,6 @@ sbatch --job-name=calibration_$id \\
 PYTHONPATH=calibration python3 -m calibration.model.calibrate $id;
 exit;
 " \
-|| exit_if_error $? "ssh failed: Failed to ssh into CAMP"
+|| exit_if_error $? $LINENO "ssh failed: Failed to ssh into CAMP"
 
 # sbatch $calibration_dir/$calib_model_dir/calibrateScript.sh --id $id --email $email;
