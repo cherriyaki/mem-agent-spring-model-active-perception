@@ -1,8 +1,4 @@
 class Optimizer:
-    def _buildAgent(self, analysis):
-        # try buidl agent
-        pass
-
     @abstractmethods
     def setParams(self, params):
         pass

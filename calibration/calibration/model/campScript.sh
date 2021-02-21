@@ -34,10 +34,8 @@ done
 #-- Local Paths
 THIS_FILE=$(basename "${BASH_SOURCE[0]}")
 ROOT=$(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd)     # Thanks to https://codefather.tech/blog/bash-get-script-directory/ for this line of code
-input_file="$ROOT/calibration/data/inputHistory/input_$id.json"
 log_file="$ROOT/calibration/logs/log_$id.log"
 result_file="$ROOT/calibration/output/calibrationResults/result_$id.txt"
-config="$ROOT/calibration/calibration/config.py"
 
 camp_home="/camp/lab/bentleyk/home/shared/$user"
 session_dir="APSingleCodebase/session_$id"
@@ -75,9 +73,9 @@ exit_if_error() {
 }
 
 #-- Create files
-touch log_file
+touch $log_file
 write_log "INFO" $LINENO "Session $id started. Input file: calibration/data/inputHistory/input_$id.json"
-touch result_file
+touch $result_file
 write_log "INFO" $LINENO "Result file created: calibration/output/calibrationResults/result_$id.txt"
 
 #-- Main activity
@@ -87,6 +85,7 @@ write_log "DEBUG" $LINENO "Attempting to rsync agent files to CAMP..."
 rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ \
 || exit_if_error $? $LINENO "rsync failed: Failed to move files to CAMP"
 
+# TODO NEW test ssh part
 # TODO NEW add pip installs
 # TODO NEW add logging in below commands? 
 write_log "DEBUG" $LINENO "Attempting to ssh to CAMP..."

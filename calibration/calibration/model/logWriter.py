@@ -8,7 +8,7 @@ def main():
     line = _format(time, args)
     logFile = _getLogFile(args["ID"])
     try:
-        with open(logFile, 'a') as f:       # open file in append mode
+        with open(logFile, 'a') as f:   # open file in append mode
             f.write(line)
     except (IOError, OSError):
         print('could not open file ' + logFile)
