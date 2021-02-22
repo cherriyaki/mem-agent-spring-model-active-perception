@@ -55,7 +55,7 @@ write_log() {
   local line=$2
   shift; shift;
   local message=$(printf '%s' "$@")
-  PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter $id $log_type $THIS_FILE $line "$message"
+  PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter --id $id --line "$log_type\n$THIS_FILE\n$line\n$message"
 }
 
 #- Error handling function
@@ -63,12 +63,14 @@ write_log() {
 exit_if_error() {
   local exit_code=$1
   local line=$2
+  local trace=$3
   shift; shift;
   if [ $exit_code != 0 ]
   then
     write_log "ERROR" $line "$(printf '%s' "$@")"  # save to log
+    PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter --id $id --exc "$trace"
     exit "$exit_code"     
-            # TODO NEW how to handle this exit status in the python code?
+            # TODO NEW how to handle this exit status in the python viewcontroller?
   fi
 }
 
@@ -82,14 +84,14 @@ write_log "INFO" $LINENO "Result file created: calibration/output/calibrationRes
 cd $ROOT
 # TODO NEW add file extensions
 write_log "DEBUG" $LINENO "Attempting to rsync agent files to CAMP..."
-rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ \
-|| exit_if_error $? $LINENO "rsync failed: Failed to move files to CAMP"
+trace=$(rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ 2>&1) \
+|| exit_if_error $? $LINENO "$trace\n" "rsync failed: Failed to move files to CAMP" 
 
 # TODO NEW test ssh part
 # TODO NEW add pip installs
 # TODO NEW add logging in below commands? 
 write_log "DEBUG" $LINENO "Attempting to ssh to CAMP..."
-ssh $user@login.camp.thecrick.org \
+trace=$(ssh $user@login.camp.thecrick.org \
 "
 cd $camp_home/APSingleCodebase;
 ml Python/3.8.2-GCCcore-9.3.0;
@@ -106,7 +108,7 @@ sbatch --job-name=calibration_$id \\
 --exclusive \\
 PYTHONPATH=calibration python3 -m calibration.model.calibrate $id;
 exit;
-" \
-|| exit_if_error $? $LINENO "ssh failed: Failed to ssh into CAMP"
+" 2>&1)  \
+|| exit_if_error $? $LINENO "$trace\n" "ssh failed: Failed to ssh into CAMP" 
 
 # sbatch $calibration_dir/$calib_model_dir/calibrateScript.sh --id $id --email $email;

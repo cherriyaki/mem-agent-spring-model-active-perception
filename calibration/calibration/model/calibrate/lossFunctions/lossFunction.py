@@ -1,9 +1,9 @@
 
-from .. import config
+from abc import abstractmethod
 
 class LossFunction:
-    def __init__(self, analysis):
-        self.analysis = analysis
+    def __init__(self, id_):
+        self.id = id_
 
     def _runAgent(self, candidate):
         # try: run agent with candidate args

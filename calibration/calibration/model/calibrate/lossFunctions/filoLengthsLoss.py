@@ -1,13 +1,10 @@
-from ... import config
-from .. import lossFunction.LossFunction
+from .lossFunction import LossFunction
 
 class FiloLengthLossFunction(LossFunction):
-    def __init__(self):
-        super(FiloLengthLossFunction, self).__init__("filo_lengths")
 
     def getLosses(self, candidate):
-        self._runAgent(candidate)
-        output = self._getOutputContent(candidate)
+        super()._runAgent(candidate)
+        output = super()._getOutputContent(candidate)
         lengthsPerFilo = self._splitByFilo(output)
         featureDistributions = self._getFeatureDistri(lengthsPerFilo)
         return self._getKsValues(featureDistributions)        
@@ -44,7 +41,7 @@ class FeaturesExtractor:
         self._addToDistributions(lengthsPerFilo)
         return self._getOutput()
 
-    def _addToDistributions(self, lengthsPerFilo)
+    def _addToDistributions(self, lengthsPerFilo):
         listCtr = 0
         for lengths in lengthsPerFilo:
             indivFilos = self._breakIntoFilos(lengths)

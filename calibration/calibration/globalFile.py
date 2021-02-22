@@ -1,16 +1,13 @@
-"""
-params = {}
-lib = "pymoo"
-algo = "NSGA2"
-analysis = "filo_lengths"
-objectives = []
-"""
 import os, sys
+from inspect import getframeinfo
 
 TIME_STEP = 15
 
 defaultAgentParams = None
 outputFileNameFormat = None
+
+def lineNo(curFrame):
+    return getframeinfo(curFrame).lineno
 
 def getRoot():
     cwd = os.getcwd()

@@ -1,40 +1,64 @@
-from input import Input
-import lossFunctions
-import optimizers
+import os, sys
+import json 
+from calibration import globalFile
+from .lossFunctions.filoLengthsLoss import FiloLengthLossFunction
+from .optimizers.pymooOpt import PymooOptimizer
+from calibration.model import logWriter
+from inspect import currentframe, getframeinfo
+import traceback
 
 class Calibrator:
-    def __init__(self, id):
-        # with id as arg
-        self.input = Input()
-        self._setInput(id)
-        self._setup()
+    def __init__(self, id_):
+        self.id = id_
 
     def run(self):
+        self.input = self._getInputFromJson()
+        self._setup()
         self.opt.optimize()
 
-    def _setInput(self, id):
-        # init jsonconverter
-        # get data as a dict
-        # set Input fields
-        pass
+    def _getInputFromJson(self):
+        file = self._getJsonFile()
+        logWriter.write([self.id, "DEBUG", os.path.basename(__file__), globalFile.lineNo(currentframe()), "Opening input JSON file..."])
+        try:
+            with open(file) as f: 
+                data = json.load(f) 
+        except:
+            tb = traceback.format_exc()
+            logWriter.write([self.id, "ERROR", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Failed to open or load {file}"])
+            logWriter.write(exc=tb)
+            raise       # Throw the caught exception
+        return data
+
+    def _getJsonFile(self):
+        root = globalFile.getRoot()
+        file = os.path.join(root, f"calibration/data/inputHistory/input_{self.id}.json")
+        return file
 
     def _setup(self):
-        self.lossFn = self._getLossFn(self.input.getAnalysis)
-        self.opt = self._getOptimizer(self.input.lib)
+        self._setLossFn(self.input["analysis"])
+        self._setOptimizer(self.input["lib"])
         self._configureOpt()
 
-    def _getLossFn(self, analysis):
-        # check analysis type
-        # return the corresponding lossfn class
-        pass
+    def _setLossFn(self, analysis):
+        self.lossFn = FiloLengthLossFunction(self.id)      # Default
+        # Add code here to set a different loss function
+        logWriter.write([self.id, "INFO", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Set loss function as {type(self.lossFn).__name__}"])
 
-    def _getOptimizer(self, lib):
-        # init opt class with lib name
-        #  return
-        pass
+    def _setOptimizer(self, lib):
+        self.opt = PymooOptimizer(self.id)     # Default
+        # Add code here to set a differentt optimizer library
+        logWriter.write([self.id, "INFO", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Set optimizer lib as {type(self.opt).__name__}"])
 
     def _configureOpt(self):
-        # set self.input.params, self.input.objectives, self.lossFn, self.input.algo
-        pass
+        self.opt.setParams(self.input["params"])
+        self.opt.setObjectives(self.input["objectives"])
+        self.opt.setLossFn(self.lossFn)
+        self.opt.setAlgo(self.input["algorithm"])
 
-    
+    # @staticmethod
+    # def _lineNo():
+    #     return getframeinfo(currentframe()).lineno
+
+# if __name__ == '__main__':
+#     cal = Calibrator(sys.argv[1])
+#     cal.run()

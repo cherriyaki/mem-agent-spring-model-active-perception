@@ -1,4 +1,4 @@
-from optimize import Optimizer
+from .optimize import Optimizer
 
 class PymooOptimizer(Optimizer):
     def setAnalysis(self, analysis):
@@ -24,7 +24,6 @@ class PymooOptimizer(Optimizer):
 
     def optimize(self):
         self._setupProblem()
-        self._buildAgent(self.analysis)
         # call minimize()
         # save result
         pass
@@ -32,4 +31,6 @@ class PymooOptimizer(Optimizer):
     def _setupProblem(self):
         # def init
         # def evaluate
+        pass
+
     
