@@ -1,2 +1,9 @@
 2021-02-22 18:30:03 DEBUG	calibrator.py:21 - Opening input JSON file...
 2021-02-22 18:30:03 ERROR	calibrator.py:27 - Failed to open or load /Users/cherrylim/Code/spring-agent/calibration/data/inputHistory/input_2.json
+2021-02-23 13:38:38 DEBUG	calibrator.py:21 - Opening input JSON file...
+2021-02-23 13:38:38 ERROR	calibrator.py:27 - Failed to open or load /Users/cherrylim/Code/spring-agent/calibration/data/inputHistory/input_2.json
+Traceback (most recent call last):
+  File "/Users/cherrylim/Code/spring-agent/calibration/calibration/model/calibrate/calibrator.py", line 23, in _getInputFromJson
+    with open(file) as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/cherrylim/Code/spring-agent/calibration/data/inputHistory/input_2.json'
+

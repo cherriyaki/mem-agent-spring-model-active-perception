@@ -1,7 +1,7 @@
 import os, sys
 import json 
 from calibration import globalFile
-from .lossFunctions.filoLengthsLoss import FiloLengthLossFunction
+from .lossFunctions.filoLengthsLoss import FiloLengthsLoss
 from .optimizers.pymooOpt import PymooOptimizer
 from calibration.model import logWriter
 from inspect import currentframe, getframeinfo
@@ -18,14 +18,14 @@ class Calibrator:
 
     def _getInputFromJson(self):
         file = self._getJsonFile()
-        logWriter.write([self.id, "DEBUG", os.path.basename(__file__), globalFile.lineNo(currentframe()), "Opening input JSON file..."])
+        logWriter.write(id=self.id, line=["DEBUG", os.path.basename(__file__), globalFile.lineNo(currentframe()), "Loading input JSON file..."])
         try:
             with open(file) as f: 
                 data = json.load(f) 
         except:
             tb = traceback.format_exc()
-            logWriter.write([self.id, "ERROR", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Failed to open or load {file}"])
-            logWriter.write(exc=tb)
+            logWriter.write(id=self.id, line=["ERROR", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Failed to open or load {file}"])
+            logWriter.write(id=self.id, exc=tb)
             raise       # Throw the caught exception
         return data
 
@@ -40,14 +40,14 @@ class Calibrator:
         self._configureOpt()
 
     def _setLossFn(self, analysis):
-        self.lossFn = FiloLengthLossFunction(self.id)      # Default
-        # Add code here to set a different loss function
-        logWriter.write([self.id, "INFO", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Set loss function as {type(self.lossFn).__name__}"])
+        self.lossFn = FiloLengthsLoss(self.id)      # Default
+        # Add code here to set a different loss function based on argument `analysis`
+        logWriter.write(id=self.id, line=["INFO", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Set loss function as {type(self.lossFn).__name__}"])
 
     def _setOptimizer(self, lib):
         self.opt = PymooOptimizer(self.id)     # Default
-        # Add code here to set a differentt optimizer library
-        logWriter.write([self.id, "INFO", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Set optimizer lib as {type(self.opt).__name__}"])
+        # Add code here to set a differentt optimizer library based on argument `lib`
+        logWriter.write(id=self.id, line=["INFO", os.path.basename(__file__), globalFile.lineNo(currentframe()), f"Set optimizer lib as {type(self.opt).__name__}"])
 
     def _configureOpt(self):
         self.opt.setParams(self.input["params"])

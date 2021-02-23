@@ -3,6 +3,7 @@ from abc import abstractmethod
 class Optimizer:
     def __init__(self, id_):
         self.id = id_
+        self.fn = None
 
     @abstractmethod
     def setParams(self, params):

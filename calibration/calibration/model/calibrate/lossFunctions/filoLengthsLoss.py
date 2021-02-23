@@ -1,6 +1,6 @@
 from .lossFunction import LossFunction
 
-class FiloLengthLossFunction(LossFunction):
+class FiloLengthsLoss(LossFunction):
 
     def getLosses(self, candidate):
         super()._runAgent(candidate)

@@ -55,7 +55,7 @@ write_log() {
   local line=$2
   shift; shift;
   local message=$(printf '%s' "$@")
-  PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter --id $id --line "$log_type\n$THIS_FILE\n$line\n$message"
+  PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter --id $id --line $log_type $THIS_FILE $line "$message"
 }
 
 #- Error handling function
@@ -85,7 +85,7 @@ cd $ROOT
 # TODO NEW add file extensions
 write_log "DEBUG" $LINENO "Attempting to rsync agent files to CAMP..."
 trace=$(rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ 2>&1) \
-|| exit_if_error $? $LINENO "$trace\n" "rsync failed: Failed to move files to CAMP" 
+|| exit_if_error $? $LINENO "$trace" "rsync failed: Failed to move files to CAMP" 
 
 # TODO NEW test ssh part
 # TODO NEW add pip installs
@@ -109,6 +109,6 @@ sbatch --job-name=calibration_$id \\
 PYTHONPATH=calibration python3 -m calibration.model.calibrate $id;
 exit;
 " 2>&1)  \
-|| exit_if_error $? $LINENO "$trace\n" "ssh failed: Failed to ssh into CAMP" 
+|| exit_if_error $? $LINENO "$trace" "ssh failed: Failed to ssh into CAMP" 
 
 # sbatch $calibration_dir/$calib_model_dir/calibrateScript.sh --id $id --email $email;
