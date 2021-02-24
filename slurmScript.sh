@@ -112,7 +112,7 @@ ml foss
 if [ "$analysis" == "pybind" ]
 then
     ml Python/2.7.16-GCCcore-8.3.0
-    source /camp/lab/bentleyk/home/shared/"$USER"/APSingleCodebase/bin/activate
+    source /camp/lab/bentleyk/home/shared/"$USER"/APSingleCodebase/bin/activate #cherry
     #cherry actinmax
     echo "running pybind version, passing in the following arguments: run: $SLURM_ARRAY_TASK_ID maxtime: $maxtime epsilon: $epsilon vconcst: $vconcst gradient: $gradient filconstnorm: $filconstnorm filtipmax: $filtipmax tokenstrength: $tokenstrength filspacing: $filspacing actinmax: $actinmax randFilExtend: $randFilExtend randFilRetract: $randFilRetract"
     python APentropyintensity.py $SLURM_ARRAY_TASK_ID $maxtime $epsilon $vconcst $gradient $filconstnorm $filtipmax $tokenstrength $filspacing $actinmax $randFilExtend $randFilRetract
@@ -120,3 +120,5 @@ else
     echo "running executable, passing in the following arguments: run: $SLURM_ARRAY_TASK_ID epsilon: $epsilon vconcst: $vconcst gradient: $gradient filconstnorm: $filconstnorm filtipmax: $filtipmax tokenstrength: $tokenstrength filspacing: $filspacing actinmax: $actinmax randFilExtend: $randFilExtend randFilRetract: $randFilRetract"
     ./springAgent $SLURM_ARRAY_TASK_ID $epsilon $vconcst $gradient $filconstnorm $filtipmax $tokenstrength $filspacing $actinmax $randFilExtend $randFilRetract
 fi
+
+echo "job_id,$SLURM_JOB_ID"

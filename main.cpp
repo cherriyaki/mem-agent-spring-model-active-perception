@@ -77,7 +77,7 @@ float EPSILON = 0.9;
 float tokenStrength = 1;
 float FILTIPMAX = 15;
 int FIL_SPACING = 2;
-float actinMax = 512; // cherry. default 512
+float actinMax = 512; // cherry
 int run_number = 1;
 int GRADIENT = STEADY;
 float randFilExtend = -1;
@@ -177,7 +177,7 @@ int main(int argc, char * argv[]) {
     cout << "test seed: " << test_seed << endl;
     //---------------------------------------------------------------
 
-    char outfilename[150]; 
+    char outfilename[500];
     //TODO update these file names with variable vals
     //do print statement as well
     if (ANALYSIS_HYSTERESIS) {
@@ -193,12 +193,6 @@ int main(int argc, char * argv[]) {
         cout << "getting the lengths over time per filopodium" << endl;
         sprintf(outfilename,
         "filoLengthFiles/filo_lengths_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
-        );
-    }
-    else if (ANALYSIS_MAX_LENGTH) {
-        cout << "getting maximum lengths reached per filopodium" << endl;
-        sprintf(outfilename,
-        "max_length_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
         );
     }
     else {
@@ -232,7 +226,7 @@ void World::runSimulation()
     while (timeStep <= MAXtime)
     {
         // cherry commented out for faster run
-        //if (timeStep % 1 == 0) cout << "timestep " << timeStep << ".. " << MAXtime - timeStep << " left" << endl;
+        // if (timeStep % 1 == 0) cout << "timestep " << timeStep << ".. " << MAXtime - timeStep << " left" << endl;
         simulateTimestep();
 
         if (ANALYSIS_HYSTERESIS)

@@ -60,11 +60,6 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    --actinmax) # cherry
-    actinmax="$2"
-    shift # past argument
-    shift # past value
-    ;;
     --tokenstrength)
     tokenstrength="$2"
     shift # past argument
@@ -72,6 +67,11 @@ case $key in
     ;;
     --filspacing)
     filspacing="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    --actinmax) # cherry
+    actinmax="$2"
     shift # past argument
     shift # past value
     ;;
@@ -241,7 +241,7 @@ do
                 randFilRetract=$vary3_val
             fi
             if [ "$analysis" == "pybind" ]
-            then #cherry actinmax
+            then #cherry --actinmax
                 echo "calling slurm script for pybind, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --actinmax $actinmax --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime"
                 ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --actinmax $actinmax --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime; exit;"
             else
