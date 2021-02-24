@@ -650,18 +650,6 @@ void World::evaluateSandP()
         RUNSfile << "-1";
 }
 
-//cherry
-//---------------------------------------------------------------------------------------------
-/*void World::writeFiloLengths()
-{
-    for (MemAgent* memP : ALLmemAgents) {
-        if (memP->FIL == TIP && memP != nullptr) {
-            cout << memP;
-            RUNSfile << memP << "," << memP->FilLength(TIP) << endl;
-        }
-    }
-}*/
-
 //---------------------------------------------------------------------------------------------
 /*void World::filopodia_contacts_Test(void){
  *

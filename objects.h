@@ -596,9 +596,6 @@ public:
 class MemAgent {
 public:
 
-    //cherry debugging
-    bool tracking;
-
     ///general
     float Mx, My, Mz; ///continuous space coordinates
     EC* Cell; ///pointer to the cell agent it belongs to
@@ -892,7 +889,6 @@ public:
     void evaluate_shuffling(ofstream& fileTo);
     void printScores(ofstream& fileTo);
     void evaluateSandP();
-    void writeFiloLengths(); // cherry
     void filopodia_contacts_Test(void);
     void printContactsInfo(ofstream& fileTo);
     void calcEnvVEGFlevel(void);

@@ -173,11 +173,6 @@ void MemAgent::veilAdvance(void) {
  */
 bool MemAgent::filRetract(void) {
 
-    //cherry debugging
-    // if (FIL == TIP )
-    //     if (tracking)
-        // cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() entered" << endl;
-
     int flag = 0;
     int i, k;
     float B, D;
@@ -221,11 +216,6 @@ bool MemAgent::filRetract(void) {
 
     ///if its spring length>1 (so nodeAgents either end of spring are not nearest neighbours in grid, return flase and stop function. It will reassess next timestep after the spring has retracted further
     if ((int) length > 1) {
-
-        //cherry debugging
-        // if (FIL == TIP )
-        //     if (tracking)
-            // cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() after springLength>1 so dont retract" << endl;
 
         return (false);
     }
@@ -366,11 +356,6 @@ bool MemAgent::filRetract(void) {
             }
         }
         
-        //cherry debugging
-        /*if (FIL == TIP )
-            if (tracking)
-            cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() ended" << endl;*/
-
         delete neighStp;
         return (true);
     }
@@ -676,12 +661,6 @@ void MemAgent::VEGFRresponse(void) {
     //chance = (float) rand() / (float) RAND_MAX;
     chance = (float) new_rand() / (float) NEW_RAND_MAX;
 
-    //cherry debugging
-    // if (FIL == TIP)
-    // if (FilLength(TIP) < 2/*0.05*/) {
-    //     tracking = true;
-        // cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() before probability check | " << " | Prob = " << Prob << " | chance = " << chance << endl;
-    // }
 
     //-----------------------------------------------------------------------
     if (chance < Prob) {
@@ -701,18 +680,10 @@ void MemAgent::VEGFRresponse(void) {
             }
         }
 
-        //cherry debugging
-        // if (FIL == TIP)
-        // if (tracking)
-            // cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() before extension" << endl;
         //--------------------------------------------------------------------------------------------
         //filopodia extension
         if (((FIL == TIP) || (FIL == NONE)) && (filTokens >= tokenStrength)) {
             if (deleteFlag == false) moved = extendFil();
-            //cherry debugging
-            // if (FIL == TIP )
-            //     if (tracking)
-                // cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() after extension" << endl;
         }
         //--------------------------------------------------------------------------------------------
 
@@ -871,10 +842,6 @@ void MemAgent::calcForce(void) {
 
 void MemAgent::moveAgent(float newX, float newY, float newZ, bool FAset) {
 
-    //cherry debugging
-    // if (FIL == TIP )
-    //     if (tracking)
-        // cout << this << " | Length = " << FilLength(TIP) << " | " << " moveAgent() entered" << endl;
 
     int newMx = (int) newX;
     int newMy = (int) newY;
@@ -927,10 +894,6 @@ void MemAgent::moveAgent(float newX, float newY, float newZ, bool FAset) {
         //------------------------------------------------------------------------------------------------------------------------------
     }
 
-    //cherry debugging
-    // if (FIL == TIP )
-    //     if (tracking)
-        // cout << this << " | Length = " << FilLength(TIP) << " | " << " moveAgent() ended" << endl;
 
     FA = FAset;
 
@@ -1461,20 +1424,12 @@ bool MemAgent::extendFil(void) {
     bool allow;
     if (node == true) {
 
-        //cherry debugging
-        // if (FIL == TIP )
-        //     if (tracking)
-            // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after node==true" << endl;
 
         //only extend if enough membrane - not limiting individual filopodia size, but overall cell stretch
         //if((int)(Cell->nodeAgents.size()+Cell->springAgents.size()+Cell->surfaceAgents.size())<memMax){
 
         //find new position----------------------------------------------
         if (EnvNeighs.size() != 0) {
-            //cherry debugging
-            // if (FIL == TIP )
-            // if (tracking)
-            // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after envNeighs.size>0" << endl;
 
             if (Cell->actinUsed < actinMax) {
                 //if(LUMEN_BM){ for(i=0;i<EnvNeighs.size();i++){
@@ -1486,21 +1441,15 @@ bool MemAgent::extendFil(void) {
                     allow = true;
                 //}
                 if(allow==true){
-                highest = findHighestConc(); //cherry: pick env neighbour with highest VEGF conc. or a random one
+                highest = findHighestConc(); 
                 if ((highest != NULL) && (highest->VEGF != 0)) {
                     
-                    //cherry debugging
-                    // if (FIL == TIP )
-                    //     if (tracking)
-                        // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after highest!=NULL" << endl;
                     
                     //-----------------------------------------------------------------------
                     if (FIL == NONE) {
                         //if(testFilMax(Cell)==false){
                         //basal focal adhesion - inhibits veil and all cell body advance
 
-                        //cherry: if positive x distance > half of vessel dist
-                        // cherry: restrict extending dist to < half vessel dist??
                         if (sqrt((highest->Ex - Mx)*(highest->Ex - Mx)) > xMAX / 2.0f) {
                             if (highest->Ex > Mx)
                                 distNeeded = worldP->getDist(highest->Ex - xMAX, highest->Ey, highest->Ez, Mx, My, Mz);
@@ -1554,10 +1503,6 @@ bool MemAgent::extendFil(void) {
                             //confirms the extension has succeeded
                             ans = true;
 
-                            //cherry debugging
-                            // if (FIL == TIP )
-                            //     if (tracking)
-                                // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after FIL==NONE and extension success" << endl;
 
                             //spend the actin tokens
                             filTokens -= tokenStrength;
@@ -1601,17 +1546,9 @@ bool MemAgent::extendFil(void) {
 
                         distNeeded = newDist - oldDist;
 
-                        //cherry debugging
-                        // if (FIL == TIP )
-                        //     if (tracking)
-                            // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() before check of actin remaining >= dist. | Remaining = " << (actinMax - Cell->actinUsed) << " | distneeded = " << distNeeded << endl;
 
                         if ((actinMax - Cell->actinUsed) >= distNeeded) {
 
-                            //cherry debugging
-                            // if (FIL == TIP )
-                            //     if (tracking)
-                                // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after actin remaining >= dist. | Remaining = " << (actinMax - Cell->actinUsed) << " | distneeded = " << distNeeded << endl;
                             
                             Cell->actinUsed += distNeeded;
 
@@ -1619,8 +1556,6 @@ bool MemAgent::extendFil(void) {
                             this->Cell->filopodiaExtensions.push_back(std::array<int,3>{(int)Mx, (int)My, (int)Mz});
                             ans = true;
 
-                            //cherry debugging
-                                // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after FIL!=NONE and extension success" << endl;
 
                             filTokens -= tokenStrength;
                             

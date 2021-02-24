@@ -100,9 +100,6 @@ Env::Env(World* WorldP){
 //-------------------------------------------------------------------------------
 MemAgent::MemAgent(EC* belongsTo, World* world){
 
-    //cherry debugging
-    tracking = false;
-
 	int i;
 	diffAd_replaced_cell = NULL;
 	diffAd_replaced_med = NULL;
@@ -274,7 +271,7 @@ EC::EC(World*  world){
 
 //   scale_ProtLevels_to_CellSize();
 //}
-World::World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float actinmax /*cherry*/, float randomFilExtend, float randFilRetract)
+World::World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float actinmax /*cherry*/, float randomFilExtend, float randFilRetract, long long s)
 {
     if (TESTING == true)
     {
