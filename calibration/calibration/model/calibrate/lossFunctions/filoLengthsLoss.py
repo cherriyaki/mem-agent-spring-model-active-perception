@@ -4,7 +4,7 @@ class FiloLengthsLoss(LossFunction):
 
     def getLosses(self, candidate):
         """
-        @param [paramValue1, paramValue2, ...]
+        @param  candidate: [paramValue1, paramValue2, ...]
         @return {"obj1": loss, "obj2": loss, ...}
         """
         # TEST
@@ -13,10 +13,14 @@ class FiloLengthsLoss(LossFunction):
         #     "averageExtendingTime": 1
         # }
         super()._runAgent(candidate)
-        output = super()._getOutputContent(candidate)
-        lengthsPerFilo = self._splitByFilo(output)
-        featureDistributions = self._getFeatureDistri(lengthsPerFilo)
-        return self._getKsValues(featureDistributions)        
+        return {
+            "maxLen": 1, 
+            "averageExtendingTime": 1
+        }
+        # output = super()._getOutputContent(candidate)
+        # lengthsPerFilo = self._splitByFilo(output)
+        # featureDistributions = self._getFeatureDistri(lengthsPerFilo)
+        # return self._getKsValues(featureDistributions)        
 
     def _splitByFilo(self, content):
         pass
@@ -96,3 +100,7 @@ class InVivoData:
         
     def _createDict(self):
         pass
+
+if __name__ == "__main__":
+    loss = FiloLengthsLoss(1, ["filVary", "filSpacing"])
+    loss._runAgent([1,1])

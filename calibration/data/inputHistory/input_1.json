@@ -3,9 +3,9 @@
     "user": "limc",
     "email": "cherrysslim@hotmail.com",
     "params": {
-        "filvary": [0.1, 4],
-        "filspacing": [1, 3], 
-        "actinmax": [500, 600]
+        "filVary": [0.1, 4],
+        "filSpacing": [1, 3], 
+        "actinMax": [500, 600]
     },
     "lib": "pymoo",
     "algorithm": "nsga2",

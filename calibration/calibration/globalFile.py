@@ -2,9 +2,20 @@ import os, sys
 from inspect import getframeinfo
 
 TIME_STEP = 15
-
-defaultAgentParams = None
-outputFileNameFormat = None
+DEFAULTS = [1, 0.9, 0.04, 2, 2, 15, 1, 2, 512, -1, -1]
+INDEXES = {
+    "runNum": 0,
+    "epsilon": 1,
+    "VconcST": 2,
+    "gradientType": 3,
+    "filVary": 4,
+    "filTipMax": 5,
+    "tokenStrength": 6,
+    "filSpacing": 7,
+    "actinMax": 8,
+    "randFilExtend": 9,
+    "randFilRetract": 10
+}
 
 def fileName(f):
     return os.path.basename(f)

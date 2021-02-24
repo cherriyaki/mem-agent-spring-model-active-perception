@@ -40,7 +40,7 @@ class Calibrator:
         self._configureOpt()
 
     def _setLossFn(self, analysis):
-        self.lossFn = FiloLengthsLoss(self.id)      # Default
+        self.lossFn = FiloLengthsLoss(self.id, list(self.input["params"].keys()))      # Default
         # Add code here to set a different loss function based on argument `analysis`
         logWriter.write(id=self.id, line=["INFO", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Set loss function as {type(self.lossFn).__name__}"])
 

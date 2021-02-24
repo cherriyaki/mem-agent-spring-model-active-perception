@@ -47,13 +47,16 @@ class PymooOptimizer(Optimizer):
         sampling = self._getSampling()
         crossover = self._getCrossover()
         mutation = self._getMutation()
-        algo.pop_size=1 # 40
-        algo.n_offsprings=1 # 10
-        algo.sampling=sampling
-        algo.crossover=crossover
-        algo.mutation=mutation
-        algo.eliminate_duplicates=True
         self.algo=algo
+        self._configAlgo()
+
+    def _configAlgo(self):
+        self.algo.pop_size=1 # 40
+        self.algo.n_offsprings=1 # 10
+        self.algo.sampling=sampling
+        self.algo.crossover=crossover
+        self.algo.mutation=mutation
+        self.algo.eliminate_duplicates=True
 
     def _getSampling(self):
         sampling = MixedVariableSampling(self.mask, {

@@ -4,7 +4,7 @@ from datetime import datetime
 from calibration import globalFile
 
 def write(**kwargs):
-    """ @param id=ID, line=messageType, currentFilename, lineNum, message], OR
+    """ @param id=ID, line=[messageType, currentFilename, lineNum, message], OR
     exc="exceptionTrace"
     """
     id_ = kwargs["id"]
@@ -55,9 +55,6 @@ def _getLogFile(id_):
     logFile = os.path.join(root, f"calibration/logs/log_{id_}.log")
     return logFile
 
-def _separate(line):
-    return line.split('\n')
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--id', type=int)
@@ -65,7 +62,7 @@ if __name__ == '__main__':
     parser.add_argument('--exc', type=str)
     args = parser.parse_args()
     if args.line != None:
-        line = _separate(args.line)
-        write(id=args.id, line=line)
+        # line = _separate(args.line)
+        write(id=args.id, line=args.line)
     elif args.exc != None:
         write(id=args.id, exc=args.exc)

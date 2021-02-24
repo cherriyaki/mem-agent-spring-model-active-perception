@@ -64,7 +64,7 @@ exit_if_error() {
   local exit_code=$1
   local line=$2
   local trace=$3
-  shift; shift;
+  shift; shift; shift;
   if [ $exit_code != 0 ]
   then
     write_log "ERROR" $line "$(printf '%s' "$@")"  # save to log
@@ -84,12 +84,11 @@ write_log "INFO" $LINENO "Result file created: calibration/output/calibrationRes
 cd $ROOT
 # TODO NEW add file extensions
 write_log "DEBUG" $LINENO "Attempting to rsync agent files to CAMP..."
-trace=$(rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ 2>&1) \
-|| exit_if_error $? $LINENO "$trace" "rsync failed: Failed to move files to CAMP" 
+trace=$(rsync -r --include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv,json} --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ $user@login.camp.thecrick.org:$camp_home/$session_dir/ 2>&1) \
+|| exit_if_error $? $LINENO "$trace" "rsync: Failed to move files to CAMP" 
 
 # TODO NEW test ssh part
 # TODO NEW add pip installs
-# TODO NEW add logging in below commands? 
 write_log "DEBUG" $LINENO "Attempting to ssh to CAMP..."
 trace=$(ssh $user@login.camp.thecrick.org \
 "
