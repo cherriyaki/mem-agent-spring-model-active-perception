@@ -7,6 +7,8 @@
 #include <time.h>
 #include <algorithm>
 #include <math.h>
+#include <chrono>
+
 
 #if GRAPHICS
 #include "display.h"
@@ -31,7 +33,7 @@
 #endif
 
 using namespace std;
-using std::random_shuffle;
+//using std::random_shuffle;
 
 //general
 World* WORLDpointer;
@@ -82,8 +84,9 @@ int run_number = 1;
 int GRADIENT = STEADY;
 float randFilExtend = -1;
 float RAND_FILRETRACT_CHANCE = -1;
-
-long long test_seed = -1;
+long long seed = -1;
+mt19937 g;
+uniform_real_distribution<double> dist = uniform_real_distribution<double>(0, NEW_RAND_MAX);
 
 //------------------------------------------------------------------------------
 //#define BAHTI_ANALYSIS true
@@ -92,7 +95,7 @@ template <typename... Args>
 using overload_cast_ = pybind11::detail::overload_cast_impl<Args...>;
 PYBIND11_MODULE(springAgent, m) {
     py::class_<World>(m, "World")
-            .def(py::init<float, float, int, float, float, float, int, float, float>(), "World constructor: World(float epsilon, float vconcst, int gradientType, float filConstNorm, float filTipMax, float tokenstrength, int filSpacing, float randFilExtension, float randFilRetract)")
+            .def(py::init<float, float, int, float, float, float, int, float, float, long long>(), "World constructor: World(float epsilon, float vconcst, int gradientType, float filConstNorm, float filTipMax, float tokenstrength, int filSpacing, float randFilExtension, float randFilRetract, long long seed)")
             .def("simulateTimestep", overload_cast_<>()(&World::simulateTimestep), "Simulate one timestep in MemAgent-Spring Model")
             .def("simulateTimestep", overload_cast_<std::vector<std::vector<float>>>()(&World::simulateTimestep), "Simulate one timestep in MemAgent-Spring Model with 2d array of protein value changes for each cell.")
             .def_readwrite("timeStep", &World::timeStep)
@@ -116,19 +119,16 @@ void readArgs(int argc, char * argv[]) {
         FILTIPMAX = atof(argv[6]);
         tokenStrength = atof(argv[7]);
 		FIL_SPACING = atof(argv[8]);
-        actinMax = atof(argv[9]); //cherry actinmax and other number changes below
+        actinMax = atof(argv[9]); //cherry 
         if (argc > 10)
         {
             randFilExtend = atof(argv[10]);
             if (randFilExtend >= 0 && randFilExtend <= 1)
                 EPSILON = 0;
-            RAND_FILRETRACT_CHANCE = atof(argv[11]);
-
-            if ( argc > 12 )
-                test_seed = stoll(argv[12], nullptr, 11);
-
+            RAND_FILRETRACT_CHANCE = atof(argv[10]);
+            if (argc > 11)
+                seed = stoll(argv[11]);
         }
-
         VEGFconc = VconcST;
     }
 }
@@ -157,8 +157,33 @@ int main(int argc, char * argv[]) {
     if (ENV_SETUP == 1)
         VconcST = 0.04;*/ //0.008 for blind ended sprout x axis increasing gradient//0.04 for JTB and PLoS Comp Biol vessel
 
+	char statistics_file_buffer[500];
     readArgs(argc, argv);
 
+    if (ANALYSIS_HYSTERESIS) {
+		sprintf(statistics_file_buffer,
+				"statistics_hysteresis_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_randFilExtend%g_randFilRetract%g_seed%lld_run%i_.csv",
+				double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING,
+				randFilExtend, RAND_FILRETRACT_CHANCE, seed, run_number);
+	} else if (ANALYSIS_TIME_TO_PATTERN) {
+		sprintf(statistics_file_buffer,
+				"statistics_time_to_pattern_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_randFilExtend%g_randFilRetract%g_seed%lld_run%i_.csv",
+				double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING,
+				randFilExtend, RAND_FILRETRACT_CHANCE, seed, run_number);
+    } else {
+		sprintf(statistics_file_buffer,
+				"statistics_msm_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_randFilExtend%g_randFilRetract%g_seed%lld_run%i_.csv",
+				double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING,
+				randFilExtend, RAND_FILRETRACT_CHANCE, seed, run_number);
+    }
+
+	create_statistics_file(statistics_file_buffer);
+
+	std::time_t start_time = get_current_time();
+	string start_time_string = format_time_string(start_time, true);
+	write_to_statistics_file(statistics_file_buffer, start_time_string);
+
+	cout << "Current time: " << std::ctime(&start_time);
     cout << "ECPACK: " << ECpack << endl;
     cout << "GRAPHICS: " << GRAPHICS << endl;
     cout << "bahti analysis: " << BAHTI_ANALYSIS << " @@ time to pattern analysis: " << ANALYSIS_TIME_TO_PATTERN << " @@  hysteresis analysis: " << ANALYSIS_HYSTERESIS << endl;
@@ -174,7 +199,6 @@ int main(int argc, char * argv[]) {
     cout << "actinMax: " << actinMax << endl; //cherry
 	cout << "randFilExtension: " << randFilExtend << endl;
 	cout << "RAND_FILRETRACT_CHANCE: " << RAND_FILRETRACT_CHANCE<< endl;
-    cout << "test seed: " << test_seed << endl;
     //---------------------------------------------------------------
 
     char outfilename[500];
@@ -182,17 +206,17 @@ int main(int argc, char * argv[]) {
     //do print statement as well
     if (ANALYSIS_HYSTERESIS) {
         cout << "running bistability analysis" << endl;
-        sprintf(outfilename, /*cherry actinmax*/"analysis_hysteresis_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
+        sprintf(outfilename, "analysis_hysteresis_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_randFilExtend%g_randFilRetract%g_seed%lld_run%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, seed, run_number);
     }
     else if (ANALYSIS_TIME_TO_PATTERN) {
         cout << "running time to pattern analysis" << endl;
-        sprintf(outfilename, "time_to_pattern_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number);
+        sprintf(outfilename, "time_to_pattern_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_randFilExtend%g_randFilRetract%g_seed%lld_run%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, randFilExtend, RAND_FILRETRACT_CHANCE, seed, run_number);
     }
     //cherry
     else if (ANALYSIS_FILO_LENGTHS) {
         cout << "getting the lengths over time per filopodium" << endl;
         sprintf(outfilename,
-        "filoLengthFiles/filo_lengths_filvary_%f_epsilon_%f_VconcST%f_GRADIENT%i_FILTIPMAX%f_tokenStrength%f_FILSPACING%i_actinMax%f_randFilExtend%f_randFilRetract%f_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
+        "filoLengthFiles/filo_lengths_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_actinMax%f_randFilExtend%g_randFilRetract%g_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
         );
     }
     else {
@@ -207,6 +231,12 @@ int main(int argc, char * argv[]) {
 
     World* world = new World();
     WORLDpointer = world;
+	
+    for (int i=0; i<16; ++i)
+            new_rand();
+    std::vector<int> testNumber = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    new_random_shuffle(testNumber.begin(), testNumber.end());
+
     diffAd = new CPM_module(world);
 
 #if GRAPHICS
@@ -215,6 +245,18 @@ int main(int argc, char * argv[]) {
     glutMainLoop();
 #else
     world->runSimulation();
+
+    //Get end time, and calculate elapsed time -> add these to results file.
+	std::time_t end_time = get_current_time();
+	std::cout << "End time: " << std::ctime(&end_time) << std::endl;
+
+	string end_time_string = format_time_string(end_time, false);
+	write_to_statistics_file(statistics_file_buffer, end_time_string);
+
+	long elapsed_time = end_time - start_time;
+	string elapsed_time_string = "Elapsed time, " + to_string(elapsed_time);
+	write_to_statistics_file(statistics_file_buffer, elapsed_time_string);
+
 #endif
     RUNSfile.close();
 }
@@ -434,7 +476,8 @@ void World::updateMemAgents(void) {
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //reorder agents randomly
-    random_shuffle(ALLmemAgents.begin(), ALLmemAgents.end());
+    //random_shuffle(ALLmemAgents.begin(), ALLmemAgents.end());
+    new_random_shuffle(ALLmemAgents.begin(), ALLmemAgents.end());
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -475,7 +518,8 @@ void World::updateMemAgents(void) {
                     RUNSfile << memp << "," << memp->FilLength(TIP) << endl;
                 }
 
-                randomChance = rand() / (float) RAND_MAX;
+                //randomChance = rand() / (float) RAND_MAX;
+                randomChance = new_rand() / (float) NEW_RAND_MAX;
 
                 //veil advance for cell migration------------------------
                 if (VEIL_ADVANCE == true) {
@@ -866,4 +910,42 @@ void World::store_normals(void){
     store_cube_normals.push_back(cross);
 }
 //---------------------------------------------------------------------------------------------------------
+int new_rand() {
+    return (int)dist(g);
+}
 
+void create_statistics_file(string statisticsFilename) {
+	ofstream statisticsFile(statisticsFilename);
+	statisticsFile.close();
+}
+
+void write_to_statistics_file(string statisticsFilename, string line) {
+	ofstream statisticsFile;
+	statisticsFile.open(statisticsFilename, std::ios_base::app);
+	if (statisticsFile.is_open()) {
+		statisticsFile << line;
+	}
+	statisticsFile.close();
+}
+
+std::time_t get_current_time() {
+	auto time = std::chrono::system_clock::now();
+	std::time_t current_time = std::chrono::system_clock::to_time_t(time);
+	return current_time;
+}
+
+std::string format_time_string(std::time_t time, bool start) {
+	// N.B. Function should be called at start and end of simulation only, for logging purposes.
+	string time_entry, time_string;
+
+	if (start) {
+		time_entry = "Start time,";
+	} else {
+		time_entry = "End time,";
+	}
+
+	time_string = std::ctime(&time);
+	time_entry = time_entry + time_string;
+
+	return time_entry;
+}

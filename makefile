@@ -14,12 +14,16 @@ ANALYSIS_TIME_TO_PATTERN = false
 ANALYSIS_FILO_LENGTHS = false
 ANALYSIS_MAX_LENGTH = false
 CAMP = false
+GITHUB = false
 
 CDBG +=
 CPPFLAGS =
 LIBS = 
 PYBIND_INC = 
-ifeq ($(CAMP), true)
+
+ifeq ($(GITHUB), true)
+PYBIND_INC := -fPIC -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/pybind11/include
+else ifeq ($(CAMP), true)
 PYBIND_INC := -fPIC -I../include/python2.7 -I../lib/python2.7/site-packages/pybind11/include
 else
 PYBIND_INC := -undefined dynamic_lookup -I/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7 -I/pybind11/pybind11
@@ -49,7 +53,7 @@ ${TARGET} : ${OBJS}
 	${CC} ${CPPFLAGS} -c $*.cpp
 
 clean:
-	rm -f ${OBJS} display.o ScreenRecording.o
+	rm -f ${OBJS} display.o ScreenRecording.o springAgent springAgent.so
 	
 	
 	

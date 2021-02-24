@@ -673,7 +673,8 @@ void MemAgent::VEGFRresponse(void) {
     else Prob = 0;
 
    
-    chance = (float) rand() / (float) RAND_MAX;
+    //chance = (float) rand() / (float) RAND_MAX;
+    chance = (float) new_rand() / (float) NEW_RAND_MAX;
 
     //cherry debugging
     // if (FIL == TIP)
@@ -1930,8 +1931,8 @@ Env * MemAgent::findHighestConc(void){
     //start=(int)((double)rand()*(double)EnvNeighs.size()/(double)RAND_MAX);
     
     //direction=((double)rand()*2.00/(double)RAND_MAX);
-    random_shuffle(EnvNeighs.begin(), EnvNeighs.end());
-    //std::shuffle(EnvNeighs.begin(), EnvNeighs.end(), std::default_random_engine(seed));
+    //random_shuffle(EnvNeighs.begin(), EnvNeighs.end());
+    new_random_shuffle(EnvNeighs.begin(), EnvNeighs.end());
     highest=EnvNeighs[0];
     
     if (EnvNeighs[0]->VEGF > 0)
@@ -1983,7 +1984,8 @@ Env * MemAgent::findHighestConc(void){
         //else picked--;
         
     }
-    chance = (float)rand()/(float)RAND_MAX;
+    //chance = (float)rand()/(float)RAND_MAX;
+    chance = (float)new_rand()/(float)NEW_RAND_MAX;
     prob = EPSILON; //epsilon high (1) = greedy, always choses highest otherwise random.
     if(chance<prob){
         chosen = highest;
@@ -2000,7 +2002,8 @@ Env * MemAgent::findHighestConc(void){
         //pick a random direction to extend fil in -more realistic than always picking correct direction
         //could randomly pick the correct one of course..
         
-        chosen  = EnvNeighs[(int)(((float)rand()*(float)EnvNeighs.size()/(float)RAND_MAX))];
+        //chosen  = EnvNeighs[(int)(((float)rand()*(float)EnvNeighs.size()/(float)RAND_MAX))];
+        chosen  = EnvNeighs[(int)(((float)new_rand()*(float)EnvNeighs.size()/(float)NEW_RAND_MAX))];
         //chosen = furthest;
         //if(straight!=NULL){
         //cout<<"found straight!"<<endl;
