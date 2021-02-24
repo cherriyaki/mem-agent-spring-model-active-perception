@@ -497,15 +497,6 @@ void World::updateMemAgents(void) {
                 //retract fils if inactive------------
                 if ( ((RAND_FILRETRACT_CHANCE==-1)&&(memp->filTipTimer > FILTIPMAX)) || ((RAND_FILRETRACT_CHANCE>-1) &&(randomChance < RAND_FILRETRACT_CHANCE)) ) {
 
-                    //cherry
-                    if (ANALYSIS_MAX_LENGTH) {
-                        if (memp->filTipTimer != FILTIPMAX+1) { // filTipTimer is set to FILTIPMAX+2 after the filopodia has started retracting
-                            RUNSfile << memp->FilLength(TIP) 
-                            // << "\t" << WORLDpointer->timeStep << "\t" << memp->FilBase(TIP)[0] << "\t" << memp->FilBase(TIP)[1] << "\t" << memp->FilBase(TIP)[2] 
-                            << endl;
-                        }
-                    }
-
                     if (memp->filRetract() == true) {
 
                         //cherry

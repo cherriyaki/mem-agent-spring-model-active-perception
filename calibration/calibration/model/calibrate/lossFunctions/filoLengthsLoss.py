@@ -3,6 +3,15 @@ from .lossFunction import LossFunction
 class FiloLengthsLoss(LossFunction):
 
     def getLosses(self, candidate):
+        """
+        @param [paramValue1, paramValue2, ...]
+        @return {"obj1": loss, "obj2": loss, ...}
+        """
+        # TEST
+        # return {
+        #     "maxLen": 1, 
+        #     "averageExtendingTime": 1
+        # }
         super()._runAgent(candidate)
         output = super()._getOutputContent(candidate)
         lengthsPerFilo = self._splitByFilo(output)

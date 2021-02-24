@@ -8,7 +8,7 @@
         "actinmax": [500, 600]
     },
     "lib": "pymoo",
-    "algorithm": "NSGA2",
+    "algorithm": "nsga2",
     "analysis": "filo_lengths",
     "objectives": ["maxLen", "averageExtendingTime"]
 }

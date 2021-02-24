@@ -6,7 +6,13 @@ TIME_STEP = 15
 defaultAgentParams = None
 outputFileNameFormat = None
 
+def fileName(f):
+    return os.path.basename(f)
+
 def lineNo(curFrame):
+    """ 
+    @param curFrame: the object returned by calling inspect.currentframe()
+    """
     return getframeinfo(curFrame).lineno
 
 def getRoot():

@@ -1,7 +1,13 @@
-2021-02-21 00:24:48 INFO	campScript.sh:77 - Session 1 started. Input file: calibration/data/inputHistory/input_1.json
-2021-02-21 00:24:48 INFO	campScript.sh:79 - Result file created: calibration/output/calibrationResults/result_1.txt
-2021-02-21 00:24:48 DEBUG	campScript.sh:84 - Attempting to rsync agent files to CAMP...
-2021-02-21 00:24:49 ERROR	campScript.sh:86 - rsync failed: Failed to move files to CAMP
-2021-02-23 13:42:21 DEBUG	calibrator.py:21 - Opening input JSON file...
-2021-02-23 13:42:21 INFO	calibrator.py:45 - Set loss function as FiloLengthLossFunction
-2021-02-23 13:42:21 INFO	calibrator.py:50 - Set optimizer lib as PymooOptimizer
+2021-02-24 15:00:19 DEBUG	calibrator.py:29 - JSON input loaded
+2021-02-24 15:00:19 INFO	calibrator.py:45 - Set loss function as FiloLengthsLoss
+2021-02-24 15:00:19 INFO	calibrator.py:50 - Set optimizer lib as PymooOptimizer
+2021-02-24 15:00:19 INFO	pymooOpt.py:36 - mask = ['real', 'int', 'int']
+2021-02-24 15:00:19 INFO	pymooOpt.py:27 - Lower bounds = [0.1, 1, 500] | Upper bounds = [4, 3, 600]
+2021-02-24 15:00:20 DEBUG	pymooOpt.py:46 - Algorithm obtained. Object = <pymoo.algorithms.nsga2.NSGA2 object at 0x7faa2f616610>
+2021-02-24 15:00:20 DEBUG	pymooOpt.py:109 - Defined problem class. Object = # name: MyProblem
+# n_var: 3
+# n_obj: 2
+# n_constr: 0
+
+2021-02-24 15:00:20 DEBUG	pymooOpt.py:112 - Calling minimize()
+2021-02-24 15:00:20 DEBUG	pymooOpt.py:145 - Done. Wrote to result file /Users/cherrylim/Code/spring-agent/calibration/output/calibrationResults/result_1.txt

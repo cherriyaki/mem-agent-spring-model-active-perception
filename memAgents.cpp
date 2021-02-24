@@ -174,9 +174,9 @@ void MemAgent::veilAdvance(void) {
 bool MemAgent::filRetract(void) {
 
     //cherry debugging
-    if (FIL == TIP )
-        if (tracking)
-        cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() entered" << endl;
+    // if (FIL == TIP )
+    //     if (tracking)
+        // cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() entered" << endl;
 
     int flag = 0;
     int i, k;
@@ -223,9 +223,9 @@ bool MemAgent::filRetract(void) {
     if ((int) length > 1) {
 
         //cherry debugging
-        if (FIL == TIP )
-            if (tracking)
-            cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() after springLength>1 so dont retract" << endl;
+        // if (FIL == TIP )
+        //     if (tracking)
+            // cout << this << " | Length = " << FilLength(TIP) << " | " << " filRetract() after springLength>1 so dont retract" << endl;
 
         return (false);
     }
@@ -676,11 +676,11 @@ void MemAgent::VEGFRresponse(void) {
     chance = (float) rand() / (float) RAND_MAX;
 
     //cherry debugging
-    if (FIL == TIP)
-    if (FilLength(TIP) < 2/*0.05*/) {
-        tracking = true;
-        cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() before probability check | " << " | Prob = " << Prob << " | chance = " << chance << endl;
-    }
+    // if (FIL == TIP)
+    // if (FilLength(TIP) < 2/*0.05*/) {
+    //     tracking = true;
+        // cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() before probability check | " << " | Prob = " << Prob << " | chance = " << chance << endl;
+    // }
 
     //-----------------------------------------------------------------------
     if (chance < Prob) {
@@ -701,17 +701,17 @@ void MemAgent::VEGFRresponse(void) {
         }
 
         //cherry debugging
-        if (FIL == TIP)
-        if (tracking)
-            cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() before extension" << endl;
+        // if (FIL == TIP)
+        // if (tracking)
+            // cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() before extension" << endl;
         //--------------------------------------------------------------------------------------------
         //filopodia extension
         if (((FIL == TIP) || (FIL == NONE)) && (filTokens >= tokenStrength)) {
             if (deleteFlag == false) moved = extendFil();
             //cherry debugging
-            if (FIL == TIP )
-                if (tracking)
-                cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() after extension" << endl;
+            // if (FIL == TIP )
+            //     if (tracking)
+                // cout << this << " | Length = " << FilLength(TIP) << " | " << " VEGFResponse() after extension" << endl;
         }
         //--------------------------------------------------------------------------------------------
 
@@ -871,9 +871,9 @@ void MemAgent::calcForce(void) {
 void MemAgent::moveAgent(float newX, float newY, float newZ, bool FAset) {
 
     //cherry debugging
-    if (FIL == TIP )
-        if (tracking)
-        cout << this << " | Length = " << FilLength(TIP) << " | " << " moveAgent() entered" << endl;
+    // if (FIL == TIP )
+    //     if (tracking)
+        // cout << this << " | Length = " << FilLength(TIP) << " | " << " moveAgent() entered" << endl;
 
     int newMx = (int) newX;
     int newMy = (int) newY;
@@ -927,9 +927,9 @@ void MemAgent::moveAgent(float newX, float newY, float newZ, bool FAset) {
     }
 
     //cherry debugging
-    if (FIL == TIP )
-        if (tracking)
-        cout << this << " | Length = " << FilLength(TIP) << " | " << " moveAgent() ended" << endl;
+    // if (FIL == TIP )
+    //     if (tracking)
+        // cout << this << " | Length = " << FilLength(TIP) << " | " << " moveAgent() ended" << endl;
 
     FA = FAset;
 
@@ -1461,9 +1461,9 @@ bool MemAgent::extendFil(void) {
     if (node == true) {
 
         //cherry debugging
-        if (FIL == TIP )
-            if (tracking)
-            cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after node==true" << endl;
+        // if (FIL == TIP )
+        //     if (tracking)
+            // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after node==true" << endl;
 
         //only extend if enough membrane - not limiting individual filopodia size, but overall cell stretch
         //if((int)(Cell->nodeAgents.size()+Cell->springAgents.size()+Cell->surfaceAgents.size())<memMax){
@@ -1471,9 +1471,9 @@ bool MemAgent::extendFil(void) {
         //find new position----------------------------------------------
         if (EnvNeighs.size() != 0) {
             //cherry debugging
-            if (FIL == TIP )
-            if (tracking)
-            cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after envNeighs.size>0" << endl;
+            // if (FIL == TIP )
+            // if (tracking)
+            // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after envNeighs.size>0" << endl;
 
             if (Cell->actinUsed < actinMax) {
                 //if(LUMEN_BM){ for(i=0;i<EnvNeighs.size();i++){
@@ -1489,9 +1489,9 @@ bool MemAgent::extendFil(void) {
                 if ((highest != NULL) && (highest->VEGF != 0)) {
                     
                     //cherry debugging
-                    if (FIL == TIP )
-                        if (tracking)
-                        cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after highest!=NULL" << endl;
+                    // if (FIL == TIP )
+                    //     if (tracking)
+                        // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after highest!=NULL" << endl;
                     
                     //-----------------------------------------------------------------------
                     if (FIL == NONE) {
@@ -1554,9 +1554,9 @@ bool MemAgent::extendFil(void) {
                             ans = true;
 
                             //cherry debugging
-                            if (FIL == TIP )
-                                if (tracking)
-                                cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after FIL==NONE and extension success" << endl;
+                            // if (FIL == TIP )
+                            //     if (tracking)
+                                // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after FIL==NONE and extension success" << endl;
 
                             //spend the actin tokens
                             filTokens -= tokenStrength;
@@ -1601,16 +1601,16 @@ bool MemAgent::extendFil(void) {
                         distNeeded = newDist - oldDist;
 
                         //cherry debugging
-                        if (FIL == TIP )
-                            if (tracking)
-                            cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() before check of actin remaining >= dist. | Remaining = " << (actinMax - Cell->actinUsed) << " | distneeded = " << distNeeded << endl;
+                        // if (FIL == TIP )
+                        //     if (tracking)
+                            // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() before check of actin remaining >= dist. | Remaining = " << (actinMax - Cell->actinUsed) << " | distneeded = " << distNeeded << endl;
 
                         if ((actinMax - Cell->actinUsed) >= distNeeded) {
 
                             //cherry debugging
-                            if (FIL == TIP )
-                                if (tracking)
-                                cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after actin remaining >= dist. | Remaining = " << (actinMax - Cell->actinUsed) << " | distneeded = " << distNeeded << endl;
+                            // if (FIL == TIP )
+                            //     if (tracking)
+                                // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after actin remaining >= dist. | Remaining = " << (actinMax - Cell->actinUsed) << " | distneeded = " << distNeeded << endl;
                             
                             Cell->actinUsed += distNeeded;
 
@@ -1619,9 +1619,7 @@ bool MemAgent::extendFil(void) {
                             ans = true;
 
                             //cherry debugging
-                            if (FIL == TIP )
-                                if (tracking)
-                                cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after FIL!=NONE and extension success" << endl;
+                                // cout << this << " | Length = " << FilLength(TIP) << " | " << " extendFil() after FIL!=NONE and extension success" << endl;
 
                             filTokens -= tokenStrength;
                             

@@ -4,8 +4,8 @@ from datetime import datetime
 from calibration import globalFile
 
 def write(**kwargs):
-    """ @param id=<ID>, line=[<Message type>, <Current filename>, <Line num>, <Message>], OR
-    exc="<Exception trace>"
+    """ @param id=ID, line=messageType, currentFilename, lineNum, message], OR
+    exc="exceptionTrace"
     """
     id_ = kwargs["id"]
     if "line" in kwargs:
