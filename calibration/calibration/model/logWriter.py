@@ -28,7 +28,7 @@ def _write(id_, str_):
     logFile = _getLogFile(id_)
     try:
         with open(logFile, 'a') as f:   # open file in append mode
-            f.write(str_)
+            f.write(str_ + "\n")
     except (IOError, OSError):
         print('could not open file ' + logFile)
 

@@ -1,5 +1,8 @@
 # error handling: check inputs
 
+#--reminder at top of view:
+# might need to give execute permission to scripts | make sure user camp dir has APSingleCodebase dir | check theyre vpn connected | double check typed input like user, email (email might not work!)
+
 #-- upon 'calibrate' button clicked
 # popup asking if they're sure they wanna submit. remind to 1) check theyre vpn connected 2) double check typed input like user, email
 #-- upon confirmation
