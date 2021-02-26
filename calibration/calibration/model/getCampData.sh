@@ -47,3 +47,4 @@ scp $camp_server:$result_camp $result_local
 scp $camp_server:$log_camp $log_local
 # Slurmerr
 scp $camp_server:$slurmerr_camp $slurmerr_local
+chmod +r $slurmerr_local

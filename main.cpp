@@ -216,7 +216,7 @@ int main(int argc, char * argv[]) {
     else if (ANALYSIS_FILO_LENGTHS) {
         cout << "getting the lengths over time per filopodium" << endl;
         sprintf(outfilename,
-        "filoLengthFiles/filo_lengths_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_actinMax%f_randFilExtend%g_randFilRetract%g_run_%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
+        "filoLengthFiles/filo_lengths_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_actinMax%g_randFilExtend%g_randFilRetract%g_run%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
         );
     }
     else {

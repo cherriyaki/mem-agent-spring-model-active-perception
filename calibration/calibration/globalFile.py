@@ -16,6 +16,21 @@ INDEXES = {
     "randFilExtend": 9,
     "randFilRetract": 10
 }
+TYPES = ["int","float","float","int","float","float","float","int","float","float","float"]
+
+RUNFILE = {
+    "filVary": "filvary_", 
+    "epsilon": "epsilon_",
+    "VconcST": "VconcST",
+    "gradientType": "GRADIENT",
+    "filTipMax": "FILTIPMAX",
+    "tokenStrength": "tokenStrength",
+    "filSpacing": "FILSPACING",
+    "actinMax": "actinMax",
+    "randFilExtend": "randFilExtend",
+    "randFilRetract": "randFilRetract",
+    "runNum": "run"
+}
 
 def fileName(f):
     """

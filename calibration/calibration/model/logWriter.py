@@ -6,6 +6,7 @@ from calibration import globalFile
 def write(**kwargs):
     """ @param id=ID, line=[messageType, currentFilename, lineNum, message], OR
     exc="exceptionTrace"
+    Tip: exceptionTrace can be obtained by traceback.format_exc()
     """
     id_ = kwargs["id"]
     if "line" in kwargs:
