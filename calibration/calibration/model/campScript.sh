@@ -81,21 +81,49 @@ write_log "INFO" $LINENO "Session $id started. Input file: calibration/data/inpu
 touch $result_file
 write_log "INFO" $LINENO "Result file created: calibration/output/calibrationResults/result_$id.res"
 
+#-----------------
 #-- Main activity
+#-----------------
+
+#-- Clear everything in CAMP session dir
+trace=$(ssh $user@login.camp.thecrick.org \
+"
+DIR=\"$camp_home/$session_dir\";
+if [ -d "$DIR" ]; then
+  # Take action if $DIR exists. ;
+  cd $camp_home/$session_dir;
+  rm -r *;
+fi;
+exit;
+" 2>&1)  \
+|| exit_if_error $? $LINENO "$trace" "ssh: Failed to clear session dir on CAMP" 
+write_log "DEBUG" $LINENO "ssh: Finished clearing session dir on CAMP"
+
 cd $ROOT
-# TODO NEW add file extensions
+
+#-- Make slurm submission script
+echo "#!/bin/sh 
+#SBATCH --job-name=calibration_ID 
+#SBATCH --output=OUTDIR/out/slurm_ID.out 
+#SBATCH --error=OUTDIR/err/slurm_ID.err 
+#SBATCH --mail-type=END,FAIL 
+#SBATCH --mail-user=EMAIL 
+#SBATCH --exclusive 
+PYTHONPATH=calibration python3 -m calibration.model.calibrate ID 
+" \
+| sed -e 's/ID/'$id'/g' -e 's/OUTDIR/'$slurm_out_camp'/g' -e 's/EMAIL/'$email'/g' \
+> slurm_calibrate_$id.sbatch
+
+#-- rsync agent and calibration files
 trace=$(rsync -r \
 --include='calibration/' --include='calibration/*/' --include='calibration/**/' --include='calibration/***/' --include='calibration/****/' \
---include='*.'{sh,cpp,h,py,npy,pyc,log,out,err,csv,json,res} \
+--include='*.'{sh,cpp,h,py,npy,pyc,log,csv,json,res,sbatch} \
 --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ \
 $user@login.camp.thecrick.org:$camp_home/$session_dir/ 2>&1) \
 || exit_if_error $? $LINENO "$trace" "rsync: Failed to move files to CAMP" 
 write_log "DEBUG" $LINENO "Finished rsync files to CAMP"
 
-slurmcmd=$(echo "PYTHONPATH=calibration python3 -m calibration.model.calibrate ID" \
-| sed -e 's/ID/'$id'/g' -e 's/OUTDIR/'$slurm_out_camp'/g' -e 's/EMAIL/'$email'/g')
-
-# TODO NEW test ssh part
+#-- ssh commands to CAMP
 # TODO NEW add pip installs
 trace=$(ssh $user@login.camp.thecrick.org \
 "
@@ -106,17 +134,12 @@ source env/bin/activate;
 pip install numpy scipy pymoo;
 cd ../$session_dir;
 ./buildSpringAgent.sh --analysis $analysis;
-sbatch --job-name=calibration_$id \\
---output=$slurm_out_camp/out/slurm_$id.out \\
---error=$slurm_out_camp/err/slurm_$id.err \\
---mail-type=END,FAIL \\
---mail-user=$email \\
---exclusive \\
---wrap=$slurmcmd
-# PYTHONPATH=calibration python3 -m calibration.model.calibrate $id;
-# slurm_calibrate_$id.sh;
+sbatch \\
+slurm_calibrate_$id.sbatch;
 exit;
 " 2>&1)  \
 || exit_if_error $? $LINENO "$trace" "ssh: Failed to run commands on CAMP" 
-write_log "DEBUG" $LINENO "Finished ssh to CAMP"
+write_log "DEBUG" $LINENO "ssh: Finished ssh to CAMP"
 
+# Delete submission script
+rm slurm_calibrate_$id.sbatch

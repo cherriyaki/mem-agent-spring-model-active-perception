@@ -12,6 +12,7 @@ class Calibrator:
         self.id = id_
 
     def run(self):
+        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), "Calibrator started running"])
         self.input = self._getInputFromJson()
         self._setup()
         self.opt.optimize()

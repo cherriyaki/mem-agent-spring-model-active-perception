@@ -1,36 +1,18 @@
-2021-02-25 19:52:10 INFO	campScript.sh:80 - Session 1 started. Input file: calibration/data/inputHistory/input_1.json
-2021-02-25 19:52:10 INFO	campScript.sh:82 - Result file created: calibration/output/calibrationResults/result_1.res
-2021-02-25 19:52:12 DEBUG	campScript.sh:93 - Finished rsync files to CAMP
-2021-02-25 19:52:35 ERROR	campScript.sh:120 - ssh: Failed to run commands on CAMP
-Requirement already satisfied: numpy in ./env/lib/python3.8/site-packages (1.20.1)
-Requirement already satisfied: scipy in ./env/lib/python3.8/site-packages (1.6.1)
-Requirement already satisfied: pymoo in ./env/lib/python3.8/site-packages (0.4.2.1)
-Requirement already satisfied: matplotlib>=3 in ./env/lib/python3.8/site-packages (from pymoo) (3.3.4)
-Requirement already satisfied: autograd>=1.3 in ./env/lib/python3.8/site-packages (from pymoo) (1.3)
-Requirement already satisfied: cma==2.7 in ./env/lib/python3.8/site-packages (from pymoo) (2.7.0)
-Requirement already satisfied: pillow>=6.2.0 in ./env/lib/python3.8/site-packages (from matplotlib>=3->pymoo) (8.1.0)
-Requirement already satisfied: cycler>=0.10 in ./env/lib/python3.8/site-packages (from matplotlib>=3->pymoo) (0.10.0)
-Requirement already satisfied: python-dateutil>=2.1 in ./env/lib/python3.8/site-packages (from matplotlib>=3->pymoo) (2.8.1)
-Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.3 in ./env/lib/python3.8/site-packages (from matplotlib>=3->pymoo) (2.4.7)
-Requirement already satisfied: kiwisolver>=1.0.1 in ./env/lib/python3.8/site-packages (from matplotlib>=3->pymoo) (1.3.1)
-Requirement already satisfied: future>=0.15.2 in ./env/lib/python3.8/site-packages (from autograd>=1.3->pymoo) (0.18.2)
-Requirement already satisfied: six in ./env/lib/python3.8/site-packages (from cycler>=0.10->matplotlib>=3->pymoo) (1.15.0)
-WARNING: You are using pip version 19.2.3, however version 21.0.1 is available.
-You should consider upgrading via the 'pip install --upgrade pip' command.
-graphics = false
-camp = false
-writing the lengths over time per filopodium...
-rm -f main.o analysis.o Grid.o CPM_module.o constructors.o memAgents.o creation.o geometry_functions.o EC.o ECmesh.o environment.o display.o ScreenRecording.o springAgent springAgent.so
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c main.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c analysis.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c Grid.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c CPM_module.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c constructors.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c memAgents.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c creation.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c geometry_functions.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c EC.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c ECmesh.cpp
-g++ -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w -c environment.cpp
-g++ -o springAgent -Wno-deprecated -g -std=c++11 -DECpack=10 -DGRAPHICS=false -DMAXtime=1000 -DBAHTI_ANALYSIS=false -DANALYSIS_HYSTERESIS=false -DANALYSIS_TIME_TO_PATTERN=false  -DANALYSIS_FILO_LENGTHS=true  -w main.o analysis.o Grid.o CPM_module.o constructors.o memAgents.o creation.o geometry_functions.o EC.o ECmesh.o environment.o 
-sbatch: error: Script arguments not permitted with --wrap option
+2021-02-26 10:38:27 INFO	campScript.sh:80 - Session 1 started. Input file: calibration/data/inputHistory/input_1.json
+2021-02-26 10:38:27 INFO	campScript.sh:82 - Result file created: calibration/output/calibrationResults/result_1.res
+2021-02-26 10:38:28 DEBUG	campScript.sh:100 - ssh: Finished clearing session dir on CAMP
+2021-02-26 10:39:00 DEBUG	calibrator.py:15 - Calibrator started running
+2021-02-26 10:39:00 DEBUG	calibrator.py:30 - JSON input loaded
+2021-02-26 10:39:00 INFO	calibrator.py:46 - Set loss function as FiloLengthsLoss
+2021-02-26 10:39:00 INFO	calibrator.py:51 - Set optimizer lib as PymooOptimizer
+2021-02-26 10:39:00 INFO	pymooOpt.py:36 - mask = ['real', 'int', 'int']
+2021-02-26 10:39:00 INFO	pymooOpt.py:27 - Lower bounds = [0.1, 1, 500] | Upper bounds = [4, 3, 600]
+2021-02-26 10:39:02 DEBUG	pymooOpt.py:46 - Algorithm obtained. Object = <pymoo.algorithms.nsga2.NSGA2 object at 0x7feea34fc250>
+2021-02-26 10:39:02 DEBUG	pymooOpt.py:112 - Defined problem class. Object = # name: MyProblem
+# n_var: 3
+# n_obj: 2
+# n_constr: 0
+
+2021-02-26 10:39:02 DEBUG	pymooOpt.py:115 - Calling minimize()
+2021-02-26 10:41:45 DEBUG	lossFunction.py:43 - Ran agent successfully. Params=['1', '0.9', '0.04', '2', '1.7263858183400387', '15', '1', '2.440648986884316', '500.0114374817345', '-1', '-1']
+2021-02-26 10:41:45 DEBUG	pymooOpt.py:148 - Done. Wrote to result file /camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/output/calibrationResults/result_1.res

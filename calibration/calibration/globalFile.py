@@ -18,6 +18,9 @@ INDEXES = {
 }
 
 def fileName(f):
+    """
+    @param pass in __file__
+    """
     return os.path.basename(f)
 
 def lineNo(curFrame):

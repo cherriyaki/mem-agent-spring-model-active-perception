@@ -29,7 +29,7 @@ class PymooOptimizer(Optimizer):
     def _setMask(self, paramNames):
         self.mask = []
         for name in paramNames:
-            if name == "filvary":
+            if name.lower() == "filvary":
                 self.mask.append("real")
             else:
                 self.mask.append("int")
@@ -48,9 +48,9 @@ class PymooOptimizer(Optimizer):
         crossover = self._getCrossover()
         mutation = self._getMutation()
         self.algo=algo
-        self._configAlgo()
+        self._configAlgo(sampling, crossover, mutation)
 
-    def _configAlgo(self):
+    def _configAlgo(self, sampling, crossover, mutation):
         self.algo.pop_size=1 # 40
         self.algo.n_offsprings=1 # 10
         self.algo.sampling=sampling

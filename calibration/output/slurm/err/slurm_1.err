@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/camp/apps/eb/software/Python/3.8.2-GCCcore-9.3.0/lib/python3.8/runpy.py", line 193, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/camp/apps/eb/software/Python/3.8.2-GCCcore-9.3.0/lib/python3.8/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/calibration/model/calibrate/__main__.py", line 11, in <module>
+    main()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/calibration/model/calibrate/__main__.py", line 7, in main
+    calibrator.run()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/calibration/model/calibrate/calibrator.py", line 16, in run
+    self._setup()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/calibration/model/calibrate/calibrator.py", line 40, in _setup
+    self._configureOpt()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/calibration/model/calibrate/calibrator.py", line 56, in _configureOpt
+    self.opt.setAlgo(self.input["algorithm"])
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/calibration/model/calibrate/optimizers/pymooOpt.py", line 51, in setAlgo
+    self._configAlgo()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_1/calibration/calibration/model/calibrate/optimizers/pymooOpt.py", line 56, in _configAlgo
+    self.algo.sampling=sampling
+NameError: name 'sampling' is not defined
