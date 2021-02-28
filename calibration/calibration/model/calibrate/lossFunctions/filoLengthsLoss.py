@@ -17,8 +17,8 @@ class FiloLengthsLoss(LossFunction):
         @param  candidate: [paramValue1, paramValue2, ...]
         @return {"obj1": loss, "obj2": loss, ...}
         """
-        super()._runAgent(candidate)
-        output = super()._getOutputContent(candidate)
+        super().runAgent(candidate)
+        output = super().getOutputContent(candidate, runOutputDir="filoLengthFiles")
         if output.strip() in ['\n', '\r\n', '']:    # Empty file: treat as no filopodia growth
             return self.maxLosses
         # TEST
@@ -205,6 +205,7 @@ class InVivoData:
         self.avgExtIV = self._getData(self._path('avgExtIV.csv'))
         self.avgRetIV = self._getData(self._path('avgRetIV.csv'))
         self.timeAtMaxIV = self._getData(self._path('timeAtMaxIV.csv'))
+        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Loaded invivo data"])
 
     def _path(self, fileName):
         return os.path.join(self.ivDir, fileName)
@@ -225,7 +226,6 @@ class InVivoData:
             logWriter.write(id=self.id, line=["ERROR", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Invivo retrieval: Failed to open {file}"])
             logWriter.write(id=self.id, exc=tb)
             raise
-        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Loaded invivo csv"])
         return arr
 
         

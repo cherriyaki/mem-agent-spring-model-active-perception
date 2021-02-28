@@ -145,7 +145,7 @@ class PymooOptimizer(Optimizer):
             logWriter.write(id=self.id, line=["ERROR", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Failed to open or write to {file}"])
             logWriter.write(id=self.id, exc=tb)
             raise       # Throw the caught exception
-        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Done. Wrote to result file {file}"])
+        logWriter.write(id=self.id, line=["INFO", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Done. Wrote to result file {file}"])
 
 # if __name__ == "__main__":
 #     opt = PymooOptimizer(sys.argv[1])

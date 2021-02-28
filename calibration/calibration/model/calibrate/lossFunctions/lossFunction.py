@@ -29,7 +29,10 @@ class LossFunction:
         path = os.path.join(globalFile.getRoot(), "./springAgent")
         self.agent = path
 
-    def _runAgent(self, candidate):
+    def runAgent(self, candidate):
+        """
+        Runs agent with given candidate solution
+        """
         cmd = self._getCommand(candidate)
         process = subprocess.run(cmd, shell=False, capture_output=True, text=True)
         # self._checkAgentDone()
@@ -61,8 +64,11 @@ class LossFunction:
         # repeatedly check job finish
         pass
 
-    def _getOutputContent(self, candidate):
-        file = self._getRunFilePath(candidate)
+    def getOutputContent(self, candidate, **kwargs):
+        """
+        @param candidate, runOutputDir="dirname"
+        """
+        file = self._getRunFilePath(candidate, **kwargs)
         try:
             with open(file, "r") as f:
                 content = f.read()
@@ -74,10 +80,13 @@ class LossFunction:
         logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Loaded agent output from {file}"])
         return content
 
-    def _getRunFilePath(self, candidate):
+    def _getRunFilePath(self, candidate, **kwargs):
         name = self._getRunFileName(candidate)
         root = globalFile.getRoot()
-        path = os.path.join(root, "filoLengthFiles", name)
+        if "runOutputDir" in kwargs:
+            path = os.path.join(root, kwargs["runOutputDir"], name)
+        else:
+            path = os.path.join(root, name)
         return path
 
     def _getRunFileName(self, candidate):

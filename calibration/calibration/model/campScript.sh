@@ -104,6 +104,7 @@ cd $ROOT
 #-- Make slurm submission script
 echo "#!/bin/sh 
 #SBATCH --job-name=calibration_ID 
+#SBATCH --time=7-24
 #SBATCH --output=OUTDIR/out/slurm_ID.out 
 #SBATCH --error=OUTDIR/err/slurm_ID.err 
 #SBATCH --mail-type=END,FAIL 
