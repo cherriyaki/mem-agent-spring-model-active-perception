@@ -1,0 +1,15 @@
+{
+    "id": 2,
+    "user": "limc",
+    "email": "cherrysslim@hotmail.com",
+    "params": {
+        "filVary": [0.1, 8],
+        "filSpacing": [1, 5], 
+        "filTipMax": [5,20],
+        "actinMax": [450, 600]
+    },
+    "lib": "pymoo",
+    "algorithm": "nsga2",
+    "analysis": "filo_lengths",
+    "objectives": ["maxLen", "averageExtendingTime"]
+}

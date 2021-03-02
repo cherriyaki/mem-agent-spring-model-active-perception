@@ -56,7 +56,7 @@ write_log() {
   local line=$2
   shift; shift;
   local message=$(printf '%s' "$@")
-  PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter --id $id --line $log_type $THIS_FILE $line "$message"
+  PYTHONPATH=$ROOT/calibration python3 -m calibration.model.log --id $id --line $log_type $THIS_FILE $line "$message"
 }
 
 #- Error handling function
@@ -69,7 +69,7 @@ exit_if_error() {
   if [ $exit_code != 0 ]
   then
     write_log "ERROR" $line "$(printf '%s' "$@")"  # save to log
-    PYTHONPATH=$ROOT/calibration python3 -m calibration.model.logWriter --id $id --exc "$trace"
+    PYTHONPATH=$ROOT/calibration python3 -m calibration.model.log --id $id --exc "$trace"
     exit "$exit_code"     
             # TODO NEW how to handle this exit status in the python viewcontroller?
   fi
@@ -85,19 +85,16 @@ write_log "INFO" $LINENO "Result file created: calibration/output/calibrationRes
 #-- Main activity
 #-----------------
 
-#-- Clear everything in CAMP session dir
+#-- Prep camp
+# Create APSingleCodebase dir if it doesn't exist. If the session dir already exists, clear its contents.
 trace=$(ssh $user@login.camp.thecrick.org \
 "
-DIR=\"$camp_home/$session_dir\";
-if [ -d "$DIR" ]; then
-  # Take action if $DIR exists. ;
-  cd $camp_home/$session_dir;
-  rm -r *;
-fi;
+mkdir -p $camp_home/APSingleCodebase;
+mkdir $camp_home/$session_dir;
 exit;
 " 2>&1)  \
 || exit_if_error $? $LINENO "$trace" "ssh: Failed to clear session dir on CAMP" 
-write_log "DEBUG" $LINENO "ssh: Finished clearing session dir on CAMP"
+write_log "DEBUG" $LINENO "ssh: Cleared session dir on CAMP"
 
 cd $ROOT
 
@@ -122,7 +119,7 @@ trace=$(rsync -r \
 --include="makefile" --include="requirements" --exclude="*" --delete-excluded ./ \
 $user@login.camp.thecrick.org:$camp_home/$session_dir/ 2>&1) \
 || exit_if_error $? $LINENO "$trace" "rsync: Failed to move files to CAMP" 
-write_log "DEBUG" $LINENO "Finished rsync files to CAMP"
+write_log "DEBUG" $LINENO "rsync: Moved files to CAMP"
 
 #-- ssh commands to CAMP
 # TODO NEW add pip installs
@@ -140,7 +137,7 @@ slurm_calibrate_$id.sbatch;
 exit;
 " 2>&1)  \
 || exit_if_error $? $LINENO "$trace" "ssh: Failed to run commands on CAMP" 
-write_log "DEBUG" $LINENO "ssh: Finished ssh to CAMP"
+write_log "DEBUG" $LINENO "ssh: Sent commands to CAMP"
 
 # Delete submission script
 rm slurm_calibrate_$id.sbatch

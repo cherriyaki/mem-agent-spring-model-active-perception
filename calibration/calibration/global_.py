@@ -1,5 +1,6 @@
 import os, sys
 from inspect import getframeinfo
+import math
 
 TIME_STEP = 15
 DEFAULTS = [1, 0.9, 0.04, 2, 2, 15, 1, 2, 512, -1, -1]
@@ -31,6 +32,21 @@ RUNFILE = {
     "randFilRetract": "randFilRetract",
     "runNum": "run"
 }
+
+def truncate(f, n):
+    """
+    @param f - positive float, n - number of digits to keep 
+    """
+    f = str(f)
+    res = ""
+    ct = 0   # digit count
+    for c in f:
+        if c != '.':
+            ct += 1
+        if ct > n:  # stop after we have parsed n digits
+            break
+        res += c
+    return float(res)
 
 def fileName(f):
     """

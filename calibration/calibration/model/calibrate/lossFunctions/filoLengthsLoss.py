@@ -1,6 +1,6 @@
 from .lossFunction import LossFunction
-from calibration import globalFile
-from calibration.model import logWriter
+from calibration import global_
+from calibration.model import log
 import os
 import csv
 import traceback
@@ -50,9 +50,9 @@ class FiloLengthsLoss(LossFunction):
         """
         @return {obj1: [], obj2: []}
         """
-        extractor = FeaturesExtractor(self.id, globalFile.TIME_STEP)
+        extractor = FeaturesExtractor(self.id, global_.TIME_STEP)
         distri = extractor.getFeatureDistri(list(lengthsPerFilo.values()))
-        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Got distributions for each objective"])
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Got distributions for each objective"])
         return distri
 
     def _getKsValues(self, distributions):
@@ -111,7 +111,7 @@ class FeaturesExtractor:
                     self._analyseLength(length, prev)
                     prev = length
         if not self.maxLengths or not self.avgExtTimes or not self.timesAtMax or not self.avgRetTimes:  # one of distri is empty
-            logWriter.write(id=self.id, line=["ERROR", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"≥1 objective's distribution is empty. Might be that 0 filopodia retracted fully"])
+            log.w(id=self.id, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"≥1 objective's distribution is empty. Might be that 0 filopodia retracted fully"])
 
     def _breakIntoFilos(self, list_):
         """
@@ -172,7 +172,7 @@ class FeaturesExtractor:
 class InVivoData:
     def __init__(self, id_):
         self.id = id_
-        self.ivDir = os.path.join(globalFile.getRoot(), "calibration/data/filoLengths/invivo")
+        self.ivDir = os.path.join(global_.getRoot(), "calibration/data/filoLengths/invivo")
         self.maxLensIV = []
         self.avgExtIV = []
         self.avgRetIV = []
@@ -205,7 +205,7 @@ class InVivoData:
         self.avgExtIV = self._getData(self._path('avgExtIV.csv'))
         self.avgRetIV = self._getData(self._path('avgRetIV.csv'))
         self.timeAtMaxIV = self._getData(self._path('timeAtMaxIV.csv'))
-        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Loaded invivo data"])
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Loaded invivo data"])
 
     def _path(self, fileName):
         return os.path.join(self.ivDir, fileName)
@@ -223,8 +223,8 @@ class InVivoData:
                         arr.append(value)
         except:
             tb = traceback.format_exc()
-            logWriter.write(id=self.id, line=["ERROR", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Invivo retrieval: Failed to open {file}"])
-            logWriter.write(id=self.id, exc=tb)
+            log.w(id=self.id, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"Invivo retrieval: Failed to open {file}"])
+            log.w(id=self.id, exc=tb)
             raise
         return arr
 

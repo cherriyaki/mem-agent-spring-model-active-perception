@@ -1,0 +1,15 @@
+2021-03-02 17:16:32 INFO	campScript.sh:80 - Session 3 started. Input file: calibration/data/inputHistory/input_3.json
+2021-03-02 17:16:32 INFO	campScript.sh:82 - Result file created: calibration/output/calibrationResults/result_3.res
+2021-03-02 17:16:33 ERROR	campScript.sh:100 - ssh: Failed to clear session dir on CAMP
+bash: line 4: cd: /camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_3: No such file or directory
+rm: cannot remove ‘*’: No such file or directory
+2021-03-02 17:17:04 INFO	campScript.sh:80 - Session 3 started. Input file: calibration/data/inputHistory/input_3.json
+2021-03-02 17:17:04 INFO	campScript.sh:82 - Result file created: calibration/output/calibrationResults/result_3.res
+2021-03-02 17:17:05 ERROR	campScript.sh:100 - ssh: Failed to clear session dir on CAMP
+bash: -c: line 3: syntax error near unexpected token `;'
+bash: -c: line 3: `if [ -d  ]; then;'
+2021-03-02 17:20:18 INFO	campScript.sh:80 - Session 3 started. Input file: calibration/data/inputHistory/input_3.json
+2021-03-02 17:20:18 INFO	campScript.sh:82 - Result file created: calibration/output/calibrationResults/result_3.res
+2021-03-02 17:20:19 DEBUG	campScript.sh:97 - ssh: Cleared session dir on CAMP
+2021-03-02 17:20:21 DEBUG	campScript.sh:122 - rsync: Moved files to CAMP
+2021-03-02 17:20:44 DEBUG	campScript.sh:140 - ssh: Sent commands to CAMP

@@ -1,9 +1,9 @@
 import os, sys
 import argparse
 from datetime import datetime
-from calibration import globalFile
+from calibration import global_
 
-def write(**kwargs):
+def w(**kwargs):
     """ @param id=ID, line=[messageType, currentFilename, lineNum, message], OR
     exc="exceptionTrace"
     Tip: exceptionTrace can be obtained by traceback.format_exc()
@@ -52,7 +52,7 @@ def _format(time, args):
     return timeAndType + fileAndLine + args["Message"] + '\n'
 
 def _getLogFile(id_):
-    root = globalFile.getRoot()
+    root = global_.getRoot()
     logFile = os.path.join(root, f"calibration/logs/log_{id_}.log")
     return logFile
 
@@ -64,6 +64,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.line != None:
         # line = _separate(args.line)
-        write(id=args.id, line=args.line)
+        w(id=args.id, line=args.line)
     elif args.exc != None:
-        write(id=args.id, exc=args.exc)
+        w(id=args.id, exc=args.exc)

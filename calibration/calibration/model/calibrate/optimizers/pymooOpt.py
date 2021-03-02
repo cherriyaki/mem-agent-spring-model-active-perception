@@ -3,8 +3,8 @@ from pymoo.factory import get_sampling, get_crossover, get_mutation, get_algorit
 from pymoo.operators.mixed_variable_operator import MixedVariableSampling, MixedVariableMutation, MixedVariableCrossover
 from pymoo.model.problem import Problem
 from pymoo.optimize import minimize
-from calibration import globalFile
-from calibration.model import logWriter
+from calibration import global_
+from calibration.model import log
 from inspect import currentframe
 import traceback
 import numpy as np
@@ -24,7 +24,7 @@ class PymooOptimizer(Optimizer):
         for bounds in params.values():
             self.lower.append(bounds[0])
             self.upper.append(bounds[1])
-        logWriter.write(id=self.id, line=["INFO", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Lower bounds = {self.lower} | Upper bounds = {self.upper}"])
+        log.w(id=self.id, line=["INFO", global_.fileName(__file__), global_.lineNo(currentframe()), f"Lower bounds = {self.lower} | Upper bounds = {self.upper}"])
 
     def _setMask(self, paramNames):
         self.mask = []
@@ -33,7 +33,7 @@ class PymooOptimizer(Optimizer):
                 self.mask.append("real")
             else:
                 self.mask.append("int")
-        logWriter.write(id=self.id, line=["INFO", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"mask = {self.mask}"])
+        log.w(id=self.id, line=["INFO", global_.fileName(__file__), global_.lineNo(currentframe()), f"mask = {self.mask}"])
 
     def setObjectives(self, objectives):
         self.objs = objectives
@@ -43,7 +43,7 @@ class PymooOptimizer(Optimizer):
 
     def setAlgo(self, algoName):
         algo = get_algorithm(algoName)
-        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Algorithm obtained. Object = {algo}"])
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Algorithm obtained. Object = {algo}"])
         sampling = self._getSampling()
         crossover = self._getCrossover()
         mutation = self._getMutation()
@@ -51,8 +51,8 @@ class PymooOptimizer(Optimizer):
         self._configAlgo(sampling, crossover, mutation)
 
     def _configAlgo(self, sampling, crossover, mutation):
-        self.algo.pop_size=1 # 40
-        self.algo.n_offsprings=1 # 10
+        self.algo.pop_size=40 # 40
+        self.algo.n_offsprings=10 # 10
         self.algo.sampling=sampling
         self.algo.crossover=crossover
         self.algo.mutation=mutation
@@ -81,7 +81,7 @@ class PymooOptimizer(Optimizer):
 
     def optimize(self):
         self._setupProblem()
-        self.termination = get_termination("n_gen", 1) # 40
+        self.termination = get_termination("n_gen", 40) # 40
         self._minimize()
         self._getResult()
 
@@ -109,10 +109,10 @@ class PymooOptimizer(Optimizer):
                 out["F"] = np.column_stack(np.array(list(f.values())))
 
         self.problem = MyProblem()
-        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Defined problem class. Object = {self.problem}"])
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Defined problem class. Object = {self.problem}"])
 
     def _minimize(self):
-        logWriter.write(id=self.id, line=["DEBUG", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Calling minimize()"])
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Calling minimize()"])
         try:
             self.res = minimize(self.problem,
                                 self.algo,
@@ -122,8 +122,8 @@ class PymooOptimizer(Optimizer):
                                 verbose=True)
         except: 
             tb = traceback.format_exc()
-            logWriter.write(id=self.id, line=["ERROR", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Failed to run minimize()"])
-            logWriter.write(id=self.id, exc=tb)
+            log.w(id=self.id, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"Failed to run minimize()"])
+            log.w(id=self.id, exc=tb)
             raise       # Throw the caught exception
 
     def _getResult(self):
@@ -136,16 +136,16 @@ class PymooOptimizer(Optimizer):
         self._saveOutput(output)
 
     def _saveOutput(self, output):
-        file = os.path.join(globalFile.getRoot(), f"calibration/output/calibrationResults/result_{self.id}.res")
+        file = os.path.join(global_.getRoot(), f"calibration/output/calibrationResults/result_{self.id}.res")
         try:
             with open(file, "w") as f:
                 f.write(output)
         except:
             tb = traceback.format_exc()
-            logWriter.write(id=self.id, line=["ERROR", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Failed to open or write to {file}"])
-            logWriter.write(id=self.id, exc=tb)
+            log.w(id=self.id, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"Failed to open or write to {file}"])
+            log.w(id=self.id, exc=tb)
             raise       # Throw the caught exception
-        logWriter.write(id=self.id, line=["INFO", globalFile.fileName(__file__), globalFile.lineNo(currentframe()), f"Done. Wrote to result file {file}"])
+        log.w(id=self.id, line=["INFO", global_.fileName(__file__), global_.lineNo(currentframe()), f"Done. Wrote to result file {file}"])
 
 # if __name__ == "__main__":
 #     opt = PymooOptimizer(sys.argv[1])
