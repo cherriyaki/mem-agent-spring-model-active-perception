@@ -90,7 +90,11 @@ write_log "INFO" $LINENO "Result file created: calibration/output/calibrationRes
 trace=$(ssh $user@login.camp.thecrick.org \
 "
 mkdir -p $camp_home/APSingleCodebase;
-mkdir $camp_home/$session_dir;
+cd $camp_home/APSingleCodebase;
+if [ -d $camp_home/$session_dir ];
+  then rm -r session_$id;
+fi;
+mkdir session_$id;
 exit;
 " 2>&1)  \
 || exit_if_error $? $LINENO "$trace" "ssh: Failed to clear session dir on CAMP" 

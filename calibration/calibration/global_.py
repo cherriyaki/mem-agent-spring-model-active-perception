@@ -1,6 +1,7 @@
 import os, sys
 from inspect import getframeinfo
 import math
+import numpy as np
 
 TIME_STEP = 15
 DEFAULTS = [1, 0.9, 0.04, 2, 2, 15, 1, 2, 512, -1, -1]
@@ -47,6 +48,13 @@ def truncate(f, n):
             break
         res += c
     return float(res)
+
+def dimension(npArr):
+    """
+    takes a Numpy array and returns the number of dimensions
+    """
+    shape = npArr.shape
+    return len(shape)
 
 def fileName(f):
     """

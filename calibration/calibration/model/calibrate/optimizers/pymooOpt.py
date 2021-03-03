@@ -128,10 +128,18 @@ class PymooOptimizer(Optimizer):
 
     def _getResult(self):
         output = ""
-        for i in range(len(self.res.X)):
-            output += "--- SOLUTION ("+str(i)+") \n"
-            output += "Solution: %s" % self.res.X[i] + "\n"
-            output += "Loss values: %s" % self.res.F[i] + "\n"
+        try:
+            if global_.dimension(self.res.X) == 1 and global_.dimension(self.res.F) == 1:
+                output += "--- SOLUTION \n"
+                output += "Solution: %s" % self.res.X + "\n"
+                output += "Loss value(s): %s" % self.res.F + "\n"
+            else:   # if 2 dimensions, then iterate list by list
+                for i in range(len(self.res.X)):
+                    output += "--- SOLUTION (" + str(i) + ") \n"
+                    output += "Solution: %s" % self.res.X[i] + "\n"
+                    output += "Loss values: %s" % self.res.F[i] + "\n"
+        except:
+            output = "-- SOLUTIONS:\n" + str(self.res.X) + "\n-- LOSSES\n" + str(self.res.F)
         print(output)
         self._saveOutput(output)
 

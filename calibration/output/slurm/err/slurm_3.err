@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/camp/apps/eb/software/Python/3.8.2-GCCcore-9.3.0/lib/python3.8/runpy.py", line 193, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/camp/apps/eb/software/Python/3.8.2-GCCcore-9.3.0/lib/python3.8/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_3/calibration/calibration/model/calibrate/__main__.py", line 11, in <module>
+    main()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_3/calibration/calibration/model/calibrate/__main__.py", line 7, in main
+    calibrator.run()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_3/calibration/calibration/model/calibrate/calibrator.py", line 18, in run
+    self.opt.optimize()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_3/calibration/calibration/model/calibrate/optimizers/pymooOpt.py", line 86, in optimize
+    self._getResult()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_3/calibration/calibration/model/calibrate/optimizers/pymooOpt.py", line 134, in _getResult
+    output += "Loss values: %s" % self.res.F[i] + "\n"
+IndexError: index 1 is out of bounds for axis 0 with size 1
