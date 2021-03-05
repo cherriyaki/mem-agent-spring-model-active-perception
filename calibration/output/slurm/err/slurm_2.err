@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/camp/apps/eb/software/Python/3.8.2-GCCcore-9.3.0/lib/python3.8/runpy.py", line 193, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/camp/apps/eb/software/Python/3.8.2-GCCcore-9.3.0/lib/python3.8/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/__main__.py", line 11, in <module>
+    main()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/__main__.py", line 7, in main
+    calibrator.run()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/calibrator.py", line 18, in run
+    self.opt.optimize()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/optimizers/pymooOpt.py", line 85, in optimize
+    self._minimize()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/optimizers/pymooOpt.py", line 117, in _minimize
+    self.res = minimize(self.problem,
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/optimize.py", line 85, in minimize
+    res = algorithm.solve()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/model/algorithm.py", line 226, in solve
+    self._solve(self.problem)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/model/algorithm.py", line 321, in _solve
+    self.next()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/model/algorithm.py", line 246, in next
+    self._next()
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/algorithms/genetic_algorithm.py", line 107, in _next
+    self.evaluator.eval(self.problem, self.off, algorithm=self)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/model/evaluator.py", line 78, in eval
+    self._eval(problem, pop[I], **kwargs)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/model/evaluator.py", line 94, in _eval
+    out = problem.evaluate(pop.get("X"),
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/model/problem.py", line 286, in evaluate
+    out = self._evaluate_batch(X, calc_gradient, out, *args, **kwargs)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/env/lib/python3.8/site-packages/pymoo/model/problem.py", line 385, in _evaluate_batch
+    self._evaluate(X, out, *args, **kwargs)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/optimizers/pymooOpt.py", line 104, in _evaluate
+    losses = fn(solution)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/lossFunctions/filoLengthsLoss.py", line 27, in getLosses
+    lengthsPerFilo = self._splitByFilo(output)
+  File "/camp/lab/bentleyk/home/shared/limc/APSingleCodebase/session_2/calibration/calibration/model/calibrate/lossFunctions/filoLengthsLoss.py", line 43, in _splitByFilo
+    length = float(elements[1])
+IndexError: list index out of range

@@ -37,7 +37,7 @@ class FiloLengthsLoss(LossFunction):
         ctr = 0
         for line in lines:
             ctr += 1
-            if line.strip() not in ['\n', '\r\n', '']: 
+            if line.strip() not in ['\n', '\r\n', ''] and self._correctFormat(line):    # only parse this line if it is the correct format
                 elements = line.split(",")
                 filo = elements[0]
                 length = float(elements[1])
@@ -45,6 +45,10 @@ class FiloLengthsLoss(LossFunction):
                     lengthsPerFilo[filo] = []
                 lengthsPerFilo[filo].append(length) 
         return lengthsPerFilo
+
+    def _correctFormat(self, line):
+        split_ = line.split(",")
+        return len(split_) == 2
 
     def _getFeatureDistri(self, lengthsPerFilo):
         """
@@ -231,5 +235,6 @@ class InVivoData:
         
 
 if __name__ == "__main__":
+    # test
     loss = FiloLengthsLoss(1, ["filVary", "filSpacing"])
     loss._runAgent([1,1])
