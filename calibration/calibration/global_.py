@@ -3,6 +3,11 @@ from inspect import getframeinfo
 import math
 import numpy as np
 
+ANALYSIS = ["filo_lengths", "time_to_pattern", "bistability", "pybind"]
+OBJ = ["maxLen",
+            "averageExtendingTime",
+            "averageRetractingTime",
+            "timeAtMax"]
 TIME_STEP = 15
 DEFAULTS = [1, 0.9, 0.04, 2, 2, 15, 1, 2, 512, 0.95, 0.1, -1, -1]
 INDEXES = {

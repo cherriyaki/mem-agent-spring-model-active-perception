@@ -24,7 +24,7 @@ class LossFunction:
         for name in self.params:
             idx = global_.INDEXES[name]
             idxes.append(idx)
-        self.idxes = idxes
+        self.idxes = idxes      # The indexes of the varying params
 
     def _setAgent(self):
         path = os.path.join(global_.getRoot(), "./springAgent")

@@ -4,29 +4,33 @@ from datetime import datetime
 from calibration import global_
 
 def w(**kwargs):
-    """ @param id=ID, line=[messageType, currentFilename, lineNum, message], OR
+    """ @param id=ID, job=JobType, line=[messageType, currentFilename, lineNum, message], OR
     exc="exceptionTrace"
     Tip: exceptionTrace can be obtained by traceback.format_exc()
     """
     id_ = kwargs["id"]
+    job = "opt"
+    if "job" in kwargs:
+        job = kwargs["job"]
     if "line" in kwargs:
-        _writeLine(id_, kwargs["line"])
+        _writeLine(id_, job, kwargs["line"])
     elif "exc" in kwargs:
-        _write(id_, kwargs["exc"])
+        _write(id_, job, kwargs["exc"])
 
-def _writeLine(id_, arr):
+
+def _writeLine(id_, job, arr):
     args = _getArgDict(arr)
     time = _getTimeStamp()
     line = _format(time, args)
-    logFile = _getLogFile(id_)
+    logFile = _getLogFile(id_, job)
     try:
         with open(logFile, 'a') as f:   # open file in append mode
             f.write(line)
     except (IOError, OSError):
         print('could not open file ' + logFile)
 
-def _write(id_, str_):
-    logFile = _getLogFile(id_)
+def _write(id_, job, str_):
+    logFile = _getLogFile(id_, job)
     try:
         with open(logFile, 'a') as f:   # open file in append mode
             f.write(str_ + "\n")
@@ -51,9 +55,9 @@ def _format(time, args):
     fileAndLine = args["File"] + ':' + str(args["Line"]) + ' - '
     return timeAndType + fileAndLine + args["Message"] + '\n'
 
-def _getLogFile(id_):
+def _getLogFile(id_, job):
     root = global_.getRoot()
-    logFile = os.path.join(root, f"calibration/logs/log_{id_}.log")
+    logFile = os.path.join(root, f"calibration/logs/{job}_{id_}.log")
     return logFile
 
 if __name__ == '__main__':
