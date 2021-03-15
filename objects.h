@@ -184,10 +184,12 @@ extern float M2_lambda;
 ///SPRING_SETUP
 #define springConstant 0.05f
 #define FAspringConstant 0.05f
-#define filSpringConstant 0.95f
+// #define filSpringConstant 0.95f
+extern float filSpringConstant; //cherry
 #define filBaseConstant 0.7f ///was 0.7 lower as smaller cells?
 #define junctionConstant 0.4f
-#define filSpringLength 0.1f
+// #define filSpringLength 0.1f
+extern float filSpringLength; //cherry
 #define springLength 1.0f
 #define JunctionSpringLength 0.5f
 
@@ -769,7 +771,7 @@ public:
     //TODO: add yMax in..
     //TODO: put ybaseline back in
     //World(float epsilon = 0.9, float vconcst = 0.04, int gradientType = 2, /*float yBaseline,*/ float filConstNorm = 2.0f, float filTipMax = 10, float tokenstrength = 1);
-    World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float actinmax /*cherry*/, float randomFilExtend, float randFilRetract, long long s);
+    World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, /*cherry*/ float actinmax, /*cherry*/ float filSpringC, /*cherry*/ float filSpringL, float randomFilExtend, float randFilRetract, long long s);
     void runSimulation();
     void creationTimestep(int movie);
     void simulateTimestep();

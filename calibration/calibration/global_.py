@@ -4,7 +4,7 @@ import math
 import numpy as np
 
 TIME_STEP = 15
-DEFAULTS = [1, 0.9, 0.04, 2, 2, 15, 1, 2, 512, -1, -1]
+DEFAULTS = [1, 0.9, 0.04, 2, 2, 15, 1, 2, 512, 0.95, 0.1, -1, -1]
 INDEXES = {
     "runNum": 0,
     "epsilon": 1,
@@ -15,10 +15,12 @@ INDEXES = {
     "tokenStrength": 6,
     "filSpacing": 7,
     "actinMax": 8,
-    "randFilExtend": 9,
-    "randFilRetract": 10
+    "filSpringC": 9,
+    "filSpringL": 10,
+    "randFilExtend": 11,
+    "randFilRetract": 12
 }
-TYPES = ["int","float","float","int","float","float","float","int","float","float","float"]
+TYPES = ["int","float","float","int","float","float","float","int","float","float","float","float","float"]
 
 RUNFILE = {
     "filVary": "filvary_", 
@@ -29,6 +31,8 @@ RUNFILE = {
     "tokenStrength": "tokenStrength",
     "filSpacing": "FILSPACING",
     "actinMax": "actinMax",
+    "filSpringC": "filSpringC",
+    "filSpringL": "filSpringL",
     "randFilExtend": "randFilExtend",
     "randFilRetract": "randFilRetract",
     "runNum": "run"

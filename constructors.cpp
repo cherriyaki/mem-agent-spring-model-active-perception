@@ -271,7 +271,7 @@ EC::EC(World*  world){
 
 //   scale_ProtLevels_to_CellSize();
 //}
-World::World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float actinmax /*cherry*/, float randomFilExtend, float randFilRetract, long long s)
+World::World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing,/*cherry*/ float actinmax , /*cherry*/ float filSpringC, /*cherry*/ float filSpringL, float randomFilExtend, float randFilRetract, long long s)
 {
     if (TESTING == true)
     {
@@ -295,6 +295,8 @@ World::World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*
     GRADIENT = gradientType;
     FIL_SPACING = filspacing;
     actinMax = actinmax; //cherry
+    filSpringConstant = filSpringC; //cherry
+    filSpringLength = filSpringL; //cherry
     randFilExtend = randomFilExtend;
     RAND_FILRETRACT_CHANCE = randFilRetract;
 

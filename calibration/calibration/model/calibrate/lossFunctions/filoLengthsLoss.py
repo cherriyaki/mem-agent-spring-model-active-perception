@@ -9,6 +9,9 @@ from inspect import currentframe
 
 class FiloLengthsLoss(LossFunction):
     def __init__(self, id_, paramNames):
+        """
+        @param paramNames: [paramName1, paramName2, ...]
+        """
         super().__init__(id_, paramNames, "filo_lengths")
         self.maxLosses = {"maxLen": 1, "averageExtendingTime": 1, "averageRetractingTime": 1, "timeAtMax": 1}
 

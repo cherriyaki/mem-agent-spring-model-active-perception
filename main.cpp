@@ -80,6 +80,8 @@ float tokenStrength = 1;
 float FILTIPMAX = 15;
 int FIL_SPACING = 2;
 float actinMax = 512; // cherry
+float filSpringConstant = 0.95; //cherry
+float filSpringLength = 0.1; //cherry
 int run_number = 1;
 int GRADIENT = STEADY;
 float randFilExtend = -1;
@@ -120,14 +122,16 @@ void readArgs(int argc, char * argv[]) {
         tokenStrength = atof(argv[7]);
 		FIL_SPACING = atof(argv[8]);
         actinMax = atof(argv[9]); //cherry 
-        if (argc > 10)
+        filSpringConstant = atof(argv[10]); //cherry
+        filSpringLength = atof(argv[11]); //cherry
+        if (argc > 12)
         {
-            randFilExtend = atof(argv[10]);
+            randFilExtend = atof(argv[12]);
             if (randFilExtend >= 0 && randFilExtend <= 1)
                 EPSILON = 0;
-            RAND_FILRETRACT_CHANCE = atof(argv[10]);
-            if (argc > 11)
-                seed = stoll(argv[11]);
+            RAND_FILRETRACT_CHANCE = atof(argv[12]);
+            if (argc > 13)
+                seed = stoll(argv[13]);
         }
         VEGFconc = VconcST;
     }
@@ -197,6 +201,8 @@ int main(int argc, char * argv[]) {
     cout << "tokenStrength: " << tokenStrength << endl;
 	cout << "FIL_SPACING: " << FIL_SPACING << endl;
     cout << "actinMax: " << actinMax << endl; //cherry
+    cout << "filSpringConstant: " << filSpringConstant << endl; //cherry
+    cout << "filSpringLength: " << filSpringLength << endl; //cherry
 	cout << "randFilExtension: " << randFilExtend << endl;
 	cout << "RAND_FILRETRACT_CHANCE: " << RAND_FILRETRACT_CHANCE<< endl;
     //---------------------------------------------------------------
@@ -216,7 +222,7 @@ int main(int argc, char * argv[]) {
     else if (ANALYSIS_FILO_LENGTHS) {
         cout << "getting the lengths over time per filopodium" << endl;
         sprintf(outfilename,
-        "filoLengthFiles/filo_lengths_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_actinMax%g_randFilExtend%g_randFilRetract%g_run%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
+        "filoLengthFiles/filo_lengths_filvary_%g_epsilon_%g_VconcST%g_GRADIENT%i_FILTIPMAX%g_tokenStrength%g_FILSPACING%i_actinMax%g_filSpringC%g_filSpringL%g_randFilExtend%g_randFilRetract%g_run%i_.txt", double(FIL_VARY), double(EPSILON), VconcST, GRADIENT, FILTIPMAX, tokenStrength, FIL_SPACING, actinMax, filSpringConstant, filSpringLength, randFilExtend, RAND_FILRETRACT_CHANCE, run_number
         );
     }
     else {
