@@ -47,8 +47,8 @@ class LossFunction:
 
     def _getCommand(self, candidate):
         # TEST LOCAL
-        # cmd = [f"{self.agent}", f"{self.run}"]
-        cmd = ["srun", "--partition=int", "--time=72:00:00", "--nodes=1", "--ntasks=1", "--cpus-per-task=1", f"{self.agent}", f"{self.run}"]
+        cmd = [f"{self.agent}", f"{self.run}"]
+        # cmd = ["srun", "--partition=int", "--time=72:00:00", "--nodes=1", "--ntasks=1", "--cpus-per-task=1", f"{self.agent}", f"{self.run}"]
         ctr = 0
         for i in range(1, len(global_.DEFAULTS)):   # for every positional arg after runNum
             if i in self.idxes:     # if this index points to a param we are varying

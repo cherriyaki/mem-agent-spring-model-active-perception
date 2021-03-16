@@ -144,7 +144,7 @@ class PymooOptimizer(Optimizer):
         self._saveOutput(output)
 
     def _saveOutput(self, output):
-        file = os.path.join(global_.getRoot(), f"calibration/output/calibrationResults/result_{self.id}.res")
+        file = os.path.join(global_.getRoot(), f"calibration/output/calibrationResults/{self.id}.res")
         try:
             with open(file, "w") as f:
                 f.write(output)

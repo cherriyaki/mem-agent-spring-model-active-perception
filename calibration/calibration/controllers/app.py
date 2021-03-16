@@ -50,7 +50,7 @@ class App(tk.Tk):
         Run sensitivity analysis 
         @param {"name": [var1, var2], "name2": var1}
         """
-        id_ = self._createID()
+        id_ = self._createID("sens")
         dict_ = self._parseDict(inputs)
         str_ = self._dictToJson(dict_)
         json = self._jsonFileName(id_, "sens")
@@ -59,9 +59,9 @@ class App(tk.Tk):
         if not written:
             return
         # backend code
-        self._showSensNext()
+        self._showSensNext(id_)
         
-    def _showSensNext(self):
+    def _showSensNext(self, id_):
         frame = self.frames["SensNextPage"]
         log = self._logFileName(id_, "sens")
         res = self._resFileName(id_, "sens")
@@ -133,9 +133,10 @@ class App(tk.Tk):
         frame.show(err)
         frame.tkraise()
 
-    def _createID(self):
+    def _createID(self, job):
         dtObj = dt.now()
         id_ = f"{dtObj.year}{dtObj.month}{dtObj.day}{dtObj.hour}{dtObj.minute}{dtObj.second}"
+        id_ = f"{job}_{id_}"
         return id_
     
     def clear(self, inputs):

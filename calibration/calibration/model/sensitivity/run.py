@@ -9,11 +9,10 @@ import os
 class SensRunner:
     def __init__(self, id_):
         self.id = id_
-        self.job = "sens"
         self.out = ""
 
     def run(self):
-        log.w(id=self.id, job=self.job, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), "Started sensitivity experiment"])
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), "Started sensitivity experiment"])
         self.input = self._getInputFromJson()
         self._setup()
         self._testEachParam()
@@ -26,26 +25,30 @@ class SensRunner:
                 data = json.load(f) 
         except:
             tb = traceback.format_exc()
-            log.w(id=self.id, job=self.job, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"Failed to open or load {file}"])
-            log.w(id=self.id, job=self.job, exc=tb)
+            log.w(id=self.id, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"Failed to open or load {file}"])
+            log.w(id=self.id,  exc=tb)
             raise       # Throw the caught exception
-        log.w(id=self.id, job=self.job, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), "JSON input loaded"])
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), "JSON input loaded"])
         return data
 
     def _getJsonFile(self):
         root = global_.getRoot()
-        file = os.path.join(root, f"calibration/data/inputHistory/{self.job}_{self.id}.json")
+        file = os.path.join(root, f"calibration/data/inputHistory/{self.id}.json")
         return file
 
     def _setup(self):
+        self._setParams()
         self._setLossFn(self.input["analysis"])
-        self.params = self.input["params"].keys()
         self._setupOut()
+    
+    def _setParams(self):
+        self.params = list(self.input["params"].keys())
+        log.w(id=self.id, line=["INFO", global_.fileName(__file__), global_.lineNo(currentframe()), f"Variable params are {self.params}"])
 
     def _setLossFn(self, analysis):
-        self.lossFn = FiloLengthsLoss(self.id, list(self.input["params"].keys()))      # Default
+        self.lossFn = FiloLengthsLoss(self.id, self.params)      # Default
         # Add code here to set a different loss function based on argument `analysis`
-        log.w(id=self.id, job=self.job, line=["INFO", global_.fileName(__file__), global_.lineNo(currentframe()), f"Set loss function as {type(self.lossFn).__name__}"])
+        log.w(id=self.id, line=["INFO", global_.fileName(__file__), global_.lineNo(currentframe()), f"Set loss function as {type(self.lossFn).__name__}"])
 
     def _setupOut(self):
         for p in self.params:
@@ -53,11 +56,13 @@ class SensRunner:
         self.out += ","
         for o in global_.OBJ:
             self.out += f"{o},"
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Created output string {self.out}"])
 
     def _testEachParam(self):
         for p in self.params:
+            log.w(id=self.id, line=["INFO", global_.fileName(__file__), global_.lineNo(currentframe()), f"NOW TESTING: {p}"])
             vals = self._getVals(p)
-            others = self.params - [p]
+            others = [r for r in self.params if r != p]
             defs = self._getDefaults(others)
             for v in vals:
                 candidate = []
@@ -66,6 +71,7 @@ class SensRunner:
                         candidate.append(v)
                     else:   # default param
                         candidate.append(defs[q])
+                log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Candidate set as {candidate}"])
                 losses = self.lossFn.getLosses(candidate).values()
                 self._addToOut(candidate, losses)
 
@@ -94,12 +100,16 @@ class SensRunner:
         """
         For given param, get the list of vals to test
         """
-        start, end, step = self.input["params"][p]
+        [start, end, step] = self.input["params"][p]
+        start = float(start)
+        end = float(end)
+        step = float(step)
         vals = []
         v = start
         while v <= end:
             vals.append(v)
             v += step
+        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Vals for {p} are {vals}"])
         return vals
 
     def _writeOut(self):
@@ -109,11 +119,11 @@ class SensRunner:
                 f.write(self.out)
         except:
             tb = traceback.format_exc()
-            log.w(id=self.id, job=self.job, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"Failed to open or load {file}"])
-            log.w(id=self.id, job=self.job, exc=tb)
+            log.w(id=self.id, line=["ERROR", global_.fileName(__file__), global_.lineNo(currentframe()), f"Failed to open or load {file}"])
+            log.w(id=self.id, exc=tb)
             raise       # Throw the caught exception
 
     def _outFile(self):
         root = global_.getRoot()
-        file = os.path.join(root, f"calibration/output/results/{self.job}_{self.id}.csv")
+        file = os.path.join(root, f"calibration/output/results/{self.id}.csv")
         return file

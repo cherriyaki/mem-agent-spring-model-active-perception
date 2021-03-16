@@ -25,15 +25,15 @@ camp_root="/camp/lab/bentleyk/home/shared/$user/APSingleCodebase/session_$id"
 ROOT=$(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd)     # Thanks to https://codefather.tech/blog/bash-get-script-directory/ for this line of code
 # session_dir="session_$id"
 
-result="calibration/output/calibrationResults/result_$id.res"
+result="calibration/output/calibrationResults/$id.res"
 result_camp="$camp_root/$result"
 result_local="$ROOT/$result"
 
-log="calibration/logs/log_$id.log"
+log="calibration/logs/$id.log"
 log_camp="$camp_root/$log"
 log_local="$ROOT/$log"
 
-slurmerr="calibration/output/slurm/err/slurm_$id.err"
+slurmerr="calibration/output/slurm/err/$id.err"
 slurmerr_camp="$camp_root/$slurmerr"
 slurmerr_local="$ROOT/$slurmerr"
 

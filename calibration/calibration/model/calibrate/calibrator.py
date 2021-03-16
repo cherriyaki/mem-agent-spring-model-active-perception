@@ -32,7 +32,7 @@ class Calibrator:
 
     def _getJsonFile(self):
         root = global_.getRoot()
-        file = os.path.join(root, f"calibration/data/inputHistory/input_{self.id}.json")
+        file = os.path.join(root, f"calibration/data/inputHistory/{self.id}.json")
         return file
 
     def _setup(self):

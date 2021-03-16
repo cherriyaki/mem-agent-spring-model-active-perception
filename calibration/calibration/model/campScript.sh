@@ -1,6 +1,7 @@
 
 #-- Default variables
 user=$USER
+model="calibrate"
 
 #-- Set variables from args
 POSITIONAL=()
@@ -31,11 +32,15 @@ case $key in
 esac
 done
 
+if [[ $id == *"sens"* ]]; then
+  model="sensitivity"
+fi
+
 #-- Paths
 THIS_FILE=$(basename "${BASH_SOURCE[0]}")
 ROOT=$(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd)     # Thanks to https://codefather.tech/blog/bash-get-script-directory/ for this line of code
-log_file="$ROOT/calibration/logs/log_$id.log"
-result_file="$ROOT/calibration/output/calibrationResults/result_$id.res"
+log_file="$ROOT/calibration/logs/$id.log"
+result_file="$ROOT/calibration/output/calibrationResults/$id.res"
 
 camp_home="/camp/lab/bentleyk/home/shared/$user"
 session_dir="APSingleCodebase/session_$id"
@@ -77,9 +82,9 @@ exit_if_error() {
 
 #-- Create files
 touch $log_file
-write_log "INFO" $LINENO "Session $id started. Input file: calibration/data/inputHistory/input_$id.json"
+write_log "INFO" $LINENO "Session $id started. Input file: calibration/data/inputHistory/$id.json"
 touch $result_file
-write_log "INFO" $LINENO "Result file created: calibration/output/calibrationResults/result_$id.res"
+write_log "INFO" $LINENO "Result file created: calibration/output/calibrationResults/$id.res"
 
 #-----------------
 #-- Main activity
@@ -104,17 +109,17 @@ cd $ROOT
 
 #-- Make slurm submission script
 echo "#!/bin/sh 
-#SBATCH --job-name=calibration_ID 
+#SBATCH --job-name=ID 
 #SBATCH --time=7-24
-#SBATCH --output=OUTDIR/out/slurm_ID.out 
-#SBATCH --error=OUTDIR/err/slurm_ID.err 
+#SBATCH --output=OUTDIR/out/ID.out 
+#SBATCH --error=OUTDIR/err/ID.err 
 #SBATCH --mail-type=END,FAIL 
 #SBATCH --mail-user=EMAIL 
 #SBATCH --exclusive 
-PYTHONPATH=calibration python3 -m calibration.model.calibrate ID 
+PYTHONPATH=calibration python3 -m calibration.model.MODEL ID 
 " \
-| sed -e 's/ID/'$id'/g' -e 's/OUTDIR/'$slurm_out_camp'/g' -e 's/EMAIL/'$email'/g' \
-> slurm_calibrate_$id.sbatch
+| sed -e 's/ID/'$id'/g' -e 's/OUTDIR/'$slurm_out_camp'/g' -e 's/EMAIL/'$email'/g' -e 's/MODEL/'$model'/g' \
+> slurm_$id.sbatch
 
 #-- rsync agent and calibration files
 trace=$(rsync -r \
@@ -137,11 +142,11 @@ pip install numpy scipy pymoo;
 cd ../$session_dir;
 ./buildSpringAgent.sh --analysis $analysis;
 sbatch \\
-slurm_calibrate_$id.sbatch;
+slurm_$id.sbatch;
 exit;
 " 2>&1)  \
 || exit_if_error $? $LINENO "$trace" "ssh: Failed to run commands on CAMP" 
 write_log "DEBUG" $LINENO "ssh: Sent commands to CAMP"
 
 # Delete submission script
-rm slurm_calibrate_$id.sbatch
+rm slurm_$id.sbatch
