@@ -2,13 +2,14 @@ import tkinter as tk
 from tkinter import ttk
 from calibration.views.homePage import HomePage
 from calibration.views.optPage import OptPage
-from calibration.views.sensPage import SensPage, SensNextPage
-from calibration.views.errPage import ErrPage
+from calibration.views.sensPage import SensPage
+from calibration.views.smallPages import ErrPage, MessagePage
 from datetime import datetime as dt
 import json
 from calibration import global_
-import os
+import os, subprocess
 import traceback 
+from .helpers import parse, clear, clearL
 
 class App(tk.Tk):
     """
@@ -28,7 +29,7 @@ class App(tk.Tk):
 
         # create and fill frames dict
         self.frames = {}  
-        for F in (HomePage, OptPage, SensPage, SensNextPage, ErrPage): #, CampPage
+        for F in (HomePage, OptPage, SensPage, MessagePage, ErrPage): #, CampPage
             # create and place frame object
             frame = F(container, self)
             self.frames[F.__name__] = frame 
@@ -43,52 +44,44 @@ class App(tk.Tk):
         """
         frame = self.frames[F]
         frame.tkraise()
-        self._clearVars(vars)
+        clearL(vars)
+
+    def runOpt(self, inputs):
+        """
+        Run optimization
+        @param {"name": [var1, var2], "name2": var1}
+        """
+        self._run(inputs, "opt")
 
     def runSens(self, inputs):
         """
         Run sensitivity analysis 
         @param {"name": [var1, var2], "name2": var1}
         """
-        id_ = self._createID("sens")
-        dict_ = self._parseDict(inputs)
+        self._run(inputs, "sens")
+
+    def _run(self, inputs, job):
+        id_ = self._createID(job)
+        dict_ = parse(inputs)
         str_ = self._dictToJson(dict_)
-        json = self._jsonFileName(id_, "sens")
-        self.clear(inputs)
+        print(str_)
+        json = self._jsonFileName(id_)
         written = self._writeFile(json, str_)
         if not written:
             return
-        # backend code
-        self._showSensNext(id_)
-        
-    def _showSensNext(self, id_):
-        frame = self.frames["SensNextPage"]
-        log = self._logFileName(id_, "sens")
-        res = self._resFileName(id_, "sens")
+        clear(inputs)
+        ran = self._runOnCamp(id_, dict_)
+        if not ran:
+            return
+        self._showNext(id_)
+
+    def _showNext(self, id_):
+        page = "MessagePage"
+        frame = self.frames[page]
+        log = self._logFileName(id_)
+        res = self._resFileName(id_)
         frame.show(f"Session ID = {id_}\n Please remember session ID for locating files and CAMP job tracking\n File locations:\nJson input file: {json}\n Log: {log}\n Result file: {res}")
         frame.tkraise()
-
-    def _parseDict(self, dict_):
-        """
-        @param {"name": [var1, var2], "name2": var1}
-        Returns copy of dict with empty items removed and text extracted
-        """
-        d = {}
-        for k, v in dict_.items():
-            if isinstance(v, list):  # if v is a list
-                empty = True
-                for var in v:   # empty remains true if whole list is empty
-                    if var.get().strip() != "":
-                        empty = False
-                        break
-                if not empty:
-                    d[k] = [var.get() for var in v]
-            elif isinstance(v, dict):   # if v is a dict
-                d[k] = self._parseDict(v)
-            else:   # if v is one value
-                if v.get().strip() != "":
-                    d[k] = v.get()
-        return d
 
     def _dictToJson(self, dict_):
         """
@@ -100,22 +93,25 @@ class App(tk.Tk):
         str_ = json.dumps(dict_)
         return str_
 
-    def _jsonFileName(self, id_, name):
+    def _jsonFileName(self, id_):
         """
         Gets json file name with given type and id
         """
         root = global_.getRoot() 
-        f = os.path.join(root, f"calibration/data/inputHistory/{name}_{id_}.json")
+        f = os.path.join(root, f"calibration/data/inputHistory/{id_}.json")
         return f
 
-    def _logFileName(self, id_, name):
+    def _logFileName(self, id_):
         root = global_.getRoot() 
-        f = os.path.join(root, f"calibration/logs/{name}_{id_}.log")
+        f = os.path.join(root, f"calibration/logs/{id_}.log")
         return f
 
-    def _resFileName(self, id_, name):
+    def _resFileName(self, id_):
         root = global_.getRoot() 
-        f = os.path.join(root, f"calibration/output/results/{name}_{id_}.csv")
+        if "sens" in id_:
+            f = os.path.join(root, f"calibration/output/results/{id_}.csv")
+        else:
+            f = os.path.join(root, f"calibration/output/results/{id_}.res")
         return f
 
     def _writeFile(self, file, str_):
@@ -128,6 +124,28 @@ class App(tk.Tk):
             self._showErr(f"Failed to open {file}. \n {tb}")
             return False
 
+    def _runOnCamp(self, id_, dict_):
+        analysis = dict_['analysis']
+        email = dict_['email']
+        user = dict_['user']
+        cmd = [self._campScript(), "--analysis", f"{analysis}", "--email", f"{email}", "--user", f"{user}", "--id", f"{id_}"]
+        process = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        if process.returncode != 0:
+            self._showErr(f"Failed to run campScript.sh\n {process.stderr}")
+            return False
+        else:
+            return True
+        
+    def _campScript(self):
+        root = global_.getRoot()
+        file = os.path.join(root, "calibration/calibration/model/./campScript.sh")
+        return file
+    
+    def _getCampScript(self):
+        root = global_.getRoot()
+        file = os.path.join(root, "calibration/calibration/model/./getCampData.sh")
+        return file
+
     def _showErr(self, err):        
         frame = self.frames["ErrPage"]
         frame.show(err)
@@ -139,27 +157,5 @@ class App(tk.Tk):
         id_ = f"{job}_{id_}"
         return id_
     
-    def clear(self, inputs):
-        """
-        @param {"name": [var1, var2], "name2": var1}
-        """
-        for var in inputs.values():
-            if isinstance(var, list):   # var is a list
-                self._clearVars(var)
-            elif isinstance(var, dict): # var is a dict
-                self.clear(var)
-            elif isinstance(var, ttk.Label):
-                var['text'] = ""
-            else:   # var is one item
-                var.set("")
-
-    def _clearVars(self, vars):
-        """
-        @param [var1, var2]
-        """
-        for var in vars:
-            if isinstance(var, ttk.Label):
-                var['text'] = ""
-            else:
-                var.set("")
+    
 

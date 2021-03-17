@@ -1,4 +1,6 @@
 
+#!/bin/sh
+
 #-- Default variables
 user=$USER
 model="calibrate"

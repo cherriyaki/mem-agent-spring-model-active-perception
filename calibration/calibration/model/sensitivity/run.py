@@ -5,6 +5,7 @@ from inspect import currentframe
 import traceback
 from calibration.model.calibrate.lossFunctions.filoLengthsLoss import FiloLengthsLoss
 import os
+import statistics as stats
 
 class SensRunner:
     def __init__(self, id_):
@@ -56,7 +57,6 @@ class SensRunner:
         self.out += ","
         for o in global_.OBJ:
             self.out += f"{o},"
-        log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Created output string {self.out}"])
 
     def _testEachParam(self):
         for p in self.params:
@@ -72,8 +72,19 @@ class SensRunner:
                     else:   # default param
                         candidate.append(defs[q])
                 log.w(id=self.id, line=["DEBUG", global_.fileName(__file__), global_.lineNo(currentframe()), f"Candidate set as {candidate}"])
-                losses = self.lossFn.getLosses(candidate).values()
-                self._addToOut(candidate, losses)
+                metrics = list(self.lossFn.getMetrics(candidate).values())
+                means = self._getMeans(metrics)
+                self._addToOut(candidate, means)
+
+    def _getMeans(self, lists):
+        """
+        @param [list1, list2]
+        @return [mean1, mean2]
+        """
+        means = []
+        for list_ in lists:
+            means.append(stats.mean(list_))
+        return means
 
     def _addToOut(self, cand, losses):
         self.out += "\n"

@@ -108,25 +108,4 @@ class SensPage(tk.Frame):
                             command = lambda : self.controller.clear(self.inputs))
         clearBtn.grid(row = 10, column = 7)
 
-class SensNextPage(tk.Frame):
-    def __init__(self, parent, controller):
-        self.parent = parent
-        self.controller = controller
-        self.allVars = []
-        tk.Frame.__init__(self, parent)
-        self._addTop()
 
-    def _addTop(self):
-        topFrame = tk.Frame(self)
-        topFrame.pack(fill = tk.X)
-        # Create and place button
-        homeBtn = ttk.Button(topFrame, text ="Home",
-                            command = lambda : self.controller.show_frame("HomePage", self.allVars))
-        homeBtn.grid(row = 0, column = 0)
-
-    def show(self, message):
-        frame = tk.Frame(self)
-        frame.pack(fill = tk.X)
-        lbl = ttk.Label(frame, text = message, font = "Calibri, 14")
-        lbl.pack()
-        self.allVars.append(lbl)

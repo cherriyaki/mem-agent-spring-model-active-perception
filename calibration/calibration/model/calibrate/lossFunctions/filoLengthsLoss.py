@@ -20,16 +20,21 @@ class FiloLengthsLoss(LossFunction):
         @param  candidate: [paramValue1, paramValue2, ...]
         @return {"obj1": loss, "obj2": loss, ...}
         """
+        featureDistributions = self.getMetrics(candidate)
+        return self._getKsValues(featureDistributions)        
+
+    def getMetrics(self, candidate):
+        """
+        @param  candidate: [paramValue1, paramValue2, ...]
+        @return {obj1: [], obj2: []}
+        """
         super().runAgent(candidate)
         output = super().getOutputContent(candidate, runOutputDir="filoLengthFiles")
         if output.strip() in ['\n', '\r\n', '']:    # Empty file: treat as no filopodia growth
             return self.maxLosses
-        # TEST
-        # print(output)
-        # return self.maxLosses
         lengthsPerFilo = self._splitByFilo(output)
         featureDistributions = self._getFeatureDistri(lengthsPerFilo)
-        return self._getKsValues(featureDistributions)        
+        return featureDistributions
 
     def _splitByFilo(self, content):
         """

@@ -24,6 +24,29 @@ class ErrPage(tk.Frame):
     def show(self, message):
         frame = tk.Frame(self)
         frame.pack(fill = tk.X)
-        lbl = ttk.Label(frame, text = message, font = "Calibri, 11, bold")
+        lbl = ttk.Label(frame, text = message, font = ("Calibri", 11, "bold"))
+        lbl.pack()
+        self.allVars.append(lbl)
+
+class MessagePage(tk.Frame):
+    def __init__(self, parent, controller):
+        self.parent = parent
+        self.controller = controller
+        self.allVars = []
+        tk.Frame.__init__(self, parent)
+        self._addTop()
+
+    def _addTop(self):
+        topFrame = tk.Frame(self)
+        topFrame.pack(fill = tk.X)
+        # Create and place button
+        homeBtn = ttk.Button(topFrame, text ="Home",
+                            command = lambda : self.controller.show_frame("HomePage", self.allVars))
+        homeBtn.grid(row = 0, column = 0)
+
+    def show(self, message):
+        frame = tk.Frame(self)
+        frame.pack(fill = tk.X)
+        lbl = ttk.Label(frame, text = message, font = ("Calibri", 13))
         lbl.pack()
         self.allVars.append(lbl)
